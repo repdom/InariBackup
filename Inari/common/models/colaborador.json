@@ -1,0 +1,30 @@
+{
+  "name": "colaborador",
+  "plural": "colaboradores",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "primerNombre": {
+      "type": "string",
+      "required": true
+    },
+    "segundoNombre": {
+      "type": "string"
+    },
+    "primerApellido": {
+      "type": "string",
+      "required": true,
+      "default": "y"
+    },
+    "segundoApellido": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

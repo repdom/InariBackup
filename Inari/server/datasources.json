@@ -5,7 +5,7 @@
     "url": "",
     "database": "inari",
     "password": "",
-    "name": "inari",
+    "name": "mysql",
     "user": "root",
     "connector": "mysql"
   }
