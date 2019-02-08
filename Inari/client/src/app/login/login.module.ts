@@ -5,6 +5,10 @@ import { MatButtonModule, MatCheckboxModule, MatInputModule } from '@angular/mat
 
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
     imports: [
@@ -13,7 +17,13 @@ import { LoginComponent } from './login.component';
         MatInputModule,
         MatCheckboxModule,
         MatButtonModule,
-        FlexLayoutModule.withConfig({addFlexToParent: false})
+        FlexLayoutModule,
+        FormsModule,
+        HttpModule,
+        HttpClientModule,
+    ],
+    providers: [
+        CookieService
     ],
     declarations: [LoginComponent]
 })

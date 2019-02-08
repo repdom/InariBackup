@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutComponent } from './layout.component';
+import { FormularioComponent } from './formulario/formulario.component';
 
 const routes: Routes = [
     {
@@ -17,6 +18,10 @@ const routes: Routes = [
                 loadChildren: './dashboard/dashboard.module#DashboardModule'
             },
             {
+                path: 'formulario',
+                component: FormularioComponent
+            }
+            /*{
                 path: 'charts',
                 loadChildren: './charts/charts.module#ChartsModule'
             },
@@ -40,7 +45,7 @@ const routes: Routes = [
             {
                 path: 'blank-page',
                 loadChildren: './blank-page/blank-page.module#BlankPageModule'
-            }
+            }*/
         ]
     }
 ];

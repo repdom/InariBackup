@@ -1,3 +1,4 @@
+import { FormularioModule } from './formulario/formulario.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import {
@@ -27,7 +28,8 @@ import { NavComponent } from './nav/nav.component';
         MatInputModule,
         MatMenuModule,
         MatListModule,
-        TranslateModule
+        TranslateModule,
+        FormularioModule
     ],
     declarations: [LayoutComponent, NavComponent, TopnavComponent, SidebarComponent]
 })

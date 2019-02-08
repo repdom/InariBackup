@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-title> Configuraciones de Área </mat-card-title>
+  <mat-card-content>
+    <form class="area-form">
+        <mat-form-field class="area-full-width">
+            <input [(ngModel)]="txtNombreArea" type="text" name="nombreArea"  matInput #message maxlength="256" (keyup.enter)="agregarArea()" placeholder="Nombre de Area">
+            <mat-hint align="start"><strong>Recuerde colocar un nombre informativo</strong> </mat-hint>
+            <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+        </mat-form-field>
+    </form>
+    <mat-action-list *ngFor="let area of Areas">
+      <button mat-list-item> {{ area.nombre }} </button>
+    </mat-action-list>    
+  </mat-card-content>
+</mat-card>
