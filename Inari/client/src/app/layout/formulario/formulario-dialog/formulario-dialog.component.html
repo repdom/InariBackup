@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>Formulario de Área {{ data.nombre }}</h1>
+<div mat-dialog-content class="centrado">
+  <!--<mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-icon-button (click)="agregarFormulario()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>-->
+    <mat-form-field>
+      <input
+        matInput
+        [(ngModel)]="formularioNuevo.nombre"
+        name="nombre"
+        placeholder="Nombre de Formulario"
+      />
+    </mat-form-field>
+    <!--<button mat-raised-button (click)="agregarSorteoADB()" *ngIf="agregar">Guardar</button>-->
+    <!--<button mat-raised-button (click)="actualizarSorteo()" *ngIf="editar">Actualizar</button>-->
+    <!--<button mat-raised-button (click)="agregarNuevoFormulario()">Guardar</button>
+    <button mat-raised-button (click)="cancelar()">Cancelar</button>
+  </mat-card>
+  <mat-list role="list">
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let formulario of formulariosModelos">
+          <mat-expansion-panel-header>
+            <mat-panel-title> {{ formulario.nombre }} </mat-panel-title>
+            <button mat-icon-button><mat-icon>edit</mat-icon></button>
+              <mat-panel-description>
+                Type your name and age
+              </mat-panel-description>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-list>  
+</div>-->
+<div mat-dialog-actions class="centrado">
+  <button mat-button  (click)="cancelar()">Cancelar</button>
+  <button mat-button [disabled]="(formularioNuevo.nombre.length > 0) ? false : true" [mat-dialog-close]="formularioNuevo" cdkFocusInitial>
+    Aceptar
+  </button>
+</div>

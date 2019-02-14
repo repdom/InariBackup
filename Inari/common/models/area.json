@@ -54,6 +54,171 @@
         "dataScale": 0,
         "nullable": "N"
       }
+    },
+    "foto1": {
+      "type": "String",
+      "required": false,
+      "length": 4294967295,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "foto1",
+        "dataType": "longtext",
+        "dataLength": 4294967295,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "foto2": {
+      "type": "String",
+      "required": false,
+      "length": 4294967295,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "foto2",
+        "dataType": "longtext",
+        "dataLength": 4294967295,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "foto3": {
+      "type": "String",
+      "required": false,
+      "length": 4294967295,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "foto3",
+        "dataType": "longtext",
+        "dataLength": 4294967295,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "foto4": {
+      "type": "String",
+      "required": false,
+      "length": 4294967295,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "foto4",
+        "dataType": "longtext",
+        "dataLength": 4294967295,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "foto5": {
+      "type": "String",
+      "required": false,
+      "length": 4294967295,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "foto5",
+        "dataType": "longtext",
+        "dataLength": 4294967295,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "foto6": {
+      "type": "String",
+      "required": false,
+      "length": 4294967295,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "foto6",
+        "dataType": "longtext",
+        "dataLength": 4294967295,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "foto7": {
+      "type": "String",
+      "required": false,
+      "length": 4294967295,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "foto7",
+        "dataType": "longtext",
+        "dataLength": 4294967295,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "foto8": {
+      "type": "String",
+      "required": false,
+      "length": 4294967295,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "foto8",
+        "dataType": "longtext",
+        "dataLength": 4294967295,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "foto9": {
+      "type": "String",
+      "required": false,
+      "length": 4294967295,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "foto9",
+        "dataType": "longtext",
+        "dataLength": 4294967295,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "foto10": {
+      "type": "String",
+      "required": false,
+      "length": 4294967295,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "foto10",
+        "dataType": "longtext",
+        "dataLength": 4294967295,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "usuarioAdministradorArea": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 10,
+      "scale": 0,
+      "mysql": {
+        "columnName": "usuario_admin_area",
+        "dataType": "int",
+        "dataLength": null,
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
     }
   },
   "validations": [],

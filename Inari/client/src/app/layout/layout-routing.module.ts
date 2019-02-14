@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutComponent } from './layout.component';
 import { FormularioComponent } from './formulario/formulario.component';
+import { AreaComponent } from './area/area.component';
+import { ItemComponent } from './item/item.component';
+import { UsuarioComponent } from './usuario/usuario.component';
 
 const routes: Routes = [
     {
@@ -20,6 +23,18 @@ const routes: Routes = [
             {
                 path: 'formulario',
                 component: FormularioComponent
+            },
+            {
+                path: 'areas',
+                component: AreaComponent
+            },
+            {
+                path: 'items',
+                component: ItemComponent
+            },
+            {
+                path: 'usuarios',
+                component: UsuarioComponent
             }
             /*{
                 path: 'charts',

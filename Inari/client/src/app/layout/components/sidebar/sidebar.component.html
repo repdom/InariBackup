@@ -3,8 +3,17 @@
         <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/dashboard']">
             <mat-icon class="sidenav-icon">dashboard</mat-icon> {{ 'Dashboard' | translate }}
         </a>
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/areas']">
+            <mat-icon class="sidenav-icon">account_balance</mat-icon> {{ 'Areas' | translate }}
+        </a>
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/items']">
+            <mat-icon class="sidenav-icon">assignment</mat-icon> {{ 'Items' | translate }}
+        </a>
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/usuarios']">
+            <mat-icon class="sidenav-icon">assignment_ind</mat-icon> {{ 'Usuarios' | translate }}
+        </a>
         <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/formulario']">
-            <mat-icon class="sidenav-icon">library_books</mat-icon> {{ 'Formulario' | translate }}
+            <mat-icon class="sidenav-icon">library_books</mat-icon> {{ 'Formularios' | translate }}
         </a>
         <!--<a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/charts']">
             <mat-icon class="sidenav-icon">bar_chart</mat-icon> {{ 'Charts' | translate }}

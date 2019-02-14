@@ -13,14 +13,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComunesModule } from './comunes/comunes.module';
 import { HttpModule } from '@angular/http';
-import { LoginService } from '../services/usuario/login.service';
+import { LoginService } from './services/usuario/login.service';
 import { CookieService } from 'ngx-cookie-service';
-import { AreaService } from '../services/area/area.service';
+import { AreaService } from './services/area/area.service';
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -43,6 +43,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         HttpClientModule,
         HttpModule,
         ComunesModule,
+        MatProgressSpinnerModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

@@ -112,18 +112,18 @@
       }
     },
     "imagen": {
-      "type": "Binary",
-      "required": true,
-      "length": 65535,
+      "type": "String",
+      "required": false,
+      "length": 4294967295,
       "precision": null,
       "scale": null,
       "mysql": {
         "columnName": "imagen",
-        "dataType": "blob",
-        "dataLength": 65535,
+        "dataType": "longtext",
+        "dataLength": 4294967295,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "N"
+        "nullable": "Y"
       }
     },
     "usuarioRelacionado": {

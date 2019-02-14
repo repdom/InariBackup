@@ -1,15 +1,182 @@
-<mat-card>
-  <mat-card-title> Configuraciones de Área </mat-card-title>
-  <mat-card-content>
-    <form class="area-form">
-        <mat-form-field class="area-full-width">
-            <input [(ngModel)]="txtNombreArea" type="text" name="nombreArea"  matInput #message maxlength="256" (keyup.enter)="agregarArea()" placeholder="Nombre de Area">
-            <mat-hint align="start"><strong>Recuerde colocar un nombre informativo</strong> </mat-hint>
-            <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
-        </mat-form-field>
-    </form>
-    <mat-action-list *ngFor="let area of Areas">
-      <button mat-list-item> {{ area.nombre }} </button>
-    </mat-action-list>    
-  </mat-card-content>
-</mat-card>
+<div
+  class="mb-20"
+  fxLayout="row"
+  fxLayout.lt-md="column"
+  fxFlex
+  fxLayoutGap="20px"
+>
+  <div fxFlex>
+        <h1>Área</h1>
+        <form class="area-form">
+          <div fxLayout="row">
+            <mat-form-field class="area-full-width">
+              <input
+                [(ngModel)]="txtNombreArea"
+                type="text"
+                name="nombreArea"
+                matInput
+                #message
+                maxlength="255"
+                (keyup.enter)="agregarArea()"
+                placeholder="Nombre de Area"
+              />
+              <mat-hint align="start"
+                ><strong>Recuerde colocar un nombre informativo</strong>
+              </mat-hint>
+              <mat-hint align="end">{{ message.value.length }} / 255</mat-hint>
+            </mat-form-field>
+            <button mat-button (click)="agregarArea()">
+              <i class="material-icons">add_circle_outline</i>
+            </button>
+          </div>
+        </form>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let areaFormulario of AreasFormularios">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ areaFormulario.Area.nombre }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <button
+              mat-button
+              align="right"
+              (click)="abrirConfiguracion(areaFormulario)"
+            >
+              <i class="material-icons">add_circle_outline</i>
+            </button>
+            <mat-action-list>
+              <button
+                (click)="vincularFormularioModuloItem(formulario)"
+                *ngFor="let formulario of areaFormulario.FormulariosModelos"
+                mat-list-item
+              >
+                {{ formulario.nombre }}
+              </button>
+            </mat-action-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <!--<mat-action-list>
+          <button mat-list-item (click)="abrirConfiguracion(area)">
+            {{ area.nombre }}
+          </button>
+        </mat-action-list>-->
+  </div>
+  <div fxFlex>
+    <a name="abajo"></a>
+        <h1>Item</h1>
+        <form class="area-form">
+          <div fxLayout="row">
+            <mat-form-field class="area-full-width">
+              <input
+                [(ngModel)]="txtNombreItem"
+                type="text"
+                name="nombreItem"
+                matInput
+                #message
+                maxlength="255"
+                (keyup.enter)="agregarItem()"
+                placeholder="Nombre de Item"
+              />
+              <mat-hint align="start"
+                ><strong>Recuerde colocar un nombre informativo</strong>
+              </mat-hint>
+              <mat-hint align="end">{{ message.value.length }} / 255</mat-hint>
+            </mat-form-field>
+            <button mat-button (click)="agregarItem()">
+              <i class="material-icons">add_circle_outline</i>
+            </button>
+          </div>
+        </form>
+        <!--<mat-action-list *ngFor="let item of Items">
+          <button mat-list-item>
+            {{ item.nombre }}
+          </button>
+        </mat-action-list>-->
+        <table
+          class="scroll-container"
+          #paginatorItem
+          #sortItem="matSort"
+          mat-table
+          [dataSource]="itemDatasource"
+          matSort
+        >
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+            <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+          </ng-container>
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="accion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Acción</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button><i class="material-icons">edit</i></button>
+              <button mat-button><i class="material-icons">cancel</i></button>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="itemDesplayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: itemDesplayedColumns"></tr>
+        </table>
+
+        <!--<mat-paginator 
+            [pageSize]="5"
+            [pageSizeOptions]="[5, 10, 20]"
+            >
+          </mat-paginator>-->
+  </div>
+</div>
+<div *ngIf="seleccionFormulario">
+  <mat-form-field>
+    <input
+      matInput
+      (keyup)="applyFilter($event.target.value)"
+      id="mb-100"
+      placeholder="Filtrar"
+    />
+  </mat-form-field>
+</div>
+<div class="mat-elevation-z8" [hidden]="!seleccionFormulario">
+  <table #paginator #sort="matSort" mat-table [dataSource]="dataSource" matSort>
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="$event ? masterToggle() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+      <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="selection.toggle(row)"
+    ></tr>
+  </table>
+
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+  <button mat-button (click)="cancelarAgregarItem()">Cancelar</button>
+  <button mat-button>Guardar</button>
+</div>

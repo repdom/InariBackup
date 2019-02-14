@@ -16,6 +16,9 @@ import { TopnavComponent } from './components/topnav/topnav.component';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { NavComponent } from './nav/nav.component';
+import { AreaModule } from './area/area.module';
+import { ItemModule } from './item/item.module';
+import { UsuarioModule } from './usuario/usuario.module';
 
 @NgModule({
     imports: [
@@ -29,7 +32,10 @@ import { NavComponent } from './nav/nav.component';
         MatMenuModule,
         MatListModule,
         TranslateModule,
-        FormularioModule
+        FormularioModule,
+        AreaModule,
+        ItemModule,
+        UsuarioModule
     ],
     declarations: [LayoutComponent, NavComponent, TopnavComponent, SidebarComponent]
 })

@@ -14,7 +14,7 @@ export class DialogComponent implements OnInit {
 
     constructor(public dialog: MatDialog) {}
 
-    ngOnInit() {}
+    ngOnInit() { }
 
     openDialog(): void {
         const dialogRef = this.dialog.open(DialogOverviewComponent, {
