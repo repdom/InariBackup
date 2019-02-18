@@ -1,3 +1,5 @@
+import { Colaborador } from './colaborador';
+
 export class FormularioModelo {
     // tslint:disable-next-line:no-inferrable-types
     public codigo: number = 0;
@@ -11,7 +13,7 @@ export class FormularioModelo {
     public areaCodigo: number = 0;
     // tslint:disable-next-line:no-inferrable-types
     public usuarioRelacionado: number = 0;
-
+    public items?: Item[] = [];
     constructor() { }
 }
 
@@ -25,18 +27,43 @@ export class FormularioModeloItem {
 }
 
 export class Item {
-    codigo: number;
-    nombre: string;
-    fechaCreacion: string;
-    cancelado: number;
+    // tslint:disable-next-line:no-inferrable-types
+    codigo: number = 0;
+    // tslint:disable-next-line:no-inferrable-types
+    nombre: string = '';
+    // tslint:disable-next-line:no-inferrable-types
+    fechaCreacion: string = '';
+    // tslint:disable-next-line:no-inferrable-types
+    cancelado: number = 0;
+    // tslint:disable-next-line:no-inferrable-types
+    definicion: string = '';
 
     constructor() { }
 }
 
 export class Area {
-    codigo: number;
-    nombre: string;
-    cancelado: number;
+    // tslint:disable-next-line:no-inferrable-types
+    codigo: number = 0;
+    // tslint:disable-next-line:no-inferrable-types
+    nombre: string = '';
+    // tslint:disable-next-line:no-inferrable-types
+    cancelado: number = 0;
+    // tslint:disable-next-line:no-inferrable-types
+    foto: string[] = [
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        ''
+    ];
+    // tslint:disable-next-line:no-inferrable-types
+    usuarioAdministradorArea: number = 0;
+    administrador: Colaborador = new Colaborador();
 }
 
 export class FormularioItemModelo {

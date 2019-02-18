@@ -28,13 +28,13 @@
     "nombre": {
       "type": "String",
       "required": true,
-      "length": 64,
+      "length": 255,
       "precision": null,
       "scale": null,
       "mysql": {
         "columnName": "nombre",
         "dataType": "varchar",
-        "dataLength": 64,
+        "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
         "nullable": "N"

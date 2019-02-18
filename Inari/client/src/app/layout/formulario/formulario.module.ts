@@ -17,7 +17,8 @@ import { MatInputModule,
         MatGridListModule,
         MatListModule,
         MatExpansionModule,
-        MatSortModule
+        MatSortModule,
+        MatSelectModule
       } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpModule } from '@angular/http';
@@ -54,6 +55,7 @@ import { ItemService } from '../../services/item/item.service';
     MatListModule,
     MatExpansionModule,
     MatSortModule,
+    MatSelectModule,
     FlexLayoutModule.withConfig({addFlexToParent: false})
   ],
   providers: [

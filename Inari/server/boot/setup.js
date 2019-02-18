@@ -27,7 +27,8 @@ function defaultRoles(app) {
 
   let listOfRoles = [
         ['Administrador', 'Tiene acceso a todo el sistema.'],
-        ['Evaluador', 'Puede hacer las evaluaciones.'],
+        ['Verificador', 'Puede hacer las evaluaciones.'],
+        ['Administrador de Area', 'Puede hacer análisis en las areas evaluadas'],
   ];
 
   listOfRoles.forEach(function(element) {

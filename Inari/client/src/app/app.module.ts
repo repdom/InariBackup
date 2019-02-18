@@ -21,6 +21,7 @@ import { HttpModule } from '@angular/http';
 import { LoginService } from './services/usuario/login.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AreaService } from './services/area/area.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -44,6 +45,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         HttpModule,
         ComunesModule,
         MatProgressSpinnerModule,
+        NgxSpinnerModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

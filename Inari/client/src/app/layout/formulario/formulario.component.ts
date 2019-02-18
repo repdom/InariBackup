@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 import swal from 'sweetalert2';
 import { ItemService } from 'src/app/services/item/item.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 export class AreaFormularios {
@@ -29,28 +30,26 @@ export class FormularioItemTable {
   styleUrls: ['./formulario.component.scss']
 })
 export class FormularioComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['select', 'nombre'];
-  itemDesplayedColumns = ['nombre', 'accion'];
-  txtNombreArea: string = '';
-  txtNombreItem: string = '';
+  displayedColumns = ['select', 'nombre', 'definicion'];
+  itemDesplayedColumns = ['nombre', 'definicion', 'accion'];
 
-  dataLoteria: MatTableDataSource<FormularioModelo>;
   AreasFormularios: AreaFormularios[] = [];
   Items: Item[] = [];
+  areas: Area[] = [];
+  areasFiltradas: Area[] = [];
   FormulariosModelosItems: FormularioModeloItem[] = [];
   private formulario: FormularioModelo;
   private userID: number;
   dataSource: MatTableDataSource<Item>;
-  itemDatasource: MatTableDataSource<Item>;
   selection: SelectionModel<Item>;
   seleccionFormulario = false;
   formularioSeleccionado: FormularioModelo = new FormularioModelo();
   pageEvent: PageEvent;
+  nuevoFormularioModelo: FormularioModelo = new FormularioModelo();
+  formulariosModelos: FormularioModelo[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('sort') sort: MatSort;
-
-  @ViewChild('sortItem') sortItem: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
 
   constructor(private formularioModeloService: FormularioModeloService,
@@ -59,15 +58,16 @@ export class FormularioComponent implements OnInit, AfterViewInit {
               public dialog: MatDialog,
               private changeDetectorRefs: ChangeDetectorRef,
               private cookieService: CookieService,
-              private itemsService: ItemService
+              private itemsService: ItemService,
+              private spinner: NgxSpinnerService,
             ) { }
 
   ngOnInit() {
     /*this.formularioModeloService.getAllWhereCodigoFormulario(2, 'formulario').subscribe(response => {
       console.log(response);
-      this.userID = Number(this.cookieService.get('userid'));
     });*/
     this.selection = new SelectionModel(true, []);
+    this.userID = Number(this.cookieService.get('userid'));
     this.listarAreas();
     this.listarItems();
   }
@@ -90,80 +90,24 @@ export class FormularioComponent implements OnInit, AfterViewInit {
     });
   }
 
-  abrirConfiguracion(area: AreaFormularios) {
-    const dialogRef = this.dialog.open(FormularioDialogComponent, {
-      width: '250px',
-      height: '280px',
-      data: {
-        codigo: area.Area.codigo,
-        nombre: area.Area.nombre,
-        cancelado: area.Area.cancelado
-      }
-    });
-    dialogRef.afterClosed().subscribe(resultado => {
-      if (resultado !== undefined) {
-        this.formulario = resultado;
-        console.log(this.formulario);
-        const d2 = new Date();
-        const d = new Date(d2.getTime());
-        const fechaCreacion = formatDate(new Date(d), 'yyyy-MM-dd', 'en-US');
-
-        const formularioModelo = {
-          codigo: 0,
-          nombre: this.formulario.nombre,
-          fechaCreacion: fechaCreacion,
-          cancelado: 0,
-          areaCodigo: area.Area.codigo,
-          usuarioRelacionado: this.userID,
-        };
-
-        const nombreAux = this.formulario.nombre;
-        const indice = area.FormulariosModelos.push(formularioModelo);
-        // this.formularioNuevo.nombre = '';
-        // swal.showLoading();
-
-        this.formularioModeloService.create(formularioModelo).subscribe(formularioModeloResponse => {
-          area.FormulariosModelos[indice - 1].codigo = formularioModeloResponse['codigo'];
-          area.FormulariosModelos[indice - 1].codigo = formularioModeloResponse['codigo'];
-        }, (error) => {
-          area.FormulariosModelos.pop();
-          this.formulario.nombre = nombreAux;
-          swal.fire({
-            type: 'error',
-            title: 'Oops...',
-            text: 'Algo malo sucedió, vuelva a intentarlo. Revise conexión de internet',
-          });
-          // swal.hideLoading();
-        }, () => {
-            swal.fire(
-              'Formulario Agregado',
-              '',
-              'success',
-            );
-            // this.formularioNuevo = new FormularioModelo();
-        });
-        }
-      });
-    }
-
   listarItems() {
     this.itemsService.getAll().subscribe(itemResponse => {
       itemResponse.forEach(itemElement => {
-        const item: Item = {
-          codigo: itemElement['codigo'],
-          nombre: itemElement['nombre'],
-          cancelado: itemElement['cancelado'],
-          fechaCreacion: itemElement['fechaCreacion']
-        };
-         this.Items.push(item);
-        this.dataSource = new MatTableDataSource(this.Items);
-        this.selection = new SelectionModel(true, []);
-        this.changeDetectorRefs.detectChanges();
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.itemDatasource = new MatTableDataSource(this.Items);
-        this.changeDetectorRefs.detectChanges();
-        this.itemDatasource.sort = this.sortItem;
+          if (itemElement['cancelado'] === 0) {
+            const item: Item = {
+              codigo: itemElement['codigo'],
+              nombre: itemElement['nombre'],
+              cancelado: itemElement['cancelado'],
+              fechaCreacion: itemElement['fechaCreacion'],
+              definicion: itemElement['definicion']
+            };
+            this.Items.push(item);
+            this.dataSource = new MatTableDataSource(this.Items);
+            this.selection = new SelectionModel(true, []);
+            this.changeDetectorRefs.detectChanges();
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          }
         });
     }, (error) => {
       throwError(error);
@@ -173,26 +117,22 @@ export class FormularioComponent implements OnInit, AfterViewInit {
       this.changeDetectorRefs.detectChanges();
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.itemDatasource = new MatTableDataSource(this.Items);
-      this.changeDetectorRefs.detectChanges();
-      this.itemDatasource.sort = this.sortItem;
     });
   }
 
   listarAreas() {
     this.areaService.getAll().subscribe(areasResponse => {
       areasResponse.forEach(areaElement => {
-        const area: Area = {
-          codigo: areaElement['codigo'],
-          nombre: areaElement['nombre'],
-          cancelado: areaElement['cancelado']
-        };
-
+        const area: Area = new Area();
+        area.codigo = areaElement['codigo'];
+        area.nombre = areaElement['nombre'];
+        area.cancelado = areaElement['cancelado'];
+        area.administrador = areaElement['administrador'];
+        this.areas.push(area);
         // tslint:disable-next-line:prefer-const
         let areaFormularios: AreaFormularios = new AreaFormularios();
         areaFormularios.Area = area;
         this.formularioModeloService.getAllWhereCodigoFormulario(area.codigo, '').subscribe(formulariosModulo => {
-
           formulariosModulo.forEach(elementFormularioModelo => {
             const formularioModulo: FormularioModelo = {
               areaCodigo: elementFormularioModelo['areaCodigo'],
@@ -210,50 +150,11 @@ export class FormularioComponent implements OnInit, AfterViewInit {
           this.AreasFormularios.push(areaFormularios);
         });
       });
+    }, (error) => {
+      return throwError(error);
+    }, () => {
+      this.areasFiltradas = this.areas.filter(a => a.cancelado === 0);
     });
-  }
-
-  agregarItem() {
-    if (this.txtNombreItem.length > 0) {
-      const d2 = new Date();
-      const d = new Date(d2.getTime());
-      const fechaCreacion = formatDate(new Date(d), 'yyyy-MM-dd', 'en-US');
-
-      const itemAgregado = {
-        codigo: 0,
-        nombre: this.txtNombreItem,
-        fechaCreacion: fechaCreacion,
-        cancelado: 0
-      };
-
-      const nombreItem = this.txtNombreItem;
-      this.txtNombreItem = '';
-
-      const index = this.Items.push(itemAgregado);
-
-      this.itemsService.create(itemAgregado).subscribe(itemResponse => {
-        this.Items[index - 1].codigo = itemResponse['codigo'];
-      }, (error) => {
-        this.Items.pop();
-        this.txtNombreItem = nombreItem;
-        swal.fire({
-          type: 'error',
-          title: 'Oops...',
-          text: 'Algo malo sucedió, vuelva a intentarlo. Revise conexión de internet',
-        });
-      }, () => {
-        this.dataSource.data = [];
-        this.dataSource.data = this.Items;
-        this.itemDatasource.data = [];
-        this.itemDatasource.data = this.Items;
-        this.txtNombreItem = '';
-        swal.fire(
-          'Formulario Agregado',
-          '',
-          'success',
-        );
-      });
-    }
   }
 
   vincularFormularioModuloItem(formularioModulo: FormularioModelo) {
@@ -261,46 +162,6 @@ export class FormularioComponent implements OnInit, AfterViewInit {
     this.seleccionFormulario = true;
   }
 
-  agregarArea() {
-    if (this.txtNombreArea.length > 0) {
-      const areaAgregada = {
-        codigo: 0,
-        nombre: this.txtNombreArea,
-        cancelado: 0,
-      };
-
-      const nombreArea = this.txtNombreArea;
-      const ultimoElemento = this.AreasFormularios.push(
-        {
-          Area: {
-            codigo: 0,
-            nombre: this.txtNombreArea,
-            cancelado: 0,
-          },
-          FormulariosModelos: []
-        });
-        this.txtNombreArea = '';
-      this.areaService.create(areaAgregada).subscribe(areaResponse => {
-        this.AreasFormularios[ultimoElemento - 1].Area.codigo = areaResponse['codigo'];
-        this.AreasFormularios[ultimoElemento - 1].Area.cancelado = areaResponse['cancelado'];
-        this.txtNombreArea = '';
-      }, (error) => {
-        this.Items.pop();
-        this.txtNombreArea = nombreArea;
-        swal.fire({
-          type: 'error',
-          title: 'Oops...',
-          text: 'Algo malo sucedió, vuelva a intentarlo. Revise conexión de internet',
-        });
-      }, () => {
-        swal.fire(
-          'Formulario Agregado',
-          '',
-          'success',
-        );
-      });
-    }
-  }
     /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected() {
       const numSelected = this.selection.selected.length;
@@ -313,6 +174,7 @@ export class FormularioComponent implements OnInit, AfterViewInit {
       this.isAllSelected() ?
           this.selection.clear() :
           this.dataSource.data.forEach(row => this.selection.select(row));
+          // console.log();
     }
     applyFilter(filterValue: string) {
       filterValue = filterValue.trim(); // Remove whitespace
@@ -324,5 +186,65 @@ export class FormularioComponent implements OnInit, AfterViewInit {
     }
     cancelarAgregarItem() {
       this.seleccionFormulario = false;
+    }
+    guardarFormulario() {
+      this.spinner.show();
+      const itemsSeleccionados = this.selection.selected;
+      const d2 = new Date();
+      const d = new Date(d2.getTime());
+      const fechaCreacion = formatDate(new Date(d), 'yyyy-MM-dd', 'en-US');
+      console.log(this.selection.selected);
+      const formularioAgregado = {
+          codigo: this.nuevoFormularioModelo.codigo,
+          nombre: this.nuevoFormularioModelo.nombre,
+          fechaCreacion: fechaCreacion,
+          cancelado: this.nuevoFormularioModelo.cancelado,
+          areaCodigo: this.nuevoFormularioModelo.areaCodigo,
+          usuarioRelacionado: this.userID,
+      };
+
+      this.nuevoFormularioModelo.items = itemsSeleccionados;
+      const formularioAux = this.nuevoFormularioModelo;
+      const indice = this.formulariosModelos.push(formularioAux);
+      this.formularioModeloService.create(formularioAgregado).subscribe(formularioResponse => {
+        this.formulariosModelos[indice - 1].codigo = formularioResponse['codigo'];
+        this.nuevoFormularioModelo.codigo = formularioResponse['codigo'];
+      }, (error) => {
+        this.spinner.hide();
+        swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Hubo un error en crear el formulario. Revise conexión a internet.',
+        });
+      }, () => {
+        let i = 0;
+        this.nuevoFormularioModelo.items.forEach(itemResponse => {
+          const itemFormulario = {
+            id: 0,
+            formularioModeloCodigo: this.nuevoFormularioModelo.codigo,
+            itemCodigo: itemResponse.codigo,
+            cancelado: 0
+          };
+          this.formularioModeloItemService.create(itemFormulario).subscribe(itemFormularioItem => {
+          }, (error) => {
+            this.spinner.hide();
+            swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: 'Hubo un error en crear el formulario. Revise conexión a internet.',
+            });
+          }, () => {
+          });
+          i += 1;
+        });
+        this.spinner.hide();
+        this.selection.clear();
+        this.nuevoFormularioModelo = new FormularioModelo();
+        swal.fire(
+          'Formulario agregado',
+          '',
+          'success',
+        );
+      });
     }
   }

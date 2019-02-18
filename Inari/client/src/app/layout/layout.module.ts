@@ -19,6 +19,7 @@ import { NavComponent } from './nav/nav.component';
 import { AreaModule } from './area/area.module';
 import { ItemModule } from './item/item.module';
 import { UsuarioModule } from './usuario/usuario.module';
+import { ComunesModule } from '../comunes/comunes.module';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import { UsuarioModule } from './usuario/usuario.module';
         FormularioModule,
         AreaModule,
         ItemModule,
-        UsuarioModule
+        UsuarioModule,
+        ComunesModule
     ],
     declarations: [LayoutComponent, NavComponent, TopnavComponent, SidebarComponent]
 })
