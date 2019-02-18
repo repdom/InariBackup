@@ -84,6 +84,8 @@ function crearUsuarioAdministrador(app) {
     primerApellido: 'manager',
     segundoNombre: 'manager',
     segundoApellido: 'managel',
+    cedula: '000000000',
+    cancelado: 0,
   },
         function(err, user) {
           if (err) return console.log(err);
