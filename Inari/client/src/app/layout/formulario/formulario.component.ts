@@ -2,11 +2,11 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, AfterViewInit } from '
 import { FormularioModeloService } from '../../services/formulario/formulario-modelo.service';
 import { FormularioModeloItemService } from '../../services/formulario/formulario-modelo-item.service';
 import { MatDialog, MatSort, MatPaginator, MatTableDataSource, PageEvent } from '@angular/material';
-import { FormularioModelo } from 'src/app/clases/formulario/formulario';
+import { FormularioModelo, ItemCombinado } from 'src/app/clases/formulario/formulario';
 import { Area, Item, FormularioModeloItem } from '../../clases/formulario/formulario';
 import { AreaService } from '../../services/area/area.service';
 import { FormularioDialogComponent } from './formulario-dialog/formulario-dialog.component';
-import { throwError } from 'rxjs';
+import { throwError, config } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import swal from 'sweetalert2';
@@ -16,8 +16,22 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 
 export class AreaFormularios {
-  public Area: Area = new Area();
   public FormulariosModelos: FormularioModelo[] = [];
+  public FormularioItemModelo?: FormularioModeloItem[] = [];
+}
+
+export class FormularioItemCombinado {
+  itemCombinado: ItemCombinado[] = [];
+  formularioModelo: FormularioModelo = new FormularioModelo();
+
+  optenerItems() {
+    // tslint:disable-next-line:prefer-const
+    let items: Item [] = [];
+    this.itemCombinado.forEach(r => {
+      items.push(r.item);
+    });
+    return items;
+  }
 }
 
 export class FormularioItemTable {
@@ -31,26 +45,31 @@ export class FormularioItemTable {
 })
 export class FormularioComponent implements OnInit, AfterViewInit {
   displayedColumns = ['select', 'nombre', 'definicion'];
-  itemDesplayedColumns = ['nombre', 'definicion', 'accion'];
+  formularioModeloDisplayedColumns = ['nombre', 'cantidad', 'accion'];
 
   AreasFormularios: AreaFormularios[] = [];
   Items: Item[] = [];
-  areas: Area[] = [];
-  areasFiltradas: Area[] = [];
   FormulariosModelosItems: FormularioModeloItem[] = [];
   private formulario: FormularioModelo;
   private userID: number;
   dataSource: MatTableDataSource<Item>;
+  dataSourceFormularioModelo: MatTableDataSource<FormularioItemCombinado>;
   selection: SelectionModel<Item>;
   seleccionFormulario = false;
   formularioSeleccionado: FormularioModelo = new FormularioModelo();
   pageEvent: PageEvent;
   nuevoFormularioModelo: FormularioModelo = new FormularioModelo();
   formulariosModelos: FormularioModelo[] = [];
+  itemFormularioCombinado: FormularioItemCombinado[] = [];
+  actualizarFormulario = false;
+  formularioModeloAuxiliar: FormularioItemCombinado = new FormularioItemCombinado();
+  itemsAux: Item[] = [];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('tableItemPaginator') paginator: MatPaginator;
+  @ViewChild('tableItemSort') sort: MatSort;
 
+  @ViewChild('tableFormularioModeloPaginator') paginatorFormularioModelo: MatPaginator;
+  @ViewChild('tableSortFormularioModelo') sortFormularioModelo: MatSort;
 
   constructor(private formularioModeloService: FormularioModeloService,
               private formularioModeloItemService: FormularioModeloItemService,
@@ -67,27 +86,13 @@ export class FormularioComponent implements OnInit, AfterViewInit {
       console.log(response);
     });*/
     this.selection = new SelectionModel(true, []);
-    this.userID = Number(this.cookieService.get('userid'));
-    this.listarAreas();
+    // this.userID = Number(this.cookieService.get('userid'));
+    this.listarFormularioItem();
     this.listarItems();
   }
 
   ngAfterViewInit()  {
-    this.userID = Number(this.cookieService.get('userid'));
-  }
-
-  listarRelacionFormularioModelosItems() {
-    this.formularioModeloItemService.getAll().subscribe(formularioModeloItem => {
-      formularioModeloItem.forEach(elementModeloItem => {
-        const modeloItem: FormularioModeloItem = {
-          cancelado: elementModeloItem['cancelado'],
-          formularioModeloCodigo: elementModeloItem['formularioModeloCodigo'],
-          itemCodigo: elementModeloItem['itemCodigo'],
-          id: elementModeloItem['id']
-        };
-        this.FormulariosModelosItems.push(modeloItem);
-      });
-    });
+    // this.userID = Number(this.cookieService.get('userid'));
   }
 
   listarItems() {
@@ -99,7 +104,8 @@ export class FormularioComponent implements OnInit, AfterViewInit {
               nombre: itemElement['nombre'],
               cancelado: itemElement['cancelado'],
               fechaCreacion: itemElement['fechaCreacion'],
-              definicion: itemElement['definicion']
+              definicion: itemElement['definicion'],
+              optenidoDesdeApi: false
             };
             this.Items.push(item);
             this.dataSource = new MatTableDataSource(this.Items);
@@ -120,41 +126,80 @@ export class FormularioComponent implements OnInit, AfterViewInit {
     });
   }
 
-  listarAreas() {
-    this.areaService.getAll().subscribe(areasResponse => {
-      areasResponse.forEach(areaElement => {
-        const area: Area = new Area();
-        area.codigo = areaElement['codigo'];
-        area.nombre = areaElement['nombre'];
-        area.cancelado = areaElement['cancelado'];
-        area.administrador = areaElement['administrador'];
-        this.areas.push(area);
-        // tslint:disable-next-line:prefer-const
-        let areaFormularios: AreaFormularios = new AreaFormularios();
-        areaFormularios.Area = area;
-        this.formularioModeloService.getAllWhereCodigoFormulario(area.codigo, '').subscribe(formulariosModulo => {
-          formulariosModulo.forEach(elementFormularioModelo => {
-            const formularioModulo: FormularioModelo = {
-              areaCodigo: elementFormularioModelo['areaCodigo'],
-              cancelado: elementFormularioModelo['cancelado'],
-              nombre: elementFormularioModelo['nombre'],
-              codigo: elementFormularioModelo['codigo'],
-              fechaCreacion: elementFormularioModelo['fechaCreacion'],
-              usuarioRelacionado: elementFormularioModelo['usuarioRelacionado']
-            };
-            areaFormularios.FormulariosModelos.push(formularioModulo);
+  listarFormularioItem() {
+        this.formularioModeloService.getAll().subscribe(formulariosModelo => {
+          formulariosModelo.forEach(elementFormularioModelo => {
+            if (elementFormularioModelo['cancelado'] === 0) {
+              const formularioModulo: FormularioModelo = {
+                cancelado: elementFormularioModelo['cancelado'],
+                nombre: elementFormularioModelo['nombre'],
+                codigo: elementFormularioModelo['codigo'],
+                fechaCreacion: elementFormularioModelo['fechaCreacion'],
+              };
+              // tslint:disable-next-line:prefer-const
+              let formularioItemCombinado = new FormularioItemCombinado();
+              formularioItemCombinado.formularioModelo = formularioModulo;
+              // tslint:disable-next-line:prefer-const
+              let itemCombinado: ItemCombinado = new ItemCombinado();
+              // tslint:disable-next-line:max-line-length
+              this.formularioModeloItemService.getAllWhereCodigoFormularioModelo(elementFormularioModelo['codigo'], 'FormularioModelo').subscribe(formularioItemResponse => {
+                formularioItemResponse.forEach(elementItemModeloResponse => {
+                  if (elementItemModeloResponse['cancelado'] === 0) {
+                  const formularioModeloItem: FormularioModeloItem = {
+                    formularioModeloCodigo: elementItemModeloResponse['formularioModeloCodigo'],
+                    itemCodigo: elementItemModeloResponse['itemCodigo'],
+                    cancelado: elementItemModeloResponse['cancelado'],
+                    id: elementItemModeloResponse['id'],
+                  };
+                  // console.log(elementItemModeloResponse);
+                  // console.log(elementItemModeloResponse['itemCodigo']);
+                  this.itemsService.getFromCode(elementItemModeloResponse['itemCodigo']).subscribe(elementItem => {
+                    // console.log(elementItem);
+                    const item: Item = {
+                      codigo: elementItem['codigo'],
+                      nombre: elementItem['nombre'],
+                      fechaCreacion: elementItem['fechaCreacion'],
+                      cancelado: elementItem['cancelado'],
+                      definicion: elementItem['definicion'],
+                      optenidoDesdeApi: true,
+                    };
+                    itemCombinado.formularioModeloItem = formularioModeloItem,
+                    itemCombinado.item = item;
+                    // console.log(itemCombinado);
+                  }, (error) => {
+                    swal.fire({
+                      type: 'error',
+                      title: 'Oops...',
+                      text: 'Hubo un error en la carga de los formulario. Revise conexión a internet.',
+                    });
+                  }, () => {
+                    // console.log(itemCombinado);
+                    formularioItemCombinado.itemCombinado.push(itemCombinado);
+                    itemCombinado = new ItemCombinado();
+                  });
+                  }
+                });
+              }, (error) => {
+                swal.fire({
+                  type: 'error',
+                  title: 'Oops...',
+                  text: 'Hubo un error en la carga de los formulario. Revise conexión a internet.',
+                });
+              }, () => {
+                this.itemFormularioCombinado.push(formularioItemCombinado);
+                this.dataSourceFormularioModelo = new MatTableDataSource(this.itemFormularioCombinado);
+                this.changeDetectorRefs.detectChanges();
+                this.dataSourceFormularioModelo.paginator = this.paginatorFormularioModelo;
+                this.dataSourceFormularioModelo.sort = this.sortFormularioModelo;
+              });
+              // areaFormularios.FormulariosModelos.push(formularioModulo);
+            }
           });
         }, (error) => {
           return throwError(error);
         }, () => {
-          this.AreasFormularios.push(areaFormularios);
+          // this.AreasFormularios.push(areaFormularios);
         });
-      });
-    }, (error) => {
-      return throwError(error);
-    }, () => {
-      this.areasFiltradas = this.areas.filter(a => a.cancelado === 0);
-    });
   }
 
   vincularFormularioModuloItem(formularioModulo: FormularioModelo) {
@@ -185,7 +230,13 @@ export class FormularioComponent implements OnInit, AfterViewInit {
       }
     }
     cancelarAgregarItem() {
-      this.seleccionFormulario = false;
+      this.spinner.hide();
+      this.nuevoFormularioModelo = new FormularioModelo();
+      if (this.actualizarFormulario === true) {
+        this.Items = this.itemsAux;
+        this.actualizarFormulario = false;
+      }
+      this.selection.clear();
     }
     guardarFormulario() {
       this.spinner.show();
@@ -199,8 +250,6 @@ export class FormularioComponent implements OnInit, AfterViewInit {
           nombre: this.nuevoFormularioModelo.nombre,
           fechaCreacion: fechaCreacion,
           cancelado: this.nuevoFormularioModelo.cancelado,
-          areaCodigo: this.nuevoFormularioModelo.areaCodigo,
-          usuarioRelacionado: this.userID,
       };
 
       this.nuevoFormularioModelo.items = itemsSeleccionados;
@@ -245,6 +294,163 @@ export class FormularioComponent implements OnInit, AfterViewInit {
           '',
           'success',
         );
+      });
+    }
+    cargarActualizarFormulario(formularioItemCombinado: FormularioItemCombinado) {
+      // formularioItemCombinado.optenerItems().forEach(r => r.codigo === )
+      this.spinner.show();
+      this.actualizarFormulario = true;
+      this.itemsAux = this.Items;
+      if (formularioItemCombinado.itemCombinado.length > 0) {
+        this.Items.map(item => {
+            // console.log(item);
+            const itemAux = formularioItemCombinado.itemCombinado.find(r => r.item.codigo === item.codigo);
+            if (itemAux !== undefined) {
+              item.optenidoDesdeApi = itemAux.item.optenidoDesdeApi;
+            }
+            return item;
+        });
+      }
+      // console.log(formularioItemCombinado);
+      this.dataSource = new MatTableDataSource(this.Items);
+      this.selection = new SelectionModel(true, []);
+      formularioItemCombinado.itemCombinado.forEach(row => {
+                      this.selection.select(this.Items.find(r => r.codigo === row.item.codigo));
+      });
+      this.nuevoFormularioModelo = formularioItemCombinado.formularioModelo;
+      this.formularioModeloAuxiliar = formularioItemCombinado;
+      // console.log(this.Items);
+      this.spinner.hide();
+    }
+
+    actualizarFormularioEnBaseDeDatos() {
+      this.spinner.show();
+      const itemsSeleccionados = this.selection.selected;
+      const formulario = {
+        codigo: this.nuevoFormularioModelo.codigo,
+        nombre: this.nuevoFormularioModelo.nombre,
+      };
+      const indice = this.itemFormularioCombinado.findIndex(r => r.formularioModelo.codigo === this.nuevoFormularioModelo.codigo);
+      const formularioNombreAux = this.itemFormularioCombinado[indice].formularioModelo.nombre;
+      this.itemFormularioCombinado[indice].formularioModelo.nombre = formulario.nombre;
+      this.formularioModeloService.update(formulario).subscribe(formularioResponse => {
+        this.Items.forEach(itemResponse => {
+          if (itemResponse.optenidoDesdeApi === true) {
+            const esSelecionado = this.selection.isSelected(itemResponse);
+            if (esSelecionado === false) {
+              // tslint:disable-next-line:max-line-length
+              const itemCombinado = this.itemFormularioCombinado[indice].itemCombinado.findIndex(iCombinado => iCombinado.item.codigo === itemResponse.codigo);
+              const itemActualizar = {
+                id: this.itemFormularioCombinado[indice].itemCombinado[itemCombinado].formularioModeloItem.id,
+                cancelado: 1
+              };
+              this.formularioModeloItemService.updateWithID(itemActualizar).subscribe(response => {
+
+              }, (error) => {
+                console.log(error);
+                swal.fire({
+                  type: 'error',
+                  title: 'Oops...',
+                  text: 'Hubo un error en actualizar el formulario. Revise conexión a internet.',
+                });
+              }, () => {
+                this.itemFormularioCombinado[indice].itemCombinado.splice(itemCombinado, 1);
+              });
+            }
+          }
+        });
+      }, (error) => {
+        this.itemFormularioCombinado[indice].formularioModelo.nombre = formularioNombreAux;
+          swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Hubo un error en actualizar el formulario. Revise conexión a internet.',
+          });
+        }, () => {
+          // tslint:disable-next-line:prefer-const
+          let itemsCombinados: ItemCombinado[] = [];
+          itemsSeleccionados.forEach(itemResponse => {
+            if (itemResponse.optenidoDesdeApi === false) {
+              const itemFormulario = {
+                id: 0,
+                formularioModeloCodigo: this.nuevoFormularioModelo.codigo,
+                itemCodigo: itemResponse.codigo,
+                cancelado: 0
+              };
+              this.formularioModeloItemService.create(itemFormulario).subscribe(r => {
+                itemFormulario.id = r['id'];
+                const item: Item = {
+                  codigo: itemResponse.codigo,
+                  nombre: itemResponse.nombre,
+                  fechaCreacion: itemResponse.fechaCreacion,
+                  cancelado: itemResponse.cancelado,
+                  definicion: itemResponse.definicion,
+                  optenidoDesdeApi: true,
+                };
+                const formularioModeloItem: FormularioModeloItem = {
+                  formularioModeloCodigo: itemFormulario.formularioModeloCodigo,
+                  itemCodigo: itemFormulario.itemCodigo,
+                  cancelado: itemFormulario.cancelado,
+                  id: itemFormulario.id,
+                };
+                this.itemFormularioCombinado[indice].itemCombinado.push({
+                  item: item,
+                  formularioModeloItem: formularioModeloItem
+                });
+              }, (error) => {
+                swal.fire({
+                  type: 'error',
+                  title: 'Oops...',
+                  text: 'Hubo un error en crear el formulario. Revise conexión a internet.',
+                });
+              }, () => {
+              });
+            }
+          });
+          this.spinner.hide();
+          this.nuevoFormularioModelo = new FormularioModelo();
+          this.Items = this.itemsAux;
+          this.actualizarFormulario = false;
+          this.selection.clear();
+          swal.fire(
+            'Formulario Actualizado',
+            '',
+            'success',
+          );
+        });
+    }
+    eliminarFormulario(formularioItemCombinado: FormularioItemCombinado) {
+      swal.fire({
+        title: '¿Esta seguro?',
+        text: '¡No va a poder deshacer esta acción!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar'
+      }).then((result) => {
+        if (result.value) {
+          const formularioActualizada = {
+            codigo: formularioItemCombinado.formularioModelo.codigo,
+            cancelado: 1
+          };
+          this.formularioModeloService.update(formularioActualizada).subscribe(updatedUserResponse => {
+          }, (error) => {
+            return throwError('Ha fallado el eliminar el area, revisar conexión de internet');
+          }, () => {
+            this.itemFormularioCombinado.splice(
+              this.itemFormularioCombinado.findIndex(
+                f => f.formularioModelo.codigo === formularioItemCombinado.formularioModelo.codigo), 1
+              );
+            this.dataSourceFormularioModelo.data = [];
+            this.dataSourceFormularioModelo.data = this.itemFormularioCombinado;
+            swal.fire(
+              '!Eliminado con exito¡',
+              'El formulario ha sido eliminado.',
+              'success'
+            );
+          });
+        }
       });
     }
   }

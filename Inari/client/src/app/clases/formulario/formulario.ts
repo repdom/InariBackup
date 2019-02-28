@@ -10,9 +10,6 @@ export class FormularioModelo {
     // tslint:disable-next-line:no-inferrable-types
     public cancelado: number = 0;
     // tslint:disable-next-line:no-inferrable-types
-    public areaCodigo: number = 0;
-    // tslint:disable-next-line:no-inferrable-types
-    public usuarioRelacionado: number = 0;
     public items?: Item[] = [];
     constructor() { }
 }
@@ -37,6 +34,8 @@ export class Item {
     cancelado: number = 0;
     // tslint:disable-next-line:no-inferrable-types
     definicion: string = '';
+    // tslint:disable-next-line:no-inferrable-types
+    optenidoDesdeApi?: boolean = false;
 
     constructor() { }
 }
@@ -50,16 +49,16 @@ export class Area {
     cancelado: number = 0;
     // tslint:disable-next-line:no-inferrable-types
     foto: string[] = [
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        ''
+        'https://i.imgur.com/5qqFPl4.png',
+        'https://i.imgur.com/5qqFPl4.png',
+        'https://i.imgur.com/5qqFPl4.png',
+        'https://i.imgur.com/5qqFPl4.png',
+        'https://i.imgur.com/5qqFPl4.png',
+        'https://i.imgur.com/5qqFPl4.png',
+        'https://i.imgur.com/5qqFPl4.png',
+        'https://i.imgur.com/5qqFPl4.png',
+        'https://i.imgur.com/5qqFPl4.png',
+        'https://i.imgur.com/5qqFPl4.png'
     ];
     // tslint:disable-next-line:no-inferrable-types
     usuarioAdministradorArea: number = 0;
@@ -71,4 +70,9 @@ export class FormularioItemModelo {
     items: Item[] = [];
 
     constructor() { }
+}
+
+export class ItemCombinado {
+    item: Item = new Item();
+    formularioModeloItem: FormularioModeloItem = new FormularioModeloItem();
 }

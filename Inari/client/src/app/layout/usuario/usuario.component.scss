@@ -16,5 +16,42 @@
 }
 table {
     width: 100%;
+    border-radius: 15px;
 }
-  
+
+.mat-paginator {
+    border-radius: 15px;
+}
+.mat-card-title {
+    color: #004380;
+    font-size: 30px;font-weight: bold;
+}
+.mat-card {
+    border: 3px solid #004380;
+    border-radius: 15px;
+}
+
+.div-card {
+    border: 3px solid #004380;
+    border-radius: 15px;
+}
+.columna-border {
+    border-top-left-radius: 15px;
+}
+.columna-border {
+    border-top-right-radius: 15px;
+}
+.boton-rojo {
+    background: #ee4238;
+    color: #fff;
+}
+.boton-amarillo {
+    background: #fcb922;
+    color: #fff;
+}
+.editar-azul {
+    color: #004380;
+}
+.eliminar-rojo {
+    color: #ee4238;
+}

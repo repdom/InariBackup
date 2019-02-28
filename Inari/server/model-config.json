@@ -60,5 +60,9 @@
   "AccessToken": {
     "dataSource": "mysql",
     "public": true
+  },
+  "FormularioArea": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

@@ -5,11 +5,15 @@ import { CookieService } from 'ngx-cookie-service';
 import { ColaboradorService } from '../../services/usuario/colaborador.service';
 import swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Colaborador, RolMapping, Rol } from 'src/app/clases/formulario/colaborador';
+import { Colaborador, RolMapping, Rol, FormularioArea } from 'src/app/clases/formulario/colaborador';
 import { RolMappingService } from '../../services/rolMapping/rol-mapping.service';
 import { throwError } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatSort } from '@angular/material';
+import { FormularioModeloService } from '../../services/formulario/formulario-modelo.service';
+import { FormularioModelo } from '../../clases/formulario/formulario';
+import { AreaFormularioService } from 'src/app/services/formulario/area-formulario.service';
+
 
 @Component({
   selector: 'app-area',
@@ -20,12 +24,17 @@ export class AreaComponent implements OnInit {
   areaNueva: Area = new Area();
   listaColaboradores: Colaborador[] = [];
   areas: Area[] = [];
-  displayedColumns = ['nombreArea', 'nombreyApellidoAdministrador', 'usuario', 'acciones'];
+  displayedColumns = ['nombreArea', 'acciones'];
   dataSource: MatTableDataSource<Area>;
   actualizar = false;
   // tslint:disable-next-line:no-inferrable-types
   public imageSrc: string = '';
   areaAuxActualizar: Area = new Area();
+  agregarRelacionFormulario = false;
+  formularios: FormularioModelo[] = [];
+  formularioArea: FormularioArea[] = [];
+  nuevoFormularioArea: FormularioArea = new FormularioArea();
+  formularioAreasSeleccionados: FormularioModelo[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -36,13 +45,63 @@ export class AreaComponent implements OnInit {
           private cookieService: CookieService,
           private colaboradoresService: ColaboradorService,
           private spinner: NgxSpinnerService,
-          private rolMappingService: RolMappingService
+          private rolMappingService: RolMappingService,
+          private formularioService: FormularioModeloService,
+          private formularioAreaService: AreaFormularioService,
       ) {
       }
 
   ngOnInit() {
     this.listarColaborador();
     this.listarAreas();
+    this.listarFormularios();
+    this.listarFormularioArea();
+  }
+
+  listarFormularios() {
+    this.formularioService.getAll().subscribe(responseFormulario => {
+      responseFormulario.forEach(elementFormulario => {
+        if (elementFormulario['cancelado'] === 0) {
+          const formulario: FormularioModelo = {
+            codigo: elementFormulario['codigo'],
+            nombre: elementFormulario['nombre'],
+            fechaCreacion: elementFormulario['fechaCreacion'],
+            cancelado: elementFormulario['cancelado'],
+          };
+          this.formularios.push(formulario);
+        }
+      });
+    }, (error) => {
+      swal.fire({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Hubo un error en la carga de datos. Revise conexión a internet.',
+      });
+    }, () => {
+    });
+  }
+
+  listarFormularioArea() {
+    this.formularioAreaService.getAll().subscribe(responseFormulario => {
+      responseFormulario.forEach(elementFormulario => {
+        if (elementFormulario['cancelado'] === 0) {
+          const formularioArea: FormularioArea = {
+            cancelado: elementFormulario['cancelado'],
+            id: elementFormulario['id'],
+            area: elementFormulario['area'],
+            formularioModelo: elementFormulario['formularioModelo']
+          };
+          this.formularioArea.push(formularioArea);
+        }
+      });
+    }, (error) => {
+      swal.fire({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Hubo un error en la carga de datos. Revise conexión a internet.',
+      });
+    }, () => {
+    });
   }
 
   // listar colaboradores dentro del sistema
@@ -113,16 +172,27 @@ export class AreaComponent implements OnInit {
           area.cancelado = areaElement['cancelado'];
           area.codigo = areaElement['codigo'];
           area.usuarioAdministradorArea = areaElement['usuarioAdministradorArea'];
-          area.foto[0] = areaElement['foto1'];
-          area.foto[1] = areaElement['foto2'];
-          area.foto[2] = areaElement['foto3'];
-          area.foto[3] = areaElement['foto4'];
-          area.foto[4] = areaElement['foto5'];
-          area.foto[5] = areaElement['foto6'];
-          area.foto[6] = areaElement['foto7'];
-          area.foto[7] = areaElement['foto8'];
-          area.foto[8] = areaElement['foto9'];
-          area.foto[9] = areaElement['foto10'];
+          // tslint:disable-next-line:max-line-length
+          area.foto[0] = (areaElement['foto1'] !== '' || areaElement['foto1'] !== null) ? areaElement['foto1'] : 'https://i.imgur.com/5qqFPl4.png';
+          // tslint:disable-next-line:max-line-length
+          area.foto[1] = (areaElement['foto2'] !== '' || areaElement['foto2'] !== null) ? areaElement['foto2'] : 'https://i.imgur.com/5qqFPl4.png';
+          // tslint:disable-next-line:max-line-length
+          area.foto[2] = (areaElement['foto3'] !== '' || areaElement['foto3'] !== null) ? areaElement['foto3'] : 'https://i.imgur.com/5qqFPl4.png';
+          // tslint:disable-next-line:max-line-length
+          area.foto[3] = (areaElement['foto4'] !== '' || areaElement['foto4'] !== null) ? areaElement['foto4'] : 'https://i.imgur.com/5qqFPl4.png';
+          // tslint:disable-next-line:max-line-length
+          area.foto[4] = (areaElement['foto5'] !== '' || areaElement['foto5'] !== null) ? areaElement['foto5'] : 'https://i.imgur.com/5qqFPl4.png';
+          // tslint:disable-next-line:max-line-length
+          area.foto[5] = (areaElement['foto6'] !== '' || areaElement['foto6'] !== null) ? areaElement['foto6'] : 'https://i.imgur.com/5qqFPl4.png';
+          // tslint:disable-next-line:max-line-length
+          area.foto[6] = (areaElement['foto7'] !== '' || areaElement['foto7'] !== null) ? areaElement['foto7'] : 'https://i.imgur.com/5qqFPl4.png';
+          // tslint:disable-next-line:max-line-length
+          area.foto[7] = (areaElement['foto8'] !== '' || areaElement['foto8'] !== null) ? areaElement['foto8'] : 'https://i.imgur.com/5qqFPl4.png';
+          // tslint:disable-next-line:max-line-length
+          area.foto[8] = (areaElement['foto9'] !== '' || areaElement['foto9'] !== null) ? areaElement['foto9'] : 'https://i.imgur.com/5qqFPl4.png';
+          // tslint:disable-next-line:max-line-length
+          area.foto[9] = (areaElement['foto10'] !== '' || areaElement['foto10'] !== null) ? areaElement['foto10'] : 'https://i.imgur.com/5qqFPl4.png';
+          console.log(area);
           area.administrador = this.listaColaboradores.filter(c => c.id === area.usuarioAdministradorArea)[0];
           this.areas.push(area);
           this.dataSource = new MatTableDataSource(this.areas);
@@ -142,7 +212,6 @@ export class AreaComponent implements OnInit {
       this.spinner.hide();
     });
   }
-
   // filtro enfocado en la a la tabla
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -152,7 +221,6 @@ export class AreaComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
   handleInputChange(e, area: Area, i: number) {
     // tslint:disable-next-line:prefer-const
     // let file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
@@ -188,7 +256,6 @@ export class AreaComponent implements OnInit {
   changeListener($event, area: Area, i: number): void {
     this.readThis($event.target, area, i);
   }
-
   readThis(inputValue: any, area: Area, i: number): void {
     // tslint:disable-next-line:prefer-const
     let file: File = inputValue.files[0];
@@ -218,6 +285,7 @@ export class AreaComponent implements OnInit {
     // }
   }
   agregarArea() {
+    this.spinner.show();
     if (this.areaNueva.nombre !== '' &&
         this.areaNueva.usuarioAdministradorArea !== 0) {
       const area = {
@@ -248,8 +316,10 @@ export class AreaComponent implements OnInit {
         this.areas.pop();
         this.dataSource.data = [];
         this.dataSource.data = this.areas;
+        this.spinner.hide();
         return throwError('Debe de introducir obligatoriamente el nombre y el encargado del área');
       }, () => {
+        this.spinner.hide();
         swal.fire(
           'Área Agregada',
           '',
@@ -257,6 +327,7 @@ export class AreaComponent implements OnInit {
         );
       });
     } else {
+      this.spinner.hide();
       swal.fire({
         type: 'error',
         title: 'Oops...',
@@ -323,11 +394,117 @@ export class AreaComponent implements OnInit {
           this.dataSource.data = this.areas;
           swal.fire(
             '!Eliminado con exito¡',
-            'El colaborador ha sido eliminado.',
+            'El área ha sido eliminado.',
             'success'
           );
         });
       }
     });
+  }
+  cargarFormulariosActivos(area: Area) {
+    this.spinner.show();
+    this.agregarRelacionFormulario = true;
+    this.nuevoFormularioArea.area = area.codigo;
+    const formularioAreaAux = this.formularioArea.filter(aF => aF.area === area.codigo && aF.cancelado === 0);
+    let i = 0;
+    if (formularioAreaAux.length > 0) {
+      formularioAreaAux.forEach(formularioArea => {
+        this.formularioAreasSeleccionados.push(this.formularios.find(fA => fA.codigo === formularioArea.formularioModelo));
+        if (i === formularioAreaAux.length - 1) {
+          this.spinner.hide();
+        }
+        i += 1;
+      });
+    } else {
+      this.spinner.hide();
+    }
+  }
+  agregarFormulario() {
+    if (this.nuevoFormularioArea.formularioModelo > 0) {
+      if (this.formularioAreasSeleccionados.some(formulario => formulario.codigo === this.nuevoFormularioArea.formularioModelo) === false) {
+        const formulario = {
+          cancelado: 0,
+          area: this.nuevoFormularioArea.area,
+          formularioModelo: this.nuevoFormularioArea.formularioModelo
+        };
+        const formularioAreaAux = this.nuevoFormularioArea;
+        this.nuevoFormularioArea = new FormularioArea();
+        // tslint:disable-next-line:max-line-length
+        const indiceAreaFormulario = this.formularioArea.push({
+          id: 0,
+          cancelado: 0,
+          area: formularioAreaAux.area,
+          formularioModelo: formularioAreaAux.formularioModelo
+        });
+        const index = this.formularioAreasSeleccionados.push(this.formularios.find(f => f.codigo === formularioAreaAux.formularioModelo));
+        this.formularioAreaService.create(formulario).subscribe(formularioResponse => {
+          this.formularioArea[indiceAreaFormulario - 1].id = formularioResponse['id'];
+        }, (error) => {
+          this.formularioArea.pop();
+          this.formularioAreasSeleccionados.pop();
+          this.nuevoFormularioArea = formularioAreaAux;
+          swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: 'NO se ha agregado la relación, revice conexión a internet',
+          });
+        }, () => {
+          swal.fire(
+            'Relación Agregada',
+            '',
+            'success',
+          );
+        });
+      } else {
+        swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'NO se ha agregado la relación. El formulario ya es parte de esta área',
+        });
+      }
+    } else {
+      swal.fire({
+        type: 'error',
+        title: 'Oops...',
+        text: 'NO se ha agregado la relación, debe de seleccionar un formulario',
+      });
+    }
+  }
+
+  eliminarFormulario(formularioModelo: FormularioModelo) {
+    const formularioArea = this.formularioArea.find(r => r.formularioModelo === formularioModelo.codigo);
+    const formularioAreaActualizar = {
+      id: formularioArea.id,
+      cancelado: 1,
+    };
+    swal.fire({
+      title: '¿Esta seguro?',
+      text: '¡No va a poder deshacer esta acción!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar'
+    }).then((result) => {
+      if (result.value) {
+        this.formularioAreaService.updateWithID(formularioAreaActualizar).subscribe(responseFormulario => {
+        }, (error) => {
+          return throwError('Ha fallado el eliminar la relación con el formulario, revisar conexión de internet');
+        }, () => {
+          // tslint:disable-next-line:max-line-length
+          this.formularioAreasSeleccionados.splice(this.formularioAreasSeleccionados.findIndex(r => r.codigo === formularioModelo.codigo), 1);
+          swal.fire(
+            '!Eliminado con exito¡',
+            'La relación ha sido eliminada.',
+            'success'
+          );
+        });
+      }
+    });
+  }
+
+  cancelarAgregarFormulario() {
+    this.nuevoFormularioArea = new FormularioArea();
+    this.agregarRelacionFormulario = false;
   }
 }

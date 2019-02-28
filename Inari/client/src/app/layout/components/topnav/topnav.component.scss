@@ -6,6 +6,9 @@
     top: 0;
     z-index: 1000;
 }
+.mat-toolbar{
+    background: #fff;
+}
 .nav-brand {
     width: 215px;
     text-align: center;
@@ -13,7 +16,18 @@
 .topnav-icon {
     text-decoration: none;
     display: flex;
-    color: #fff;
+    color: #004380;
+}
+
+.mat-icon {
+    color: #004380;
+}
+
+.mat-menu-item {
+    color: #004380;
+    .mat-icon {
+        color: #004380;
+    }
 }
 
 .nav-spacer {

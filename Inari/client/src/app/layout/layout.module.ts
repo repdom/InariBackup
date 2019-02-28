@@ -1,3 +1,4 @@
+import { CalendarioModule } from './calendario/calendario.module';
 import { FormularioModule } from './formulario/formulario.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -37,7 +38,8 @@ import { ComunesModule } from '../comunes/comunes.module';
         AreaModule,
         ItemModule,
         UsuarioModule,
-        ComunesModule
+        ComunesModule,
+        CalendarioModule
     ],
     declarations: [LayoutComponent, NavComponent, TopnavComponent, SidebarComponent]
 })

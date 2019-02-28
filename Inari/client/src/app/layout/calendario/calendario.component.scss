@@ -1,0 +1,50 @@
+table {
+    width: 90%;
+    border-radius: 15px;
+  }
+  .mat-card-title {
+    color: #004380;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  .mat-card {
+    border: 3px solid #004380;
+    border-radius: 15px;
+  }
+  .div-card {
+    border: 3px solid #004380;
+    border-radius: 15px;
+  }
+  .columna-border {
+    border-top-left-radius: 15px;
+  }
+  .boton-rojo {
+    background: #ee4238;
+    color: #fff;
+  }
+  .boton-amarillo {
+    background: #fcb922;
+    color: #fff;
+  }
+  .editar-azul {
+    color: #004380;
+  }
+  .eliminar-rojo {
+    color: #ee4238;
+  }
+  .mat-paginator {
+    border-radius: 15px;
+  }
+  .margear-datepickers{
+      margin: 10px 20% 10px 10px;
+      width: 30%;
+  }
+.mat-form-field {
+    font-size: 14px;
+    width: 90%;
+    margin-right: 50px;
+}
+.aumentar-mat-form-field {
+  font-size: 14px !important;
+  width: 100% !important;
+}

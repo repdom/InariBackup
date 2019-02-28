@@ -1,0 +1,37 @@
+{
+  "name": "FormularioArea",
+  "plural": "FormulariosAreas",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "cancelado": {
+      "type": "number",
+      "required": false,
+      "default": 0
+    }
+  },
+  "validations": [],
+  "relations": {
+    "area": {
+      "type": "belongsTo",
+      "model": "Area",
+      "foreignKey": "area",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "formularioModelo": {
+      "type": "belongsTo",
+      "model": "FormularioModelo",
+      "foreignKey": "formularioModelo",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

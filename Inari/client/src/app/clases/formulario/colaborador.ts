@@ -42,3 +42,14 @@ export class RolMapping {
     // tslint:disable-next-line:no-inferrable-types
     roleId: number = 0;
 }
+
+export class FormularioArea {
+    // tslint:disable-next-line:no-inferrable-types
+    cancelado: number = 0;
+    // tslint:disable-next-line:no-inferrable-types
+    id: number = 0;
+    // tslint:disable-next-line:no-inferrable-types
+    area: number = 0;
+    // tslint:disable-next-line:no-inferrable-types
+    formularioModelo: number = 0;
+}

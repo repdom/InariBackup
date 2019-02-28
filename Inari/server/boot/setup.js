@@ -9,6 +9,7 @@ module.exports = function(app) {
     'Role',
     'RoleMapping',
     'colaborador',
+    'FormularioArea',
   ];
 
   mysql.autoupdate(modelos, function(err) {

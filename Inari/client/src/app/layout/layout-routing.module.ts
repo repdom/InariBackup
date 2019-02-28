@@ -6,6 +6,7 @@ import { FormularioComponent } from './formulario/formulario.component';
 import { AreaComponent } from './area/area.component';
 import { ItemComponent } from './item/item.component';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { CalendarioComponent } from './calendario/calendario.component';
 
 const routes: Routes = [
     {
@@ -35,6 +36,10 @@ const routes: Routes = [
             {
                 path: 'usuarios',
                 component: UsuarioComponent
+            },
+            {
+                path: 'calendario',
+                component: CalendarioComponent
             }
             /*{
                 path: 'charts',

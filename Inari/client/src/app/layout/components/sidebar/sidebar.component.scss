@@ -3,7 +3,7 @@
     position: fixed;
     top: 56px;
     bottom: 0;
-    background: #fff;
+    background: #004380;
     box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
     z-index: 999;
     -ms-overflow-y: auto;
@@ -13,8 +13,10 @@
         a {
             .mat-icon {
                 margin-right: 15px;
+                color: #ffff;
             }
             display: block;
+            color: #ffff;
         }
     }
 }

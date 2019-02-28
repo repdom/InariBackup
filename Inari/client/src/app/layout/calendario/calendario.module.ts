@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AreaComponent } from './area.component';
-import { AreaService } from 'src/app/services/area/area.service';
+import { CalendarioComponent } from './calendario.component';
+import { MatInputModule } from '@angular/material/input';
 import {
-  MatInputModule,
-  MatCheckboxModule,
-  MatButtonModule,
-  MatTabsModule,
   MatCardModule,
   MatTableModule,
   MatPaginatorModule,
+  MatCheckboxModule,
+  MatButtonModule,
+  MatTabsModule,
   MatDialogModule,
   MatButtonToggleModule,
   MatIconModule,
@@ -18,28 +17,28 @@ import {
   MatListModule,
   MatExpansionModule,
   MatSortModule,
-  MatSelectModule} from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { HttpModule } from '@angular/http';
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule} from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ColaboradorService } from '../../services/usuario/colaborador.service';
-import { FormularioModeloService } from '../../services/formulario/formulario-modelo.service';
-import { AreaFormularioService } from 'src/app/services/formulario/area-formulario.service';
+import { AreaService } from '../../services/area/area.service';
+import { CalendarioService } from 'src/app/services/calendario/calendario.service';
 
 @NgModule({
-  declarations: [AreaComponent],
+  declarations: [
+    CalendarioComponent
+  ],
   imports: [
     CommonModule,
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
     MatTabsModule,
-    FlexLayoutModule,
-    HttpModule,
     MatCardModule,
     MatTableModule,
     MatPaginatorModule,
-    FormsModule,
     MatDialogModule,
     MatButtonToggleModule,
     MatIconModule,
@@ -48,13 +47,17 @@ import { AreaFormularioService } from 'src/app/services/formulario/area-formular
     MatListModule,
     MatExpansionModule,
     MatSortModule,
+    FormsModule,
+    FlexLayoutModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     FlexLayoutModule.withConfig({addFlexToParent: false})
-  ], providers: [
-    AreaService,
+  ],
+  providers: [
     ColaboradorService,
-    FormularioModeloService,
-    AreaFormularioService
+    AreaService,
+    CalendarioService
   ]
 })
-export class AreaModule { }
+export class CalendarioModule { }

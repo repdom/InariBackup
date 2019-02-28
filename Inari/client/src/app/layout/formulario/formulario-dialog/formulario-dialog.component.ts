@@ -61,8 +61,6 @@ export class FormularioDialogComponent implements OnInit {
       nombre: this.formularioNuevo.nombre,
       fechaCreacion: fechaCreacion,
       cancelado: 0,
-      areaCodigo: this.data.codigo,
-      usuarioRelacionado: this.userID,
     };
 
     const nombreAux = this.formularioNuevo.nombre;
