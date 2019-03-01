@@ -146,7 +146,7 @@ export class AreaComponent implements OnInit {
               }, (error) => {
                 return throwError(error);
               }, () => {
-                if (colaborador.Rol.id === 3) {
+                if (colaborador.Rol.name === 'Administrador de Area') {
                   this.listaColaboradores.push(colaborador);
                 }
               });
@@ -175,25 +175,25 @@ export class AreaComponent implements OnInit {
           // tslint:disable-next-line:max-line-length
           area.foto[0] = (areaElement['foto1'] !== '' || areaElement['foto1'] !== null) ? areaElement['foto1'] : 'https://i.imgur.com/5qqFPl4.png';
           // tslint:disable-next-line:max-line-length
-          area.foto[1] = (areaElement['foto2'] !== '' || areaElement['foto2'] !== null) ? areaElement['foto2'] : 'https://i.imgur.com/5qqFPl4.png';
+          area.foto[1] = (String(areaElement['foto2']).length > 0 || areaElement['foto2'] !== null) ? areaElement['foto2'] : 'https://i.imgur.com/5qqFPl4.png';
           // tslint:disable-next-line:max-line-length
-          area.foto[2] = (areaElement['foto3'] !== '' || areaElement['foto3'] !== null) ? areaElement['foto3'] : 'https://i.imgur.com/5qqFPl4.png';
+          area.foto[2] = areaElement['foto3'] !== '' && areaElement['foto3'] !== null ? areaElement['foto3'] : 'https://i.imgur.com/5qqFPl4.png';
           // tslint:disable-next-line:max-line-length
-          area.foto[3] = (areaElement['foto4'] !== '' || areaElement['foto4'] !== null) ? areaElement['foto4'] : 'https://i.imgur.com/5qqFPl4.png';
+          area.foto[3] = areaElement['foto4'] !== '' && areaElement['foto4'] !== null ? areaElement['foto4'] : 'https://i.imgur.com/5qqFPl4.png';
           // tslint:disable-next-line:max-line-length
-          area.foto[4] = (areaElement['foto5'] !== '' || areaElement['foto5'] !== null) ? areaElement['foto5'] : 'https://i.imgur.com/5qqFPl4.png';
+          area.foto[4] = areaElement['foto5'] !== '' && areaElement['foto5'] !== null ? areaElement['foto5'] : 'https://i.imgur.com/5qqFPl4.png';
           // tslint:disable-next-line:max-line-length
-          area.foto[5] = (areaElement['foto6'] !== '' || areaElement['foto6'] !== null) ? areaElement['foto6'] : 'https://i.imgur.com/5qqFPl4.png';
+          area.foto[5] = areaElement['foto6'] !== '' && areaElement['foto6'] !== null ? areaElement['foto6'] : 'https://i.imgur.com/5qqFPl4.png';
           // tslint:disable-next-line:max-line-length
-          area.foto[6] = (areaElement['foto7'] !== '' || areaElement['foto7'] !== null) ? areaElement['foto7'] : 'https://i.imgur.com/5qqFPl4.png';
+          area.foto[6] = areaElement['foto7'] !== '' && areaElement['foto7'] !== null ? areaElement['foto7'] : 'https://i.imgur.com/5qqFPl4.png';
           // tslint:disable-next-line:max-line-length
-          area.foto[7] = (areaElement['foto8'] !== '' || areaElement['foto8'] !== null) ? areaElement['foto8'] : 'https://i.imgur.com/5qqFPl4.png';
+          area.foto[7] = areaElement['foto8'] !== '' && areaElement['foto8'] !== null ? areaElement['foto8'] : 'https://i.imgur.com/5qqFPl4.png';
           // tslint:disable-next-line:max-line-length
-          area.foto[8] = (areaElement['foto9'] !== '' || areaElement['foto9'] !== null) ? areaElement['foto9'] : 'https://i.imgur.com/5qqFPl4.png';
+          area.foto[8] = (areaElement['foto9'] !== '' && areaElement['foto9'] !== null) ? areaElement['foto9'] : 'https://i.imgur.com/5qqFPl4.png';
           // tslint:disable-next-line:max-line-length
-          area.foto[9] = (areaElement['foto10'] !== '' || areaElement['foto10'] !== null) ? areaElement['foto10'] : 'https://i.imgur.com/5qqFPl4.png';
-          console.log(area);
+          area.foto[9] = (areaElement['foto10'] !== '' && areaElement['foto10'] !== null) ? areaElement['foto10'] : 'https://i.imgur.com/5qqFPl4.png';
           area.administrador = this.listaColaboradores.filter(c => c.id === area.usuarioAdministradorArea)[0];
+          console.log(area);
           this.areas.push(area);
           this.dataSource = new MatTableDataSource(this.areas);
           this.changeDetectorRefs.detectChanges();
@@ -292,16 +292,16 @@ export class AreaComponent implements OnInit {
         codigo: 0,
         nombre: this.areaNueva.nombre,
         cancelado: this.areaNueva.cancelado,
-        foto1: this.areaNueva.foto[0],
-        foto2: this.areaNueva.foto[1],
-        foto3: this.areaNueva.foto[2],
-        foto4: this.areaNueva.foto[3],
-        foto5: this.areaNueva.foto[4],
-        foto6: this.areaNueva.foto[5],
-        foto7: this.areaNueva.foto[6],
-        foto8: this.areaNueva.foto[7],
-        foto9: this.areaNueva.foto[8],
-        foto10: this.areaNueva.foto[9],
+        foto1: this.areaNueva.foto[0] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[0] : '',
+        foto2: this.areaNueva.foto[1] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[1] : '',
+        foto3: this.areaNueva.foto[2] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[2] : '',
+        foto4: this.areaNueva.foto[3] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[3] : '',
+        foto5: this.areaNueva.foto[4] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[4] : '',
+        foto6: this.areaNueva.foto[5] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[5] : '',
+        foto7: this.areaNueva.foto[6] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[6] : '',
+        foto8: this.areaNueva.foto[7] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[7] : '',
+        foto9: this.areaNueva.foto[8] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[8] : '',
+        foto10: this.areaNueva.foto[9] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[9] : '',
         usuarioAdministradorArea: this.areaNueva.usuarioAdministradorArea
       };
       this.areaNueva.administrador = this.listaColaboradores.filter(c => c.id === area.usuarioAdministradorArea)[0];
@@ -345,16 +345,16 @@ export class AreaComponent implements OnInit {
       codigo: this.areaNueva.codigo,
       nombre: this.areaNueva.nombre,
       cancelado: this.areaNueva.cancelado,
-      foto1: this.areaNueva.foto[0],
-      foto2: this.areaNueva.foto[1],
-      foto3: this.areaNueva.foto[2],
-      foto4: this.areaNueva.foto[3],
-      foto5: this.areaNueva.foto[4],
-      foto6: this.areaNueva.foto[5],
-      foto7: this.areaNueva.foto[6],
-      foto8: this.areaNueva.foto[7],
-      foto9: this.areaNueva.foto[8],
-      foto10: this.areaNueva.foto[9],
+      foto1: this.areaNueva.foto[0] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[0] : '',
+      foto2: this.areaNueva.foto[1] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[1] : '',
+      foto3: this.areaNueva.foto[2] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[2] : '',
+      foto4: this.areaNueva.foto[3] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[3] : '',
+      foto5: this.areaNueva.foto[4] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[4] : '',
+      foto6: this.areaNueva.foto[5] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[5] : '',
+      foto7: this.areaNueva.foto[6] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[6] : '',
+      foto8: this.areaNueva.foto[7] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[7] : '',
+      foto9: this.areaNueva.foto[8] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[8] : '',
+      foto10: this.areaNueva.foto[9] !== 'https://i.imgur.com/5qqFPl4.png' ? this.areaNueva.foto[9] : '',
       usuarioAdministradorArea: this.areaNueva.usuarioAdministradorArea
     };
     // this.areaAuxActualizar = this.areaNueva;

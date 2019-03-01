@@ -127,6 +127,7 @@ export class FormularioComponent implements OnInit, AfterViewInit {
   }
 
   listarFormularioItem() {
+        this.spinner.show();
         this.formularioModeloService.getAll().subscribe(formulariosModelo => {
           formulariosModelo.forEach(elementFormularioModelo => {
             if (elementFormularioModelo['cancelado'] === 0) {
@@ -191,6 +192,7 @@ export class FormularioComponent implements OnInit, AfterViewInit {
                 this.changeDetectorRefs.detectChanges();
                 this.dataSourceFormularioModelo.paginator = this.paginatorFormularioModelo;
                 this.dataSourceFormularioModelo.sort = this.sortFormularioModelo;
+                this.spinner.hide();
               });
               // areaFormularios.FormulariosModelos.push(formularioModulo);
             }

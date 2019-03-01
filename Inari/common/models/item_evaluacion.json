@@ -93,7 +93,7 @@
         "dataLength": 264,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "N"
+        "nullable": "Y"
       }
     },
     "formularioEvaluacionCodigo": {

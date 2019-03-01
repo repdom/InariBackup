@@ -199,6 +199,7 @@ export class CalendarioComponent implements OnInit {
               this.changeDetectorRefs.detectChanges();
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
+              this.spinner.hide();
             });
           });
         }
