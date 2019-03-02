@@ -83,7 +83,7 @@
     },
     "comentario": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": 264,
       "precision": null,
       "scale": null,
