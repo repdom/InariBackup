@@ -7,6 +7,7 @@ import { AreaComponent } from './area/area.component';
 import { ItemComponent } from './item/item.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { CalendarioComponent } from './calendario/calendario.component';
+import { ListarEvaluacionComponent } from './listar-evaluacion/listar-evaluacion.component';
 
 const routes: Routes = [
     {
@@ -40,6 +41,10 @@ const routes: Routes = [
             {
                 path: 'calendario',
                 component: CalendarioComponent
+            },
+            {
+                path: 'evaluaciones',
+                component: ListarEvaluacionComponent
             }
             /*{
                 path: 'charts',

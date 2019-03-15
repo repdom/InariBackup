@@ -98,6 +98,16 @@ export class DataService {
         catchError(this.handlerError)
       );
   }
+  getAllWhere(codigo: number, campo: string) {
+    const headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json'});
+    headers.append('Authorization', this.cookieService);
+    const options = new RequestOptions({ headers: headers });
+    return this.http.get(this.url + `?filter={%22where%22:{%22${campo}%22:${codigo}}}`, options)
+      .pipe(
+        map(response => response.json()),
+        catchError(this.handlerError)
+      );
+  }
   public handlerError(error: Response) {
     if (error.status === 400) {
       return Observable.throw(new BadInput(error.json()));

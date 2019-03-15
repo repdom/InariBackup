@@ -21,6 +21,7 @@ import { AreaModule } from './area/area.module';
 import { ItemModule } from './item/item.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { ComunesModule } from '../comunes/comunes.module';
+import { ListarEvaluacionModule } from './listar-evaluacion/listar-evaluacion.module';
 
 @NgModule({
     imports: [
@@ -39,7 +40,8 @@ import { ComunesModule } from '../comunes/comunes.module';
         ItemModule,
         UsuarioModule,
         ComunesModule,
-        CalendarioModule
+        CalendarioModule,
+        ListarEvaluacionModule
     ],
     declarations: [LayoutComponent, NavComponent, TopnavComponent, SidebarComponent]
 })
