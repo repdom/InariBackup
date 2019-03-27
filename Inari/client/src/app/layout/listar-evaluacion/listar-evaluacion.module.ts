@@ -22,6 +22,11 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { ItemEvaluacionService } from '../../services/evaluacion/item-evaluacion.service';
 import { EvaluacionService } from '../../services/evaluacion/evaluacion.service';
+import { NgxViewerModule } from 'ngx-viewer';
+import { ColaboradorService } from 'src/app/services/usuario/colaborador.service';
+import { AreaService } from '../../services/area/area.service';
+import {NgxPrintModule} from 'ngx-print';
+
 
 @NgModule({
   declarations: [
@@ -48,11 +53,15 @@ import { EvaluacionService } from '../../services/evaluacion/evaluacion.service'
     MatExpansionModule,
     MatSortModule,
     MatSelectModule,
+    NgxViewerModule,
+    NgxPrintModule,
     FlexLayoutModule.withConfig({addFlexToParent: false})
   ],
   providers: [
+    AreaService,
     ItemEvaluacionService,
-    EvaluacionService
+    EvaluacionService,
+    ColaboradorService,
   ]
 })
 export class ListarEvaluacionModule { }

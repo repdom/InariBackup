@@ -22,6 +22,9 @@ import { LoginService } from './services/usuario/login.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AreaService } from './services/area/area.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { FullScreenPropioDirective } from './full-screen-propio.directive';
+import { registerLocaleData } from '@angular/common';
+import LocaleEs from '@angular/common/locales/es-US';
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -33,8 +36,10 @@ export const createTranslateLoader = (http: HttpClient) => {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 };
 
+registerLocaleData(LocaleEs, 'es');
+
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, FullScreenPropioDirective],
     imports: [
         BrowserModule,
         AppRoutingModule,

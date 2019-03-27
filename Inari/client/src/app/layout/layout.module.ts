@@ -22,6 +22,12 @@ import { ItemModule } from './item/item.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { ComunesModule } from '../comunes/comunes.module';
 import { ListarEvaluacionModule } from './listar-evaluacion/listar-evaluacion.module';
+import { ColaboradorService } from '../services/usuario/colaborador.service';
+import { ItemEvaluacionService } from '../services/evaluacion/item-evaluacion.service';
+import { EvaluacionService } from '../services/evaluacion/evaluacion.service';
+import { AreaService } from '../services/area/area.service';
+import { FormularioModeloService } from '../services/formulario/formulario-modelo.service';
+import { ItemService } from '../services/item/item.service';
 
 @NgModule({
     imports: [
@@ -42,6 +48,8 @@ import { ListarEvaluacionModule } from './listar-evaluacion/listar-evaluacion.mo
         ComunesModule,
         CalendarioModule,
         ListarEvaluacionModule
+    ],
+    providers: [
     ],
     declarations: [LayoutComponent, NavComponent, TopnavComponent, SidebarComponent]
 })
