@@ -28,23 +28,6 @@
             <span>{{ 'Urdu' | translate }}s</span>
         </button>
     </mat-menu>-->
-    <button class="hidden-sm" mat-icon-button [matMenuTriggerFor]="profile">
-        <mat-icon>account_circle</mat-icon>
-    </button>
-    <mat-menu #profile="matMenu">
-        <button mat-menu-item>
-            <mat-icon>person</mat-icon>
-            <span>{{ 'Perfil' | translate }}</span>
-        </button>
-        <button mat-menu-item>
-            <mat-icon>inbox</mat-icon>
-            <span>{{ 'Inbox' | translate }}</span>
-        </button>
-        <button mat-menu-item>
-            <mat-icon>settings</mat-icon>
-            <span>{{ 'Configuraciones' | translate }}</span>
-        </button>
-    </mat-menu>
     <button mat-icon-button (click)="onLoggedout()">
         <mat-icon>exit_to_app</mat-icon>
     </button>

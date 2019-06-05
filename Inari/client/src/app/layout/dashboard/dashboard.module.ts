@@ -1,5 +1,7 @@
+import { CalendarioModule } from './../calendario/calendario.module';
+import { CalendarioService } from './../../services/calendario/calendario.service';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule, MatCardModule, MatIconModule, MatTableModule } from '@angular/material';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -21,6 +23,7 @@ import { DashboardComponent } from './dashboard.component';
         MatIconModule,
         FlexLayoutModule.withConfig({addFlexToParent: false})
     ],
-    declarations: [DashboardComponent]
+    declarations: [DashboardComponent],
+    providers: [CalendarioService],
 })
 export class DashboardModule {}

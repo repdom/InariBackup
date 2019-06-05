@@ -30,7 +30,9 @@
                 "src/styles/styles.scss"
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.js"
+              "node_modules/chart.js/dist/Chart.js",
+              "preguntas.js",
+              "node_modules/jsonwebtoken/index.js"
             ]
           },
           "configurations": {
@@ -85,7 +87,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "scripts": [
-              "node_modules/chart.js/dist/Chart.js"
+              "node_modules/chart.js/dist/Chart.js",
+              "preguntas.js",
+              "node_modules/jsonwebtoken/index.js"
             ],
             "styles": [
                 "styles.scss"

@@ -1,6 +1,6 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { NgModule } from '@angular/core';
+import { NgModule  } from '@angular/core';
 import {
     MatButtonModule,
     MatIconModule,
@@ -63,6 +63,6 @@ registerLocaleData(LocaleEs, 'es');
         LoginService,
         CookieService,
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
 export class AppModule {}
