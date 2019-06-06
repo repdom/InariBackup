@@ -124,19 +124,20 @@ export class CalendarioComponent implements OnInit {
   listarAreas() {
     this.spinner.show();
     this.areaService.getFilterByAttributeOrderByName().subscribe(areaResponse => {
-      console.log(areaResponse);
       areaResponse.forEach(areaElement => {
+        if (areaElement['cancelado'] === 0) {
           // tslint:disable-next-line:prefer-const
           let area: Area = new Area();
           area.nombre = areaElement['nombre'];
           area.cancelado = areaElement['cancelado'];
           area.codigo = areaElement['codigo'];
           this.areas.push(area);
-          // console.log(areaElement);
+          console.log(area);
           // this.dataSource = new MatTableDataSource(this.areas);
           // this.changeDetectorRefs.detectChanges();
           // this.dataSource.paginator = this.paginator;
           // this.dataSource.sort = this.sort;
+        }
       });
     }, (error) => {
       this.spinner.hide();
@@ -154,8 +155,7 @@ export class CalendarioComponent implements OnInit {
     this.calendarioService.getAll().subscribe(calendarioResponse => {
       calendarioResponse.forEach(elementCalendario => {
         const fechaFinalCalendario = new Date(elementCalendario['finCalendario']);
-        if (elementCalendario['cancelado'] === 0 && fechaFinalCalendario.getDate() <= Date.now()
-            && elementCalendario['usuarioRelacionado'] !== 0) {
+        if (elementCalendario['cancelado'] === 0 && fechaFinalCalendario.getDate() <= Date.now()) {
           const calendario: Calendario = {
             codigo: elementCalendario['codigo'],
             inicioCalendario: elementCalendario['inicioCalendario'],

@@ -154,8 +154,7 @@ export class CalendarioComponent implements OnInit {
     this.calendarioService.getAll().subscribe(calendarioResponse => {
       calendarioResponse.forEach(elementCalendario => {
         const fechaFinalCalendario = new Date(elementCalendario['finCalendario']);
-        if (elementCalendario['cancelado'] === 0 && fechaFinalCalendario.getDate() <= Date.now()
-            && elementCalendario['usuarioRelacionado'] !== 0) {
+        if (elementCalendario['cancelado'] === 0 && fechaFinalCalendario.getDate() <= Date.now()) {
           const calendario: Calendario = {
             codigo: elementCalendario['codigo'],
             inicioCalendario: elementCalendario['inicioCalendario'],
