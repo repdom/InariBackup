@@ -9,7 +9,7 @@ module.exports = function (Calendario) {
     }
     Calendario.programacionActiva = function(cb) {
         Calendario.dataSource.connector.query(
-            `select * from calendario where DATE(calendario.fin_calendario) >= CURDATE() and DATE(calendario.inicio_calendario) <= CURDATE();`,
+            `select * from calendario where calendario.fin_calendario >= CURDATE() and calendario.inicio_calendario <= CURDATE();`,
         function(err, resp) {
                 cb(err, resp);
         })

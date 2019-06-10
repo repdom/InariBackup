@@ -7,9 +7,9 @@ module.exports = function (Calendario) {
             cb(err, resp);
         })
     }
-    Calendario.programacionActiva = function(cb) {
+    Calendario.programacionActiva = function(fechaInicial, fechaFinal, cb) {
         Calendario.dataSource.connector.query(
-            `select * from calendario where DATE(calendario.fin_calendario) >= CURDATE() and DATE(calendario.inicio_calendario) <= CURDATE();`,
+            `select * from calendario where ${fechaFinal} >= CURDATE() and ${fechaInicial} <= CURDATE();`,
         function(err, resp) {
                 cb(err, resp);
         })
@@ -24,6 +24,10 @@ module.exports = function (Calendario) {
     Calendario.remoteMethod(
         'programacionActiva', {
             http: { path: '/programacionActiva', verb: 'get' },
+            accepts: [
+                { arg: 'fechaInicial', type: 'string' },
+                { arg: 'fechaFinal', type: 'string' }
+            ],
             returns: { arg: 'data', type: 'array', root: true },
             description: 'Obtener los calendarios por fecha'
         }
