@@ -33,6 +33,7 @@
         "jsonwebtoken": "^8.5.1",
         "ng2-charts": "1.6.0",
         "ngx-cookie-service": "^2.1.0",
+        "ngx-image-compress": "^7.2.4",
         "ngx-image-viewer": "^1.0.13",
         "ngx-print": "^1.1.4",
         "ngx-spinner": "^7.0.0",
