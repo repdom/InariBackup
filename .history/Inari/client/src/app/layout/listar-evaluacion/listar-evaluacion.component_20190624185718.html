@@ -14,7 +14,7 @@
                     <table mat-table [dataSource]="dataSourceImagenes">
                       <ng-container matColumnDef="imagenArea">
                         <th mat-header-cell *matHeaderCellDef> Imagen Modelo </th>
-                        <td mat-cell *matCellDef="let element">           
+                        <td ngxViewer mat-cell *matCellDef="let element">           
                           <img
                             [src]="_DomSanitizer.bypassSecurityTrustResourceUrl(element.fotoArea)"
                             style="width: 100px; height: 70px; border: 2px hidden;border-radius: 15px;"
@@ -26,7 +26,7 @@
                       </ng-container>
                       <ng-container matColumnDef="imagenFormulario">
                         <th mat-header-cell *matHeaderCellDef> Imagen Formulario </th>
-                        <td mat-cell *matCellDef="let element">           
+                        <td ngxViewer mat-cell *matCellDef="let element">           
                           <img
                             [src]="_DomSanitizer.bypassSecurityTrustResourceUrl(element.fotoFormulario)"
                             style="width: 100px; height: 70px; border: 2px hidden;border-radius: 15px;"

@@ -93,7 +93,7 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
       zoomOut: 4,
       oneToOne: 4,
       reset: 0,
-      prev: 0,
+      prev: 4,
       play: {
         show: 0,
         size: 'large',
@@ -139,7 +139,6 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.cargarCantidad();
   }
 
   cambiarPagina(pageEvent: PageEvent) {

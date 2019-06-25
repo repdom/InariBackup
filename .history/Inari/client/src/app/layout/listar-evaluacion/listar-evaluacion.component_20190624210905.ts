@@ -93,14 +93,14 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
       zoomOut: 4,
       oneToOne: 4,
       reset: 0,
-      prev: 0,
+      prev: 4,
       play: {
         show: 0,
         size: 'large',
       },
-      next: 0,
+      next: 4,
       rotateLeft: 4,
-      rotateRight: 4,
+      rotateRight: 3,
       flipHorizontal: 4,
       flipVertical: 4,
     }

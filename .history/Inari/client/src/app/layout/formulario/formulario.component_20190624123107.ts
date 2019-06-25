@@ -343,8 +343,7 @@ export class FormularioComponent implements OnInit, AfterViewInit {
       // console.log(formularioItemCombinado);
       this.dataSource = new MatTableDataSource(this.Items);
       this.selection = new SelectionModel(true, []);
-      this.dataSource.paginator = this.paginator;
-      // this.paginator = this.dataSource.paginator;
+      this.paginator = this.dataSource.paginator;
       formularioItemCombinado.itemCombinado.forEach(row => {
                       this.selection.select(this.Items.find(r => r.codigo === row.item.codigo));
       });

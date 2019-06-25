@@ -10,20 +10,49 @@
                     Fotos del Área
                   </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="mb-20" fxLayout.lt-md="column" fxFlex fxLayoutGap="50px">
+                  <div fxLayout="row">
+                      <div ngxViewer [viewerOptions]="viewerOptions" fxLayout="column">
+                          <img
+                            *ngFor="let element of dataSourceImagenes.data"
+                            [src]="_DomSanitizer.bypassSecurityTrustResourceUrl(element.fotoArea)"
+                            style="width: 100px; height: 70px; border: 2px hidden;border-radius: 15px;"
+                          />
+                      </div>
+                  </div>
+                  <div fxFlex fxLayout="row">
+                      <div ngxViewer [viewerOptions]="viewerOptions" fxLayout="column">
+                          <img
+                            *ngFor="let element of dataSourceImagenes.data"
+                            [src]="_DomSanitizer.bypassSecurityTrustResourceUrl(element.fotoFormulario)"
+                            style="width: 100px; height: 70px; border: 2px hidden;border-radius: 15px;"
+                          />
+                      </div>
+                  </div>
+                </div>
+                <!--<div class="mb-20" fxLayout.lt-md="column" fxFlex fxLayoutGap="50px">
+                    <div ngxViewer [viewerOptions]="viewerOptions" fxLayout="column">
+                        <img
+                          *ngFor="let element of dataSourceImagenes.data"
+                          [src]="_DomSanitizer.bypassSecurityTrustResourceUrl(element.fotoFormulario)"
+                          style="width: 100px; height: 70px; border: 2px hidden;border-radius: 15px;"
+                        />
+                    </div>
+                </div>-->
+                <!--<div>
+                  *ngIf="element.fotoArea"
                     <table mat-table [dataSource]="dataSourceImagenes">
-                      <ng-container matColumnDef="imagenArea">
+                      <ng-container ngxViewer matColumnDef="imagenArea" [viewerOptions]="viewerOptions">
                         <th mat-header-cell *matHeaderCellDef> Imagen Modelo </th>
                         <td mat-cell *matCellDef="let element">           
                           <img
                             [src]="_DomSanitizer.bypassSecurityTrustResourceUrl(element.fotoArea)"
                             style="width: 100px; height: 70px; border: 2px hidden;border-radius: 15px;"
                             *ngIf="element.fotoArea"
-                            ngxViewer
-                            [viewerOptions]="viewerOptions"
                           />
                         </td>
                       </ng-container>
+                      <!--ngxViewer [viewerOptions]="viewerOptions"
                       <ng-container matColumnDef="imagenFormulario">
                         <th mat-header-cell *matHeaderCellDef> Imagen Formulario </th>
                         <td mat-cell *matCellDef="let element">           
@@ -31,15 +60,13 @@
                             [src]="_DomSanitizer.bypassSecurityTrustResourceUrl(element.fotoFormulario)"
                             style="width: 100px; height: 70px; border: 2px hidden;border-radius: 15px;"
                             *ngIf="element.fotoFormulario"
-                            ngxViewer
-                            [viewerOptions]="viewerOptions"
                           />
                         </td>
                       </ng-container>
                       <tr mat-header-row *matHeaderRowDef="evaluacionImagenesArea"></tr>
                       <tr mat-row *matRowDef="let row; columns: evaluacionImagenesArea"></tr>      
                     </table>
-                  </div>            
+                  </div>-->
                 <!--<div fxLayout="row" fxFlex="100%" fxFlex.gt-sm="100%" id="print-section">
                     <div class="mb-10 ml20" fxLayout.lt-md="column" fxFlex fxLayoutGap="50%" style="margin-left: 200px;">
                         <div div fxLayout="row" *ngFor="let f of evaluacion.area.foto">

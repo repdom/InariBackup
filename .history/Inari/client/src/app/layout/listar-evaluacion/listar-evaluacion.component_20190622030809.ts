@@ -115,7 +115,7 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
   tamAnterior = 0;
 
   @ViewChild('tableEvaluacionPaginator') paginatorEvaluacion: MatPaginator;
-  @ViewChild('tableSortEvaluacionSort') sortEvaluacion: MatSort;
+  @ViewChild('tableSortVistaFormularioEvaluado') sortEvaluacion: MatSort;
 
   @ViewChild('tablePaginatorVistaFormularioEvaluacion') paginatorVistaEvaluacion: MatPaginator;
   @ViewChild('tableSortVistaFormularioEvaluado') sortVistaEvaluacion: MatSort;
@@ -139,7 +139,6 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.cargarCantidad();
   }
 
   cambiarPagina(pageEvent: PageEvent) {
@@ -318,13 +317,11 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
   }
 
   cargarCantidad() {
-    let c: number = 0;
     this.evaluacionService.count().subscribe(r => {
-      c = r['count'];
+      this.cantidadEvaluaciones = r['count'];
     }, (error) => {
       throwError('Ha fallado la carga de datos, revisar conexión de internet');
     }, () => {
-      this.cantidadEvaluaciones = c;
     });
   }
 

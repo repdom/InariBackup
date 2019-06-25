@@ -139,7 +139,6 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.cargarCantidad();
   }
 
   cambiarPagina(pageEvent: PageEvent) {
