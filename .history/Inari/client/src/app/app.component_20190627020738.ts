@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        // guardando
         if (this.swUpdate.isEnabled) {
             this.swUpdate.available.subscribe(() => {
                 if (confirm('Una nueva versión disponible. ¿Desea cargar la nueva versión?')) {

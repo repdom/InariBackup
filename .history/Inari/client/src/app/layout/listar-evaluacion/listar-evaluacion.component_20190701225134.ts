@@ -619,52 +619,52 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
           codigo: evaluacion.codigo,
         };
         this.spinner.show();
-        // this.evaluacionService.publicdelete(evaluacionActualizada).subscribe(updatedUserResponse => {
-        // }, (error) => {
-        //   return throwError('Ha fallado el eliminar la evaluación, revisar conexión de internet');
-        // }, () => {
-        //   // let i = 0;
-        //   /*listaItemEvaluacion.forEach(elementEliminarItem => {
-        //     const evaluacionItemDelete = {
-        //       codigo: elementEliminarItem.codigo
-        //     };
-        //     this.itemEvaluacionService.publicdelete(evaluacionItemDelete).subscribe(eliminarResonse => {
-        //     }, (error) => {
-        //       return throwError('Ha fallado el eliminar la evaluación, revisar conexión de internet');
-        //     }, () => {
-        //     });
-        //     if (i === listaItemEvaluacion.length - 1) {
-        //       // this.itemEvaluacionService.publicdelete()
-        //       this.spinner.hide();
-        //       this.listaEvaluacion.splice(this.listaEvaluacion.findIndex(c => c.codigo === evaluacion.codigo), 1);
-        //       this.dataSource.data = [];
-        //       this.dataSource.data = this.listaEvaluacion;
-        //       swal.fire(
-        //         '!Eliminado con exito¡',
-        //         'La evaluación ha sido eliminada con exito.',
-        //         'success'
-        //       );
-        //     }
-        //     i += 1;
-        //   });*/
-        //   const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
-        //   // const everySixHours$ = interval(6 * 60 * 60 * 1000);
-        //   // const everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$);
-        //   // everySixHoursOnceAppIsStable$.subscribe(() => updates.checkForUpdate());
-        //   appIsStable$.subscribe(() => {
-        //     this.swUpdate.checkForUpdate();
-        //   });
-        //   this.spinner.hide();
-        //   this.listaEvaluacion.splice(this.listaEvaluacion.findIndex(c => c.codigo === evaluacion.codigo), 1);
-        //   this.dataSource.data = [];
-        //   this.dataSource.data = this.listaEvaluacion;
-        //   this.cargarCantidad();
-        //   swal.fire(
-        //     '!Eliminado con exito¡',
-        //     'La evaluación ha sido eliminada con exito.',
-        //     'success'
-        //   );
-        // });
+        this.evaluacionService.publicdelete(evaluacionActualizada).subscribe(updatedUserResponse => {
+        }, (error) => {
+          return throwError('Ha fallado el eliminar la evaluación, revisar conexión de internet');
+        }, () => {
+          // let i = 0;
+          /*listaItemEvaluacion.forEach(elementEliminarItem => {
+            const evaluacionItemDelete = {
+              codigo: elementEliminarItem.codigo
+            };
+            this.itemEvaluacionService.publicdelete(evaluacionItemDelete).subscribe(eliminarResonse => {
+            }, (error) => {
+              return throwError('Ha fallado el eliminar la evaluación, revisar conexión de internet');
+            }, () => {
+            });
+            if (i === listaItemEvaluacion.length - 1) {
+              // this.itemEvaluacionService.publicdelete()
+              this.spinner.hide();
+              this.listaEvaluacion.splice(this.listaEvaluacion.findIndex(c => c.codigo === evaluacion.codigo), 1);
+              this.dataSource.data = [];
+              this.dataSource.data = this.listaEvaluacion;
+              swal.fire(
+                '!Eliminado con exito¡',
+                'La evaluación ha sido eliminada con exito.',
+                'success'
+              );
+            }
+            i += 1;
+          });*/
+          const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
+          // const everySixHours$ = interval(6 * 60 * 60 * 1000);
+          // const everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$);
+          // everySixHoursOnceAppIsStable$.subscribe(() => updates.checkForUpdate());
+          appIsStable$.subscribe(() => {
+            this.swUpdate.checkForUpdate();
+          });
+          this.spinner.hide();
+          this.listaEvaluacion.splice(this.listaEvaluacion.findIndex(c => c.codigo === evaluacion.codigo), 1);
+          this.dataSource.data = [];
+          this.dataSource.data = this.listaEvaluacion;
+          this.cargarCantidad();
+          swal.fire(
+            '!Eliminado con exito¡',
+            'La evaluación ha sido eliminada con exito.',
+            'success'
+          );
+        });
         // tslint:disable-next-line:prefer-const
         /* let listaItemEvaluacion: ItemEvaluacion[] = [];
         let i = 0;
@@ -758,8 +758,6 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
           throwError('Ha fallado el eliminar la evaluación, revisar conexión de internet');
         }, () => {
         });*/
-    //   }
-    // });
       }
     });
   }

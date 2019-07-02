@@ -6,7 +6,6 @@ module.exports = function (ItemEvaluacion) {
             }else{
                console.log('Sucess', result); // {count:X} <- how much records deleted
             }
-            cb(err, result);
         });
     }
 

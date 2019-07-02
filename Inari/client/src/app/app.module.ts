@@ -25,6 +25,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { FullScreenPropioDirective } from './full-screen-propio.directive';
 import { registerLocaleData } from '@angular/common';
 import LocaleEs from '@angular/common/locales/es-US';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
@@ -58,7 +60,8 @@ registerLocaleData(LocaleEs, 'es');
                 useFactory: createTranslateLoader,
                 deps: [HttpClient]
             }
-        })
+        }),
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [
         LoginService,

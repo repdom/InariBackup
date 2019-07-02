@@ -24,10 +24,11 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              "src/manifest.webmanifest"
             ],
             "styles": [
-                "src/styles/styles.scss"
+              "src/styles/styles.scss"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",
@@ -58,7 +59,8 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -92,11 +94,12 @@
               "node_modules/jsonwebtoken/index.js"
             ],
             "styles": [
-                "styles.scss"
+              "styles.scss"
             ],
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              "src/manifest.webmanifest"
             ]
           }
         },
@@ -136,7 +139,7 @@
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
             "exclude": [
-                "**/node_modules/**"
+              "**/node_modules/**"
             ]
           }
         }

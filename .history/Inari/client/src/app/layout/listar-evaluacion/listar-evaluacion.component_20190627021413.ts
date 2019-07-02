@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, EventEmitter, AfterViewInit, ApplicationRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, EventEmitter, AfterViewInit } from '@angular/core';
 import { EvaluacionService } from '../../services/evaluacion/evaluacion.service';
 import { ItemEvaluacionService } from 'src/app/services/evaluacion/item-evaluacion.service';
 import { MatTableDataSource, MatSort, MatPaginator, MatDialog, PageEvent } from '@angular/material';
@@ -12,8 +12,6 @@ import { DatePipe } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AreaService } from '../../services/area/area.service';
 import swal from 'sweetalert2';
-import { SwUpdate } from '@angular/service-worker';
-import { first } from 'rxjs/operators';
 // http-server -c-1 -P http://localhost:9000 .
 
 export class ItemEvaluacion {
@@ -132,9 +130,7 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
               private changeDetectorRefs: ChangeDetectorRef,
               private cookieService: CookieService,
               private spinner: NgxSpinnerService,
-              public _DomSanitizer: DomSanitizer,
-              public swUpdate: SwUpdate,
-              public appRef: ApplicationRef) { }
+              public _DomSanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.listarEvaluaciones();
@@ -325,11 +321,11 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
   cargarCantidad() {
     let c: number = 0;
     this.evaluacionService.count().subscribe(r => {
-      this.cantidadEvaluaciones = r['count'];
+      c = r['count'];
     }, (error) => {
       throwError('Ha fallado la carga de datos, revisar conexión de internet');
     }, () => {
-      // this.cantidadEvaluaciones = c;
+      this.cantidadEvaluaciones = c;
     });
   }
 
@@ -619,54 +615,8 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
           codigo: evaluacion.codigo,
         };
         this.spinner.show();
-        // this.evaluacionService.publicdelete(evaluacionActualizada).subscribe(updatedUserResponse => {
-        // }, (error) => {
-        //   return throwError('Ha fallado el eliminar la evaluación, revisar conexión de internet');
-        // }, () => {
-        //   // let i = 0;
-        //   /*listaItemEvaluacion.forEach(elementEliminarItem => {
-        //     const evaluacionItemDelete = {
-        //       codigo: elementEliminarItem.codigo
-        //     };
-        //     this.itemEvaluacionService.publicdelete(evaluacionItemDelete).subscribe(eliminarResonse => {
-        //     }, (error) => {
-        //       return throwError('Ha fallado el eliminar la evaluación, revisar conexión de internet');
-        //     }, () => {
-        //     });
-        //     if (i === listaItemEvaluacion.length - 1) {
-        //       // this.itemEvaluacionService.publicdelete()
-        //       this.spinner.hide();
-        //       this.listaEvaluacion.splice(this.listaEvaluacion.findIndex(c => c.codigo === evaluacion.codigo), 1);
-        //       this.dataSource.data = [];
-        //       this.dataSource.data = this.listaEvaluacion;
-        //       swal.fire(
-        //         '!Eliminado con exito¡',
-        //         'La evaluación ha sido eliminada con exito.',
-        //         'success'
-        //       );
-        //     }
-        //     i += 1;
-        //   });*/
-        //   const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
-        //   // const everySixHours$ = interval(6 * 60 * 60 * 1000);
-        //   // const everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$);
-        //   // everySixHoursOnceAppIsStable$.subscribe(() => updates.checkForUpdate());
-        //   appIsStable$.subscribe(() => {
-        //     this.swUpdate.checkForUpdate();
-        //   });
-        //   this.spinner.hide();
-        //   this.listaEvaluacion.splice(this.listaEvaluacion.findIndex(c => c.codigo === evaluacion.codigo), 1);
-        //   this.dataSource.data = [];
-        //   this.dataSource.data = this.listaEvaluacion;
-        //   this.cargarCantidad();
-        //   swal.fire(
-        //     '!Eliminado con exito¡',
-        //     'La evaluación ha sido eliminada con exito.',
-        //     'success'
-        //   );
-        // });
         // tslint:disable-next-line:prefer-const
-        /* let listaItemEvaluacion: ItemEvaluacion[] = [];
+        let listaItemEvaluacion: ItemEvaluacion[] = [];
         let i = 0;
         this.itemEvaluacionService.getAllWhere(evaluacion.codigo, 'formularioEvaluacionCodigo').subscribe(responseItem => {
           responseItem.forEach(elementItem => {
@@ -700,7 +650,7 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
                 // tslint:disable-next-line:max-line-length
                 itemEvaluacion.fechaGuardadoCompleta =
                   new DatePipe('es-ES').transform(elementItem['fechaGuardado'], 'MMMM d, y, h:mm:ss');
-              });
+              });*/
             listaItemEvaluacion.push(itemEvaluacion);
             const evaluacionItemDelete = {
               codigo: elementItem['codigo']
@@ -739,7 +689,7 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
                       );
                     }
                     i += 1;
-                  });
+                  });*/
                   this.spinner.hide();
                   this.listaEvaluacion.splice(this.listaEvaluacion.findIndex(c => c.codigo === evaluacion.codigo), 1);
                   this.dataSource.data = [];
@@ -757,9 +707,7 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
         }, (error) => {
           throwError('Ha fallado el eliminar la evaluación, revisar conexión de internet');
         }, () => {
-        });*/
-    //   }
-    // });
+        });
       }
     });
   }
