@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1561699499252,
+  "timestamp": 1562356031846,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -9,7 +9,7 @@
       "updateMode": "prefetch",
       "urls": [
         "/2.f2d15a87da745ca13b13.js",
-        "/6.5b653796cb42f2641971.js",
+        "/6.4997a4f3bc9bb27c061a.js",
         "/7.724c6665f8361f891602.js",
         "/8.81e957a7c02d2e4fd481.js",
         "/common.0d3e6e869284fa09f99d.js",
@@ -17,7 +17,7 @@
         "/index.html",
         "/main.685fb42a3dfe63080048.js",
         "/polyfills.9d9805779ee64a075676.js",
-        "/runtime.410c530a5006b57685cb.js",
+        "/runtime.5988c5f6866f921bc9ef.js",
         "/scripts.9647d8a60788a64b71d6.js",
         "/styles.01381cf289f01493a06d.css"
       ],
@@ -56,7 +56,6 @@
       "name": "inari",
       "patterns": [
         "\\/api\\/Areas\\/.*",
-        "\\/api\\/ItemEvaluacions\\/.*",
         "\\/api\\/\\/Calendarios\\/.*",
         "\\/api\\/FormulariosAreas\\/.*",
         "\\/api\\/FormularioModeloItems\\/.*",
@@ -71,7 +70,7 @@
   ],
   "hashTable": {
     "/2.f2d15a87da745ca13b13.js": "0525d6fe2447d0656fb2f62952bc1f5189ed215e",
-    "/6.5b653796cb42f2641971.js": "fab23be09ac683dc5dd500f7d6a961e50e8c07ad",
+    "/6.4997a4f3bc9bb27c061a.js": "a9d68a98040c6b03556f0b4c90ea0ce99203dd71",
     "/7.724c6665f8361f891602.js": "d88d9d87ee3077e6a3fd3ab1e165c8bea22d6967",
     "/8.81e957a7c02d2e4fd481.js": "8f9110bd8e7756b807863a7bcc99577a705eb338",
     "/assets/fonts/FontinSans/Fontin_Sans_B.otf": "35845d36e336191f9db678a9c55ea3bcff92dfe4",
@@ -95,10 +94,10 @@
     "/assets/images/card-3.jpg": "a2eb1ac502716c05d32d01ef01ab60a2a9ca62ef",
     "/common.0d3e6e869284fa09f99d.js": "6300b12ef4c6e269a858fd1eea3f9e0369fb76b0",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "a0b8ef597085f042f2a9d8184e8b7519b424d563",
+    "/index.html": "dd3b2dfb87f336bcf1bb18ec8c936a1ec855fa20",
     "/main.685fb42a3dfe63080048.js": "52021a480516ca178f770ff1d070c5773a33f5b6",
     "/polyfills.9d9805779ee64a075676.js": "0539414b7b5be4fc511f66b4065ea0c70a455c86",
-    "/runtime.410c530a5006b57685cb.js": "d7aa615bf59b528667898452525b0d6853f8c660",
+    "/runtime.5988c5f6866f921bc9ef.js": "8a697170d6cc291817f8097f2ee6090f20a81f16",
     "/scripts.9647d8a60788a64b71d6.js": "f78dd81ce664813c931d74c675a784abf64c448a",
     "/styles.01381cf289f01493a06d.css": "879be2734ce899f09cc4f56402a2a387b51817cf"
   },

@@ -30,7 +30,7 @@ export class ItemEvaluacionService extends DataService{
     const headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json'});
     headers.append('Authorization', this.cookieService);
     const options = new RequestOptions({ headers: headers });
-    return this.http.delete(this.url + `/eliminarPorCodigoFormulario?formularioEvaluacionCodigo=${codigoFormularioEvaluacion}`, options)
+    return this.http.delete(this.url + `eliminarPorCodigoFormulario/formularioEvaluacionCodigo?=${codigoFormularioEvaluacion}`, options)
       .pipe(
         map(response => response.json()),
         catchError(this.handlerError)

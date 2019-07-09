@@ -95,15 +95,15 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
       zoomIn: 4,
       zoomOut: 4,
       oneToOne: 4,
-      reset: 4,
+      reset: 0,
       prev: 0,
       play: {
         show: 0,
         size: 'large',
       },
       next: 0,
-      rotateLeft: 1,
-      rotateRight: 1,
+      rotateLeft: 4,
+      rotateRight: 4,
       flipHorizontal: 4,
       flipVertical: 4,
     }
@@ -633,7 +633,6 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
               this.listaEvaluacion.splice(this.listaEvaluacion.findIndex(c => c.codigo === evaluacion.codigo), 1);
               this.dataSource.data = [];
               this.dataSource.data = this.listaEvaluacion;
-              this.cargarCantidad();
               swal.fire(
                 '!Eliminado con exito¡',
                 'La evaluación ha sido eliminada con exito.',
