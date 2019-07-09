@@ -124,7 +124,7 @@ export class CalendarioComponent implements OnInit {
   listarAreas() {
     this.spinner.show();
     this.areaService.getFilterByAttributeOrderByName().subscribe(areaResponse => {
-      console.log(areaResponse);
+      // console.log(areaResponse);
       areaResponse.forEach(areaElement => {
           // tslint:disable-next-line:prefer-const
           let area: Area = new Area();
@@ -151,19 +151,23 @@ export class CalendarioComponent implements OnInit {
   }
   listarCalendario() {
     this.spinner.show();
-    this.calendarioService.getAll().subscribe(calendarioResponse => {
+    this.calendarioService.getProgramacionActiva().subscribe(calendarioResponse => {
+      console.log(calendarioResponse);
+      // let calendario: Calendario;
       calendarioResponse.forEach(elementCalendario => {
         const fechaFinalCalendario = new Date(elementCalendario['finCalendario']);
-        if (elementCalendario['cancelado'] === 0 && fechaFinalCalendario.getDate() <= Date.now()
-            && elementCalendario['usuarioRelacionado'] !== 0) {
+        // console.log(elementCalendario);
+        if (elementCalendario['cancelado'] === 0
+            && elementCalendario['usuario_relacionado'] > 0) {
           const calendario: Calendario = {
             codigo: elementCalendario['codigo'],
-            inicioCalendario: elementCalendario['inicioCalendario'],
-            finCalendario: elementCalendario['finCalendario'],
-            areaCodigo: elementCalendario['areaCodigo'],
+            inicioCalendario: elementCalendario['inicio_calendario'],
+            finCalendario: elementCalendario['fin_calendario'],
+            areaCodigo: elementCalendario['area_codigo'],
             cancelado: elementCalendario['cancelado'],
-            usuarioRelacionado: elementCalendario['usuarioRelacionado'],
+            usuarioRelacionado: elementCalendario['usuario_relacionado'],
           };
+          // console.log(calendario);
           this.colaboradoresService.getFromCode(calendario.usuarioRelacionado).subscribe(responseCalendario => {
             const colaboradorCalendario: Colaborador = {
                 primerNombre: responseCalendario['primerNombre'],
@@ -183,7 +187,9 @@ export class CalendarioComponent implements OnInit {
               text: 'Hubo un error en la carga de datos: revise conexión a internet',
             });
           }, () => {
-            this.areaService.getFromCode(calendario.areaCodigo).subscribe(calendarioAreaResponse => {
+            // console.log(calendario);
+            this.areaService.getFromCodeLimited(calendario.areaCodigo).subscribe(calendarioAreaResponse => {
+              console.log(calendarioAreaResponse);
               const areaView: AreaView = {
                 nombre: calendarioAreaResponse['nombre']
               };
@@ -195,12 +201,13 @@ export class CalendarioComponent implements OnInit {
                 text: 'Hubo un error en la carga de datos: revise conexión a internet',
               });
             }, () => {
+              console.log(calendario);
               this.calendarios.push(calendario);
               this.dataSource = new MatTableDataSource(this.calendarios);
               this.changeDetectorRefs.detectChanges();
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
-              this.spinner.hide();
+              // this.spinner.hide();
             });
           });
         }
@@ -216,6 +223,7 @@ export class CalendarioComponent implements OnInit {
     });
   }
   agregarCalendario() {
+    this.spinner.show();
     const calendario = {
       codigo: 0,
       inicioCalendario: this.nuevoCalendario.inicioCalendario,
@@ -241,17 +249,25 @@ export class CalendarioComponent implements OnInit {
     }, (error) => {
       this.nuevoCalendario = calendarioAux;
       this.calendarios.pop();
+      this.
       swal.fire({
         type: 'error',
         title: 'Oops...',
         text: 'Debe de elegir obligatoriamente los campos: Fecha de Inicio, Fecha de Finalización, Área y Evaluador',
       });
     }, () => {
+      // this.calendarios.push(calendario);
+      this.dataSource = new MatTableDataSource(this.calendarios);
+      // this.dataSource.data = this.calendarios;
+      this.changeDetectorRefs.detectChanges();
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
       swal.fire(
         'Programación agregada',
         '',
         'success',
       );
+      this.spinner.hide();
     });
   }
   cargarActualizacion(calendarioCargar: Calendario) {
@@ -284,6 +300,11 @@ export class CalendarioComponent implements OnInit {
       };
       this.calendarios[indice].usuario = this.listaColaboradores.find(c => c.id === this.calendarios[indice].usuarioRelacionado);
       this.nuevoCalendario = new Calendario();
+      this.dataSource.data = this.calendarios;
+      this.changeDetectorRefs.detectChanges();
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+
       this.actualizar = false;
       swal.fire(
         'Programación actualizada',

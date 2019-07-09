@@ -249,6 +249,7 @@ export class CalendarioComponent implements OnInit {
     }, (error) => {
       this.nuevoCalendario = calendarioAux;
       this.calendarios.pop();
+      this.spinner.hide();
       swal.fire({
         type: 'error',
         title: 'Oops...',
