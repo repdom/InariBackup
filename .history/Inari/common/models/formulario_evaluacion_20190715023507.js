@@ -27,7 +27,7 @@ module.exports = function (FormularioEvaluacion) {
                         console.log('Sucess', result);
                         formularioCompleto.items = result
                     }
-                    cb(err, formularioCompleto);
+                    cb(err, result);
                 });
                 // cb(err, result);
             }

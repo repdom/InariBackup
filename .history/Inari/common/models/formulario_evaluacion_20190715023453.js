@@ -17,7 +17,7 @@ module.exports = function (FormularioEvaluacion) {
 
                 });*/
                 var formularioCompleto = {};
-                formularioCompleto.formulario = result;
+                formularioCompleto.formulario = result
                 let formularioCodigo = result.codigo;
                 formularioEvaluacion.items = formularioEvaluacion.items.map(item => {return {...item, formularioEvaluacionCodigo: formularioCodigo}});
                 FormularioEvaluacion.app.models.ItemEvaluacion.create(formularioEvaluacion.items, function(err, result) {
@@ -25,9 +25,8 @@ module.exports = function (FormularioEvaluacion) {
                         console.log(err);
                     } else {
                         console.log('Sucess', result);
-                        formularioCompleto.items = result
                     }
-                    cb(err, formularioCompleto);
+                    cb(err, result);
                 });
                 // cb(err, result);
             }
