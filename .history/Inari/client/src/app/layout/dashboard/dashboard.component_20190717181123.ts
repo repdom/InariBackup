@@ -89,13 +89,6 @@ export class DashboardComponent implements OnInit {
         this.obtenerDashboard();
         // this.obtenerMetabase();
         // this.obtenerMetrica();
-        if ('storage' in navigator && 'estimate' in navigator.storage) {
-
-            navigator.storage.estimate()
-                 .then(function(estimate){
-                      console.log(`Using ${estimate.usage} out of ${estimate.quota} bytes.`);
-                 });
-            }
     }
 
     // node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/webpack-configs/browser.js

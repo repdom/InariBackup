@@ -91,6 +91,7 @@ export class DashboardComponent implements OnInit {
         // this.obtenerMetrica();
     }
 
+    
     obtenerDashboard() {
         const METABASE_SITE_URL = 'https://metabase.arturobisono.tk';
         const METABASE_SECRET_KEY = '8818b7666921d0e07165b29ff13be3d23823440aac8ddb1886d7b7aa62aef2ed';

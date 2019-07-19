@@ -89,17 +89,9 @@ export class DashboardComponent implements OnInit {
         this.obtenerDashboard();
         // this.obtenerMetabase();
         // this.obtenerMetrica();
-        if ('storage' in navigator && 'estimate' in navigator.storage) {
-
-            navigator.storage.estimate()
-                 .then(function(estimate){
-                      console.log(`Using ${estimate.usage} out of ${estimate.quota} bytes.`);
-                 });
-            }
     }
 
     // node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/webpack-configs/browser.js
-    // Ruta anterior es el archivo a editar cuando se vaya a utilizar JWT para usar metabase.
     obtenerDashboard() {
         const METABASE_SITE_URL = 'https://metabase.arturobisono.tk';
         const METABASE_SECRET_KEY = '8818b7666921d0e07165b29ff13be3d23823440aac8ddb1886d7b7aa62aef2ed';
