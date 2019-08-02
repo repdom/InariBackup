@@ -1,0 +1,40 @@
+{
+    "name": "ItemEspeciales",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+    "codigo": {
+        "type": "Number",
+        "id": 1,
+        "required": true,
+        "length": null,
+        "precision": 10,
+        "scale": 0
+        },      
+      "nombre": {
+        "type": "string",
+        "required": true
+      },
+      "nombre2": {
+        "type": "string",
+        "required": true
+      },
+      "apellido1": {
+        "type": "string",
+        "required": true
+      },
+      "apellido2": {
+        "type": "string",
+        "required": true
+      },
+      "descripcion": {
+        "type": "string"
+      }
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {}
+}  

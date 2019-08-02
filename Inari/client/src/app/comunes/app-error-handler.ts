@@ -7,7 +7,7 @@ export class AppErrorHandler implements ErrorHandler {
      swal.fire({
       type: 'error',
       title: 'Oops...',
-      text: message,
+      text: 'Recargue la página o revise conexión a internet',
     });
   }
 }

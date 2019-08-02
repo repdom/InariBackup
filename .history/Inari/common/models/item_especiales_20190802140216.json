@@ -1,0 +1,33 @@
+{
+    "name": "I",
+    "base": "User",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+      "nombre1": {
+        "type": "string",
+        "required": true
+      },
+      "nombre2": {
+        "type": "string",
+        "required": true
+      },
+      "apellido1": {
+        "type": "string",
+        "required": true
+      },
+      "apellido2": {
+        "type": "string",
+        "required": true
+      },
+      "descripcion": {
+        "type": "string"
+      }
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {}
+}  

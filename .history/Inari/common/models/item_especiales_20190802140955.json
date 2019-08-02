@@ -1,0 +1,29 @@
+{
+    "name": "ItemEspeciales",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+        "codigo": {
+            "type": "number",
+            "id": 1,
+            "required": true,
+            "length": null,
+            "precision": 10,
+            "scale": 0
+    },      
+    "descripcion": {
+        "type": "string",
+        "required": true
+      },
+      "importante": {
+        "type": "boolean",
+        "required": true
+      }
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {}
+}  
