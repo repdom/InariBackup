@@ -131,7 +131,15 @@
       "required": false,
       "length": 4294967295,
       "precision": null,
-      "scale": null
+      "scale": null,
+      "mysql": {
+        "columnName": "imagen2",
+        "dataType": "longtext",
+        "dataLength": 4294967295,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
     },
     "usuarioRelacionado": {
       "type": "Number",
