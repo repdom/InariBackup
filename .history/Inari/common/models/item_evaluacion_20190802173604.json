@@ -53,7 +53,7 @@
     },
     "fechaGuardado": {
       "type": "Date",
-      "required": false,
+      "required": true,
       "length": null,
       "precision": null,
       "scale": null,
@@ -63,7 +63,7 @@
         "dataLength": null,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "Y"
+        "nullable": "N"
       }
     },
     "evaluacion": {
@@ -127,14 +127,14 @@
       }
     },
     "imagen2": {
-      "type": "String",
+      "type": "string",
       "required": false,
-      "length": 4294967295,
+      "length": 42949672,
       "precision": null,
       "scale": null,
       "mysql": {
-        "columnName": "imagen",
-        "dataType": "text",
+        "columnName": "imagen2",
+        "dataType": "longtext",
         "dataLength": 4294967295,
         "dataPrecision": null,
         "dataScale": null,

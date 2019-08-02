@@ -53,7 +53,7 @@
     },
     "fechaGuardado": {
       "type": "Date",
-      "required": false,
+      "required": true,
       "length": null,
       "precision": null,
       "scale": null,
@@ -63,7 +63,7 @@
         "dataLength": null,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "Y"
+        "nullable": "N"
       }
     },
     "evaluacion": {
@@ -134,7 +134,7 @@
       "scale": null,
       "mysql": {
         "columnName": "imagen",
-        "dataType": "text",
+        "dataType": "longtext",
         "dataLength": 4294967295,
         "dataPrecision": null,
         "dataScale": null,
