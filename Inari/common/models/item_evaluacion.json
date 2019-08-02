@@ -127,19 +127,11 @@
       }
     },
     "imagen2": {
-      "type": "string",
+      "type": "String",
       "required": false,
       "length": 4294967295,
       "precision": null,
-      "scale": null,
-      "mysql": {
-        "columnName": "imagen2",
-        "dataType": "longtext",
-        "dataLength": 4294967295,
-        "dataPrecision": null,
-        "dataScale": null,
-        "nullable": "Y"
-      }
+      "scale": null
     },
     "usuarioRelacionado": {
       "type": "Number",
