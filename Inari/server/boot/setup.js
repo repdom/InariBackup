@@ -12,10 +12,10 @@ module.exports = function(app) {
     'FormularioArea',
     'ItemEspeciales',
     'Grupos',
-    "Item",
-    "FormularioEvaluacion",
-    "ItemEvaluacion",
-    "ItemEspecialesEvaluacion",
+    'Item',
+    'FormularioEvaluacion',
+    'ItemEvaluacion',
+    'ItemEspecialesEvaluacion',
   ];
 
   mysql.autoupdate(modelos, function(err) {
@@ -25,6 +25,8 @@ module.exports = function(app) {
     console.log(`===== ACTULIZANDO: modelo ${modelos} =====`);
     defaultRoles(app);
     crearUsuarioAdministrador(app);
+    defaultGrupos(app);
+    defaultItemsEspeciales(app);
     // crearConfiguracion(app);
   });
 };
@@ -45,6 +47,61 @@ function defaultRoles(app) {
               console.log(`===== OK ${rol.name} =====`);
             }
         );
+  });
+};
+
+function defaultGrupos(app) {
+  let grupos = app.models.Grupos;
+
+  let listOfGrupos = [
+      ['Edificios', 'Construcción y el diseño de los edificios'],
+      ['Áreas', 'Disposición de los locales y de área de trabajo'],
+      ['Servicios', 'Servicios - aire, agua, energía'],
+      ['Residuos',	'Disposición de Residuos'],
+      ['Equipos', 'LyM	Equipos idoneos, limpieza y mantenimiento'],
+      ['Compras', 'Gestión de los materiales comprados'],
+      ['Contaminación', 'Medidas para la prevención de la contaminación cruzada'],
+      ['Lim y Desinf', 'Limpieza y desinfección'],
+      ['Plagas', 'Control de Plagas'],
+      ['Higiene', 'Higiene del personal e instalaciones para empleados'],
+      ['Retrabajo', 'Retrabajo'],
+      ['Recall', 'Procedimientos de retiro del producto'],
+      ['Almacén', 'Almacén'],
+      ['Etiqueta', 'Información del producto y sensibilización de los consumidores'],
+      ['Defensa', 'Defensa de los Alimentos, Biovigilancia y Bioterrorismo'],
+      ['PPR Op', 'Prerequisitos Operativos'],
+      ['PCC', 'Puntos Críticos de Control'],
+      ['Sistema', 'Sistema de Gestión de la Inocuidad'],
+    ];
+    
+    listOfGrupos.forEach(function(element) {
+      // eslint-disable-next-line max-len
+      // console.log(element);
+      grupos.findOrCreate({where: {nombre: element[0], descripcion: element[1]}}, {nombre: element[0], descripcion: element[1]},
+               function(err, grupo) {
+                 console.log(`===== OK ${grupo.nombre} =====`);
+               }
+           );
+     });   
+};
+
+function defaultItemsEspeciales(app) {
+  let itemEspeciales = app.models.ItemEspeciales;
+
+  let listOfItemEspeciales = [
+    ['Cédula de Mejora', 'Cédula de Mejora', false],
+    ['Área Liberada', 'Área Liberada', false],
+    ['Acciones Inmediatas', 'Acciones Inmediatas', false],
+    ['Acciones Correctoras', 'Acciones Correctoras', false],
+    ['Acciones Preventivas', 'Acciones Preventivas', false],
+    ['Cierre de la Cédula de Mejora', 'Cierre de la Cédula de Mejora', false],
+  ];
+  listOfItemEspeciales.forEach(function(element) {
+    itemEspeciales.findOrCreate({where: {nombre: element[0], descripcion: element[1], importante: element[2]}}, {nombre: element[0], descripcion: element[1], importante: element[2]},
+      function(err, especial) {
+        console.log(`===== OK ${especial.nombre} =====`);
+      }
+    );
   });
 };
 

@@ -28,6 +28,14 @@
         "required": true,
         "default": "false"
       },
+      "fechaSolicitada": {
+        "type": "date",
+        "required": true
+      },
+      "fechaAprobada": {
+        "type": "date",
+        "required": true
+      },  
       "formularioEvaluacionCodigo": {
         "type": "number",
         "required": true
