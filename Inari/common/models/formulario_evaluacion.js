@@ -4,7 +4,7 @@
 module.exports = function (FormularioEvaluacion) {
     // var itemEvaluacionVar = FormularioEvaluacion.app.models.ItemEvaluacion;
     FormularioEvaluacion.insertarConItemes = function(formularioEvaluacion,cb) {
-        FormularioEvaluacion.upsert(formularioEvaluacion.formulario, function (err, result) {
+        FormularioEvaluacion.bulkUpdate(formularioEvaluacion.formulario, function (err, result) {
             if (err) {
                 console.log(err);
             } else {
@@ -20,7 +20,7 @@ module.exports = function (FormularioEvaluacion) {
                 formularioCompleto.formulario = result;
                 let formularioCodigo = result.codigo;
                 formularioEvaluacion.items = formularioEvaluacion.items.map(item => {return {...item, formularioEvaluacionCodigo: formularioCodigo}});
-                FormularioEvaluacion.app.models.ItemEvaluacion.upsert(formularioEvaluacion.items, function(err, result) {
+                FormularioEvaluacion.app.models.ItemEvaluacion.bulkUpdate(formularioEvaluacion.items, function(err, result) {
                     if(err) {
                         console.log(err);
                     } else {

@@ -552,25 +552,31 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
             this.spinner.hide();
             throwError('Ha fallado la carga de datos, revisar conexión de internet');
           }, () => {
+            this.evaluacionService.getItemEspecialeEvaluacion(evaluacion.codigo).subscribe(itemEspeciales => {
+              evaluacion.itemEspeciales = itemEspeciales;
+            }, (error) => {
+              throwError('Ha fallado la carga de datos, revisar conexión de internet');
+            }, () => {
             // tslint:disable-next-line:prefer-const
-            let imagenes: Imagen[] = [];
-            this.iterable.forEach(element => {
-              if (evaluacion.foto[element] !== null && evaluacion.foto[element] !== '') {
-                imagenes.push(new Imagen(evaluacion.area.foto[element], evaluacion.foto[element]));
-                console.log(evaluacion.foto[element]);
-              }
-              if (element === 9) {
-                this.dataSourceImagenes = new MatTableDataSource(imagenes);
-              }
+              let imagenes: Imagen[] = [];
+              this.iterable.forEach(element => {
+                if (evaluacion.foto[element] !== null && evaluacion.foto[element] !== '') {
+                  imagenes.push(new Imagen(evaluacion.area.foto[element], evaluacion.foto[element]));
+                  console.log(evaluacion.foto[element]);
+                }
+                if (element === 9) {
+                  this.dataSourceImagenes = new MatTableDataSource(imagenes);
+                }
+              });
+              evaluacion.itemsEvaluados = listaItemEvaluacion;
+              this.dataSourceEvaluacion = new MatTableDataSource(evaluacion.itemsEvaluados);
+              this.dataSourceEvaluacion.paginator = this.paginatorVistaEvaluacion;
+              this.dataSourceEvaluacion.sort = this.sortVistaEvaluacion;
+              this.evaluacion = evaluacion;
+              console.log(evaluacion);
+              this.seActivo = true;
+              this.spinner.hide();
             });
-            evaluacion.itemsEvaluados = listaItemEvaluacion;
-            this.dataSourceEvaluacion = new MatTableDataSource(evaluacion.itemsEvaluados);
-            this.dataSourceEvaluacion.paginator = this.paginatorVistaEvaluacion;
-            this.dataSourceEvaluacion.sort = this.sortVistaEvaluacion;
-            this.evaluacion = evaluacion;
-            console.log(evaluacion);
-            this.seActivo = true;
-            this.spinner.hide();
           });
         });
       });
