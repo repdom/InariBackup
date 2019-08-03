@@ -133,7 +133,7 @@
       "precision": null,
       "scale": null,
       "mysql": {
-        "columnName": "imagen",
+        "columnName": "imagen2",
         "dataType": "text",
         "dataLength": 4294967295,
         "dataPrecision": null,

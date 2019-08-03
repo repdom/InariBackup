@@ -113,9 +113,10 @@
         </mat-card-header>
         <mat-card-content>
             <section>
-                <mat-checkbox class="example-margin" *ngFor="let especiales of evaluacion.itemEspeciales" [(ngModel)]="especiales.cumplido">{{especiales.nombre}}</mat-checkbox>
-                <!--<mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Indeterminate</mat-checkbox>-->
-              </section>          
+                <mat-list *ngFor="let especiales of evaluacion.itemEspeciales">
+                  <mat-checkbox class="example-margin" [(ngModel)]="especiales.cumplido">{{especiales.nombre}}</mat-checkbox>
+                </mat-list>
+              </section>  
         </mat-card-content>
       </mat-card>
   </mat-card-content>
