@@ -27,7 +27,7 @@ import { ColaboradorService } from 'src/app/services/usuario/colaborador.service
 import { AreaService } from '../../services/area/area.service';
 import {NgxPrintModule} from 'ngx-print';
 import { BloqueadosService } from '../../services/bloqueados/bloqueados.service';
-import { ItemEspecialesService } from '../../../../../../.history/Inari/client/src/app/services/itemEspeciales/item-especiales.service_20190802202600';
+import { ItemEspecialesService } from 'src/app/services/itemEspeciales/item-especiales.service';
 
 
 @NgModule({

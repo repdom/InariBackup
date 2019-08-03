@@ -4,7 +4,7 @@
 module.exports = function (FormularioEvaluacion) {
     // var itemEvaluacionVar = FormularioEvaluacion.app.models.ItemEvaluacion;
     FormularioEvaluacion.insertarConItemes = function(formularioEvaluacion,cb) {
-        formularioEvaluacion.forEach(function(element) {
+        formularioEvaluacion.formularios.forEach(function(element) {
             FormularioEvaluacion.upsert(element.formulario, function (err, result) {
                 if (err) {
                     console.log(err);
