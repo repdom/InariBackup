@@ -15,7 +15,19 @@ import swal from 'sweetalert2';
 import { SwUpdate } from '@angular/service-worker';
 import { first } from 'rxjs/operators';
 import { Evaluacion, ItemEvaluacion, Imagen } from '../listar-evaluacion/listar-evaluacion.component';
+import { BloqueadosService } from 'src/app/services/bloqueados/bloqueados.service';
+import { ItemEspecialesService } from 'src/app/services/itemEspeciales/item-especiales.service';
 
+export class ItemEspecialesEvaluacion {
+  codigo = 0;
+  nombre = '';
+  importante = false;
+  cumplido = false ;
+  fechaSolicitada = '';
+  fechaAprobada = '';
+  formularioEvaluacionCodigo = 0;
+  codigoItemEspeciales = 1;
+}
 
 @Component({
   selector: 'app-formularios-bloqueados',
@@ -90,7 +102,9 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
               private spinner: NgxSpinnerService,
               public _DomSanitizer: DomSanitizer,
               public swUpdate: SwUpdate,
-              public appRef: ApplicationRef) { }
+              public appRef: ApplicationRef,
+              private bloqueadosService: BloqueadosService,
+              private itemEspecialesService: ItemEspecialesService) { }
 
   ngOnInit() {
     setTimeout(t => {
@@ -122,7 +136,8 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
       this.acumuladorPagina -= this.tamAnterior;
     }*/
     this.listaEvaluacion = [];
-    this.evaluacionService.getFilteredPagination(0, this.tamPagina * pageEvent.pageIndex, this.tamPagina).subscribe(responseEvaluacion => {
+    // tslint:disable-next-line:max-line-length
+    this.bloqueadosService.getFilteredPagination(true, this.tamPagina * pageEvent.pageIndex, this.tamPagina).subscribe(responseEvaluacion => {
       console.log(responseEvaluacion);
       this.spinner.show();
       responseEvaluacion.forEach(elementEvaluacion => {
@@ -293,7 +308,7 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
 
   listarEvaluaciones() {
     this.spinner.show();
-    this.evaluacionService.getFilteredPagination(0, this.indicePagina, this.tamPagina).subscribe(responseEvaluacion => {
+    this.bloqueadosService.getFilteredPagination(true, this.indicePagina, this.tamPagina).subscribe(responseEvaluacion => {
       console.log(responseEvaluacion);
       this.spinner.show();
       responseEvaluacion.forEach(elementEvaluacion => {

@@ -26,6 +26,8 @@ import { NgxViewerModule } from 'ngx-viewer';
 import { ColaboradorService } from 'src/app/services/usuario/colaborador.service';
 import { AreaService } from '../../services/area/area.service';
 import {NgxPrintModule} from 'ngx-print';
+import { BloqueadosService } from '../../services/bloqueados/bloqueados.service';
+import { ItemEspecialesService } from '../../../../../../.history/Inari/client/src/app/services/itemEspeciales/item-especiales.service_20190802202600';
 
 
 @NgModule({
@@ -62,6 +64,8 @@ import {NgxPrintModule} from 'ngx-print';
     ItemEvaluacionService,
     EvaluacionService,
     ColaboradorService,
+    BloqueadosService,
+    ItemEspecialesService
   ]
 })
 export class ListarEvaluacionModule { }

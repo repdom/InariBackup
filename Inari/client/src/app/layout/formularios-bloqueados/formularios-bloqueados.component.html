@@ -160,6 +160,6 @@
       <tr mat-header-row *matHeaderRowDef="evaluacionColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: evaluacionColumns"></tr>    
   </table>
-  <mat-paginator #tableEvaluacionPaginator (page)="cambiarPagina($event)" [length]="cantidadEvaluaciones" [pageSize]="tamPagina" [pageSizeOptions]="tamPaginas"></mat-paginator>
+  <mat-paginator #tableEvaluacionPaginator (page)="cambiarPagina($event)" [pageSize]="tamPagina" [pageSizeOptions]="tamPaginas"></mat-paginator>
 </div>
 

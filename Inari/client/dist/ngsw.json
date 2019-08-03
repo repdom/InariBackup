@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1564606592900,
+  "timestamp": 1564789861918,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -9,7 +9,7 @@
       "updateMode": "prefetch",
       "urls": [
         "/2.f2d15a87da745ca13b13.js",
-        "/6.6922f050d8559f802fef.js",
+        "/6.9f94ab96256637bfd3a4.js",
         "/7.9b058fe2bccfcbe4ed09.js",
         "/8.9482213346c1b3aa054a.js",
         "/common.983726262e5cf01c2372.js",
@@ -17,7 +17,7 @@
         "/index.html",
         "/main.9583154fcdbd8f0ca476.js",
         "/polyfills.9d9805779ee64a075676.js",
-        "/runtime.5cff2291fe4a78180b8c.js",
+        "/runtime.e05fc4268deba9fc7a72.js",
         "/scripts.9647d8a60788a64b71d6.js",
         "/styles.01381cf289f01493a06d.css"
       ],
@@ -70,7 +70,7 @@
   ],
   "hashTable": {
     "/2.f2d15a87da745ca13b13.js": "0525d6fe2447d0656fb2f62952bc1f5189ed215e",
-    "/6.6922f050d8559f802fef.js": "0fd877a87ff7f4b060e9b1ee79587e357ccaa552",
+    "/6.9f94ab96256637bfd3a4.js": "59c14b91a65051d16f94e7b85980cebd820093e4",
     "/7.9b058fe2bccfcbe4ed09.js": "efcc7ea293b2c3570e3d3a17395721fe3103a219",
     "/8.9482213346c1b3aa054a.js": "64a60d89eae9c18b918e95db25e67ee37335c29f",
     "/assets/fonts/FontinSans/Fontin_Sans_B.otf": "35845d36e336191f9db678a9c55ea3bcff92dfe4",
@@ -94,10 +94,10 @@
     "/assets/images/card-3.jpg": "a2eb1ac502716c05d32d01ef01ab60a2a9ca62ef",
     "/common.983726262e5cf01c2372.js": "6300b12ef4c6e269a858fd1eea3f9e0369fb76b0",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "f6b1416e8b804f53d615e25b71d49db852806539",
+    "/index.html": "220db4ec78a8eabc7d9480fce5e4b661b8e2569b",
     "/main.9583154fcdbd8f0ca476.js": "ad6a51253112bf46b9c04024257c9a712fe6ee80",
     "/polyfills.9d9805779ee64a075676.js": "0539414b7b5be4fc511f66b4065ea0c70a455c86",
-    "/runtime.5cff2291fe4a78180b8c.js": "3922165771b3e66d3c8d570eda7d1fe3dc3c2e3e",
+    "/runtime.e05fc4268deba9fc7a72.js": "a5080be932a12746668890337e6d28710073cdf4",
     "/scripts.9647d8a60788a64b71d6.js": "f78dd81ce664813c931d74c675a784abf64c448a",
     "/styles.01381cf289f01493a06d.css": "879be2734ce899f09cc4f56402a2a387b51817cf"
   },

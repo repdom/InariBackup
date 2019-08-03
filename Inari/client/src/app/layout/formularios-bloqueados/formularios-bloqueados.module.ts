@@ -26,6 +26,7 @@ import { ColaboradorService } from '../../services/usuario/colaborador.service';
 import { ItemEvaluacionService } from 'src/app/services/evaluacion/item-evaluacion.service';
 import { AreaService } from 'src/app/services/area/area.service';
 import { EvaluacionService } from 'src/app/services/evaluacion/evaluacion.service';
+import { BloqueadosService } from 'src/app/services/bloqueados/bloqueados.service';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { EvaluacionService } from 'src/app/services/evaluacion/evaluacion.servic
     AreaService,
     ItemEvaluacionService,
     EvaluacionService,
-    ColaboradorService
+    ColaboradorService,
+    BloqueadosService
   ]
 })
 export class FormulariosBloqueadosModule { }
