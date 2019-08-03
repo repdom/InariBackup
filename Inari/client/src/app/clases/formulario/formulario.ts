@@ -36,6 +36,10 @@ export class Item {
     definicion: string = '';
     // tslint:disable-next-line:no-inferrable-types
     optenidoDesdeApi?: boolean = false;
+    // tslint:disable-next-line:no-inferrable-types
+    alias?: string = '';
+    // tslint:disable-next-line:no-inferrable-types
+    codigoGrupo?: number = 0;
 
     constructor() { }
 }

@@ -76,5 +76,13 @@
   "ItemEspecialesEvaluacion": {
     "dataSource": "mysql",
     "public": true
+  },
+  "Historial": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "ColaMensajeria": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

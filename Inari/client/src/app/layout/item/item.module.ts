@@ -21,6 +21,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { ItemService } from '../../services/item/item.service';
+import { GruposService } from 'src/app/services/grupos/grupos.service';
 
 @NgModule({
   declarations: [ItemComponent],
@@ -48,7 +49,8 @@ import { ItemService } from '../../services/item/item.service';
     MatSelectModule,
     FlexLayoutModule.withConfig({addFlexToParent: false})
   ], providers: [
-    ItemService
+    ItemService,
+    GruposService
   ]
 })
 export class ItemModule { }

@@ -24,11 +24,15 @@
         </div>
         <div fxLayout="row">
           <mat-form-field>
+              <textarea matInput placeholder="Alias" [(ngModel)]="nuevoItem.alias" name="alias"></textarea>
+          </mat-form-field>            
+        </div>
+        <div fxLayout="row">
+          <mat-form-field>
             <mat-label>Grupo Item</mat-label>
-            <mat-select [(ngModel)]="seleccionado" required>
-              <mat-option>--</mat-option>
-              <mat-option *ngFor="let grupo of gruposItem" [value]="grupo">
-                {{grupo}}
+            <mat-select [(ngModel)]="nuevoItem.codigoGrupo" required>
+              <mat-option *ngFor="let grupo of grupos" [value]="grupo.codigo">
+                {{grupo.nombre}}
               </mat-option>
             </mat-select>
           </mat-form-field>          

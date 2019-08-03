@@ -16,6 +16,8 @@ module.exports = function(app) {
     'FormularioEvaluacion',
     'ItemEvaluacion',
     'ItemEspecialesEvaluacion',
+    'Historial',
+    'ColaMensajeria',
   ];
 
   mysql.autoupdate(modelos, function(err) {

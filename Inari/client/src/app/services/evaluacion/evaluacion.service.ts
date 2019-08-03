@@ -61,6 +61,18 @@ export class EvaluacionService extends DataService {
     );
   }
 
+  insertarConItemes(update) {
+    const headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json'});
+    headers.append('Authorization', this.cookieService);
+    const options = new RequestOptions({ headers: headers });
+
+    return this.http.post(this.url + `/insertarConItemes`, JSON.stringify(update), options)
+    .pipe(
+      map(response => response.json()),
+      catchError(this.handlerError)
+    );
+  }
+
   /*getCantidad() {
     const headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json'});
     headers.append('Authorization', this.cookieService);

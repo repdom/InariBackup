@@ -17,6 +17,7 @@ import { first } from 'rxjs/operators';
 import { Evaluacion, ItemEvaluacion, Imagen } from '../listar-evaluacion/listar-evaluacion.component';
 import { BloqueadosService } from 'src/app/services/bloqueados/bloqueados.service';
 import { ItemEspecialesService } from 'src/app/services/itemEspeciales/item-especiales.service';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 export class ItemEspecialesEvaluacion {
   codigo = 0;
@@ -27,6 +28,13 @@ export class ItemEspecialesEvaluacion {
   fechaAprobada = '';
   formularioEvaluacionCodigo = 0;
   codigoItemEspeciales = 1;
+}
+
+export class HistorialDeFormulario {
+  fechaDePublicacion: string = '';
+  nombreDelPublicador: string = '';
+  codigoDelPublicador: string = '';
+  comentario: string = '';
 }
 
 @Component({
@@ -84,6 +92,11 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
   indicePagina = 0;
   acumuladorPagina = 0;
   tamAnterior = 0;
+  abrir = false;
+  contador = 0;
+  public imageSrc: string = '';
+  imgResultBeforeCompress: string;
+  imgResultAfterCompress: string;
 
   @ViewChild('tableEvaluacionPaginator') paginatorEvaluacion: MatPaginator;
   @ViewChild('tableSortEvaluacionSort') sortEvaluacion: MatSort;
@@ -104,7 +117,8 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
               public swUpdate: SwUpdate,
               public appRef: ApplicationRef,
               private bloqueadosService: BloqueadosService,
-              private itemEspecialesService: ItemEspecialesService) { }
+              private itemEspecialesService: ItemEspecialesService,
+              private imageCompress: NgxImageCompressService) { }
 
   ngOnInit() {
     setTimeout(t => {
@@ -295,6 +309,144 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
     });
   }
 
+  handleInputChange(e, itemEvaluacion: ItemEvaluacion, i: number) {
+    // tslint:disable-next-line:prefer-const
+    // let file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+    // tslint:disable-next-line:prefer-const
+    let file = e.target.files[0];
+    this.spinner.show();
+    // tslint:disable-next-line:prefer-const
+    let pattern = /image-*/;
+    // tslint:disable-next-line:prefer-const
+    let reader = new FileReader();
+    if (!file.type.match(pattern)) {
+      swal.fire({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Debe de elegir una imagen',
+      });
+      return;
+    }
+    // setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      reader.onload = this._handleReaderLoaded.bind(this);
+      reader.readAsDataURL(file);
+      itemEvaluacion.imagen2 = this.imageSrc;
+      this.spinner.hide();
+    // }, 5000);
+  }
+  _handleReaderLoaded(e) {
+    // tslint:disable-next-line:prefer-const
+    let reader = e.target;
+    this.imageSrc = reader.result;
+    console.log(this.imageSrc);
+  }
+  changeListener($event, area: Area, i: number): void {
+    this.readThis($event.target, area, i);
+  }
+  readThis(inputValue: any, area: Area, i: number): void {
+    // tslint:disable-next-line:prefer-const
+    let file: File = inputValue.files[0];
+    // tslint:disable-next-line:prefer-const
+    let myReader: FileReader = new FileReader();
+
+    // tslint:disable-next-line:prefer-const
+    let pattern = /image-*/;
+    if (!file.type.match(pattern)) {
+      swal.fire({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Debe de elegir una imagen',
+      });
+      return;
+    }
+    myReader.onloadend = (e) => {
+      console.warn('Size in bytes was:', this.imageCompress.byteCount(String(myReader.result)));
+      console.log(String(myReader.result));
+      this.imageCompress.uploadFile().then(({image, orientation}) => {
+
+        // this.imgResultBeforeCompress = image;
+        console.warn('Size in bytes was:', this.imageCompress.byteCount(image));
+        // console.log(this.imgResultBeforeCompress);
+        this.imageCompress.compressFile(image, orientation, 50, 50).then(
+          result => {
+            area.foto[i] = result;
+            area.fotoAreaCargoDesdeDB[i] = false;
+            console.warn('Size in bytes is now:', this.imageCompress.byteCount(area.foto[i]));
+            console.log(area.foto[i]);
+          }
+        );
+      });
+    };
+    myReader.readAsDataURL(file);
+  }
+
+  compressFile(itemEvaluacion: ItemEvaluacion) {
+    this.imageCompress.uploadFile().then(({image, orientation}) => {
+      this.spinner.show();
+      this.imgResultBeforeCompress = image;
+      console.warn('Size in bytes was:', this.imageCompress.byteCount(image));
+      if  (this.imageCompress.byteCount(image) < 720000) {
+        itemEvaluacion.imagen2 = image;
+        console.warn('Size in bytes is now:', this.imageCompress.byteCount(itemEvaluacion.imagen2));
+        console.log(itemEvaluacion.imagen2);
+        this.spinner.hide();
+      } else {
+        this.imageCompress.compressFile(image, orientation, 50, 50).then(
+          result => {
+            this.spinner.hide();
+            itemEvaluacion.imagen2 = result;
+            console.warn('Size in bytes is now:', this.imageCompress.byteCount(itemEvaluacion.imagen2));
+            console.log(this.imgResultBeforeCompress);
+            console.log(itemEvaluacion.imagen2);
+          }
+        );
+      }
+      /*this.imageCompress.compressFile(image, orientation, 50, 50).then(
+        result => {
+          this.imgResultAfterCompress = result;
+          console.warn('Size in bytes is now:', this.imageCompress.byteCount(result));
+          console.log(this.imgResultAfterCompress);
+        }
+      );*/
+    });
+  }
+
+  guardarFormularioBloqueado(evaluacion) {
+    console.log(evaluacion);
+    this.spinner.show();
+    let cont = 0;
+    evaluacion.itemsEvaluados.forEach(iE => {
+      const i = {
+        codigo: iE.codigo,
+        imagen: iE.imagen,
+        imagen2: iE.imagen2
+      };
+      this.itemEvaluacionService.update(i).subscribe(r => {
+        console.log(r);
+      });
+    });
+
+    evaluacion.itemEspeciales.forEach(cargando => {
+      const gurdar = {
+          cumplido: cargando['cumplido'],
+          fechaAprobada: cargando['fechaAprobada'],
+          fechaSolicitada: cargando['fechaSolicitada'],
+          formularioEvaluacionCodigo: cargando['formularioEvaluacionCodigo'],
+          importante: cargando['importante'],
+          nombre: cargando['nombre']
+      };
+      this.bloqueadosService.actualizarItemsEspecialesEnlazados(evaluacion.codigo, cargando.codigo, gurdar)
+        .subscribe(actualizando => {
+      }, (error) => {
+        console.log(error);
+        this.spinner.hide();
+      }, () => {
+        this.spinner.hide();
+      });
+    });
+  }
+
   cargarCantidad() {
     const c = 0;
     this.evaluacionService.count().subscribe(r => {
@@ -476,6 +628,7 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
   }
 
   cargarFormulario(evaluacion: Evaluacion) {
+    this.abrir = true;
     this.spinner.show();
     this.evaluacionService.getFromCode(evaluacion.codigo)
       .subscribe(evaluacionResponse => {
@@ -528,7 +681,8 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
                 itemCodigo: elementItem['itemCodigo'],
                 itemNombre: '',
                 definicion: '',
-                fechaGuardadoCompleta: ''
+                fechaGuardadoCompleta: '',
+                imagen2: elementItem['imagen2']
               };
               let nombreItem: string;
               let definicion: string;
@@ -552,9 +706,16 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
             this.spinner.hide();
             throwError('Ha fallado la carga de datos, revisar conexión de internet');
           }, () => {
+            this.contador = 0;
             this.evaluacionService.getItemEspecialeEvaluacion(evaluacion.codigo).subscribe(itemEspeciales => {
               evaluacion.itemEspeciales = itemEspeciales;
+              // itemEspeciales.forEach(r => {
+                // if (r['importante'] === true) {
+                  // this.contador += 0;
+                // }
+              // });
             }, (error) => {
+              this.spinner.hide();
               throwError('Ha fallado la carga de datos, revisar conexión de internet');
             }, () => {
             // tslint:disable-next-line:prefer-const
@@ -871,6 +1032,7 @@ imprimir += `<div class="row">
     popupWin.document.close();
   }
   cancelar() {
+    this.abrir = false;
     this.seActivo = false;
     this.evaluacion = new Evaluacion();
     this.dataSourceEvaluacion = new MatTableDataSource(this.evaluacion.itemsEvaluados);

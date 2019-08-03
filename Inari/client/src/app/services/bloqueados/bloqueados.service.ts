@@ -38,4 +38,29 @@ export class BloqueadosService extends DataService {
       catchError(this.handlerError)
     );
   }
+
+  actualizarItemsEspecialesEnlazados(codigoFormularioEvaluacion: number, codigoItemEspecial: number, actualizador) {
+    const headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json'});
+    headers.append('Authorization', this.cookieService);
+    const options = new RequestOptions({ headers: headers });
+
+    // tslint:disable-next-line:max-line-length
+    return this.http.put(this.url + `/${codigoFormularioEvaluacion}/itemEspeciales/${codigoItemEspecial}`, JSON.stringify(actualizador), options)
+    .pipe(
+      map(response => response.json()),
+      catchError(this.handlerError)
+    );
+  }
+
+  cantidadItemsIportantes(codigoFormulario: number) {
+    const headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json'});
+    headers.append('Authorization', this.cookieService);
+    const options = new RequestOptions({ headers: headers });
+
+    return this.http.get(this.url + `/${codigoFormulario}/itemEspeciales/count?where=%7B%22importante%22%3Atrue%7D`, options)
+    .pipe(
+      map(response => response.json()),
+      catchError(this.handlerError)
+    );
+  }
 }

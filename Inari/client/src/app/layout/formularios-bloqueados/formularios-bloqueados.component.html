@@ -100,6 +100,14 @@
                 ngxViewer
                 [viewerOptions]="viewerOptions"
               />
+            <img
+              [src]="_DomSanitizer.bypassSecurityTrustResourceUrl(element.imagen2)"
+              style="width: 100px; height: 70px; border: 2px hidden;border-radius: 15px;"
+              *ngIf="element.imagen2"
+              ngxViewer
+              [viewerOptions]="viewerOptions"
+            />
+            <button *ngIf="element.imagen" mat-button (click)="compressFile(element)">Cargar foto</button>
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="evaluacionVistaColumns"></tr>
@@ -107,7 +115,7 @@
         </table>
         <mat-paginator #tablePaginatorVistaFormularioEvaluacion [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>  
       </div>
-      <mat-card>
+      <mat-card *ngIf="abrir">
         <mat-card-header>
           <mat-card-title>Panel de Evaluación del administrador</mat-card-title>
         </mat-card-header>
@@ -116,13 +124,13 @@
                 <mat-list *ngFor="let especiales of evaluacion.itemEspeciales">
                   <mat-checkbox class="example-margin" [(ngModel)]="especiales.cumplido">{{especiales.nombre}}</mat-checkbox>
                 </mat-list>
-              </section>  
+            </section>  
         </mat-card-content>
       </mat-card>
   </mat-card-content>
   <mat-card-actions>
-      <button mat-button class="boton-amarillo" *ngIf="seActivo" (click)="print(evaluacion)">Desbloquear</button>
-      <button class="boton-rojo" mat-button *ngIf="seActivo" (click)="cancelar()">Guardar</button>    
+      <button mat-button class="boton-amarillo" *ngIf="seActivo" (click)="guardarFormularioBloqueado(evaluacion)">Guardar</button>
+      <button class="boton-rojo" mat-button *ngIf="seActivo" (click)="cancelar()">Cancelar</button> 
   </mat-card-actions>
 </mat-card>
 <mat-form-field>

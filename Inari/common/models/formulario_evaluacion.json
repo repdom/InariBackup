@@ -22,7 +22,13 @@
         "model": "ItemEspecialesEvaluacion",
         "foreignKey": "formularioEvaluacionCodigo",
         "primaryKey": "codigo"
-      }  
+      },
+      "historial": {
+        "type": "hasMany",
+        "model": "Historial",
+        "foreignKey": "formularioCodigo",
+        "primaryKey": "codigo"
+      }
     }
   },
   "properties": {

@@ -26,6 +26,7 @@ export class ItemEvaluacion {
   comentario = '';
   formularioEvaluacionCodigo = 0;
   imagen = '';
+  imagen2 = '';
   usuarioRelacionado = 0;
   itemCodigo = 0;
   itemNombre = '';
@@ -559,7 +560,8 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
                 itemCodigo: elementItem['itemCodigo'],
                 itemNombre: '',
                 definicion: '',
-                fechaGuardadoCompleta: ''
+                fechaGuardadoCompleta: '',
+                imagen2: elementItem['imagen2']
               };
               let nombreItem: string;
               let definicion: string;

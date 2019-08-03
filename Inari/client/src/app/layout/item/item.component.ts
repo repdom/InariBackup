@@ -6,8 +6,10 @@ import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { throwError } from 'rxjs';
 import { formatDate } from '@angular/common';
 import swal from 'sweetalert2';
+import { GruposService } from 'src/app/services/grupos/grupos.service';
 
 export class GrupoItem {
+  codigo: number = 0;
   nombre: string = '';
   descripcion: string = '';
 }
@@ -23,6 +25,7 @@ export class ItemComponent implements OnInit {
   dataSource: MatTableDataSource<Item>;
   actualizar = false;
   displayedColumns = ['nombre', 'definicion', 'acciones'];
+  grupos: GrupoItem[] = [];
   gruposItem = [
     'Edificios',
     'Áreas',
@@ -50,10 +53,12 @@ export class ItemComponent implements OnInit {
 
   constructor(private itemService: ItemService,
               private changeDetectorRefs: ChangeDetectorRef,
-              private spinner: NgxSpinnerService) { }
+              private spinner: NgxSpinnerService,
+              private grupoService: GruposService) { }
 
   ngOnInit() {
     this.listarItems();
+    this.listarGrupos();
   }
 
   listarItems() {
@@ -66,7 +71,9 @@ export class ItemComponent implements OnInit {
             codigo: elementResponse['codigo'],
             definicion: elementResponse['definicion'],
             fechaCreacion: elementResponse['fechaCreacion'],
-            nombre: elementResponse['nombre']
+            nombre: elementResponse['nombre'],
+            alias: elementResponse['alias'],
+            codigoGrupo: elementResponse['grupoCodigo']
           };
           this.items.push(item);
           this.dataSource = new MatTableDataSource(this.items);
@@ -86,6 +93,13 @@ export class ItemComponent implements OnInit {
       this.dataSource.sort = this.sort;
     });
   }
+
+  listarGrupos() {
+    this.grupoService.getAll().subscribe(r => {
+      this.grupos = r;
+    });
+  }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
@@ -107,7 +121,9 @@ export class ItemComponent implements OnInit {
         nombre: this.nuevoItem.nombre,
         fechaCreacion: fechaCreacion,
         cancelado: 0,
-        definicion: this.nuevoItem.definicion
+        definicion: this.nuevoItem.definicion,
+        alias: this.nuevoItem.alias,
+        grupoCodigo: this.nuevoItem.codigoGrupo
       };
 
       const auxItem = this.nuevoItem;
@@ -155,7 +171,9 @@ export class ItemComponent implements OnInit {
     const itemActualizado = {
       codigo: this.nuevoItem.codigo,
       nombre: this.nuevoItem.nombre,
-      definicion: this.nuevoItem.definicion
+      definicion: this.nuevoItem.definicion,
+      alias: this.nuevoItem.alias,
+      grupoCodigo: this.nuevoItem.codigoGrupo
     };
   // this.areaAuxActualizar = this.areaNueva;
     this.itemService.update(itemActualizado).subscribe(areaResponse => {
