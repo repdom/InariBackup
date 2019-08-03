@@ -32,10 +32,9 @@ export class BloqueadosService extends DataService {
     headers.append('Authorization', this.cookieService);
     const options = new RequestOptions({ headers: headers });
 
-    return this.http.get(this.url + `/${codigoFormularioEvaluacion}/itemEspeciales`, options)
+    return this.http.get(this.url + `/${codigoFormularioEvaluacion}/itemEspeciales`)
     .pipe(
-      map(response => response.json()),
-      catchError(this.handlerError)
+      map()
     );
   }
 }

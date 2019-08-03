@@ -56,7 +56,7 @@ export class EvaluacionService extends DataService {
 
     return this.http.get(this.url + `/${codigoFormularioEvaluacion}/itemEspeciales`, options)
     .pipe(
-      map(response => response.json()),
+      map(reponse => response.json()),
       catchError(this.handlerError)
     );
   }
