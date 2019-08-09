@@ -290,6 +290,15 @@
       "type": "boolean",
       "default": "false",
       "required": false
+    },
+    "liberado": {
+      "type": "boolean",
+      "required": false
+    },
+    "hallazgos": {
+      "type": "boolean",
+      "default": "false",
+      "required": false
     }
   },
   "validations": [],

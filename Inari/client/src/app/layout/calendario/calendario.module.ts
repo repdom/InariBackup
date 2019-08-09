@@ -25,6 +25,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ColaboradorService } from '../../services/usuario/colaborador.service';
 import { AreaService } from '../../services/area/area.service';
 import { CalendarioService } from 'src/app/services/calendario/calendario.service';
+import { EvaluacionService } from 'src/app/services/evaluacion/evaluacion.service';
+import { FormularioModeloService } from 'src/app/services/formulario/formulario-modelo.service';
+import { AreaFormularioService } from '../../services/formulario/area-formulario.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,10 @@ import { CalendarioService } from 'src/app/services/calendario/calendario.servic
   providers: [
     ColaboradorService,
     AreaService,
-    CalendarioService
+    CalendarioService,
+    EvaluacionService,
+    FormularioModeloService,
+    AreaFormularioService
   ]
 })
 export class CalendarioModule { }

@@ -30,6 +30,10 @@ import { FormularioModeloService } from '../services/formulario/formulario-model
 import { ItemService } from '../services/item/item.service';
 import {NgxImageCompressService} from 'ngx-image-compress';
 import { FormulariosBloqueadosModule } from './formularios-bloqueados/formularios-bloqueados.module';
+import { ItemEspecialesComponent } from './item-especiales/item-especiales.component';
+import { ItemEspecialesModule } from './item-especiales/item-especiales.module';
+import { GrupoFormularioComponent } from './grupo-formulario/grupo-formulario.component';
+import { GrupoFormularioModule } from './grupo-formulario/grupo-formulario.module';
 
 @NgModule({
     imports: [
@@ -50,7 +54,9 @@ import { FormulariosBloqueadosModule } from './formularios-bloqueados/formulario
         ComunesModule,
         CalendarioModule,
         ListarEvaluacionModule,
-        FormulariosBloqueadosModule
+        FormulariosBloqueadosModule,
+        ItemEspecialesModule,
+        GrupoFormularioModule
     ],
     providers: [
         NgxImageCompressService

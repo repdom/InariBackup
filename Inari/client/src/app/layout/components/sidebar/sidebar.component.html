@@ -6,6 +6,12 @@
         <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/items']">
             <mat-icon class="sidenav-icon">assignment</mat-icon> {{ 'Items' | translate }}
         </a>
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/item-especiales']">
+            <mat-icon class="sidenav-icon">check_circle</mat-icon> {{ 'Items Especiales' | translate }}
+        </a>
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/grupo-formulario']">
+            <mat-icon class="sidenav-icon">chrome_reader_mode</mat-icon> {{ 'Grupos' | translate }}
+        </a>
         <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/formulario']">
             <mat-icon class="sidenav-icon">library_books</mat-icon> {{ 'Formularios' | translate }}
         </a>

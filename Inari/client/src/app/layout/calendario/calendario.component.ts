@@ -11,6 +11,9 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { formatDate, registerLocaleData } from '@angular/common';
 import swal from 'sweetalert2';
 import localePy from '@angular/common/locales/es-PY';
+import { EvaluacionService } from 'src/app/services/evaluacion/evaluacion.service';
+import { FormularioModeloService } from '../../services/formulario/formulario-modelo.service';
+import { AreaFormularioService } from 'src/app/services/formulario/area-formulario.service';
 
 
 export class AreaView {
@@ -50,7 +53,9 @@ export class CalendarioComponent implements OnInit {
 
   constructor(private colaboradoresService: ColaboradorService, private areaService: AreaService,
               private calendarioService: CalendarioService, private spinner: NgxSpinnerService,
-              private rolMappingService: RolMappingService, private changeDetectorRefs: ChangeDetectorRef) { }
+              private rolMappingService: RolMappingService, private changeDetectorRefs: ChangeDetectorRef,
+              private formularioEvaluacion: EvaluacionService, private formularioModelo: FormularioModeloService,
+              private formularioAreaServicio: AreaFormularioService) { }
 
   ngOnInit() {
     this.listarColaborador();
@@ -256,19 +261,57 @@ export class CalendarioComponent implements OnInit {
         text: 'Debe de elegir obligatoriamente los campos: Fecha de Inicio, Fecha de Finalización, Área y Evaluador',
       });
     }, () => {
-      // this.calendarios.push(calendario);
-      this.dataSource = new MatTableDataSource(this.calendarios);
-      // this.dataSource.data = this.calendarios;
-      this.changeDetectorRefs.detectChanges();
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      swal.fire(
-        'Programación agregada',
-        '',
-        'success',
-      );
-      this.spinner.hide();
-    });
+      let f = {
+        codigo: 0,
+        fechaCreacion: calendario.inicioCalendario,
+        fechaGuardado: calendario.inicioCalendario,
+        usuarioRelacionado: calendario.usuarioRelacionado,
+        formularioModeloCodigo: calendario,
+        areaCodigo: calendario.areaCodigo,
+        fechaIncial: calendario.inicioCalendario,
+        fechaFinal: calendario.finCalendario,
+        completado: false,
+        bloqueado: false
+      };
+      this.formularioAreaServicio.getAllWhereCodigoFormularioModelo(f.areaCodigo, 'area').subscribe(r => {
+        // console.log(r);
+          r.forEach(elementFormularioArea => {
+            f.formularioModeloCodigo = elementFormularioArea['formularioModelo'];
+          });
+        }, (error) => {
+          swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Debe de elegir obligatoriamente los campos: Fecha de Inicio, Fecha de Finalización, Área y Evaluador',
+          });
+          this.spinner.hide();
+        }, () => {
+          this.formularioEvaluacion.create(f).subscribe(formulario => {
+            console.log(formulario);
+          }, (error) => {
+            swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: 'Debe de elegir obligatoriamente los campos: Fecha de Inicio, Fecha de Finalización, Área y Evaluador',
+            });
+            this.spinner.hide();
+          }, () => {
+            // Eliminar foto de la esquina. Día y hora de comentario. Filtro de rojos, del más nuevo al más nuevo. Filtro por área
+            // this.calendarios.push(calendario);
+            this.dataSource = new MatTableDataSource(this.calendarios);
+            // this.dataSource.data = this.calendarios;
+            this.changeDetectorRefs.detectChanges();
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            swal.fire(
+              'Programación agregada',
+              '',
+              'success',
+            );
+            this.spinner.hide();
+          });
+        });
+      });
   }
   cargarActualizacion(calendarioCargar: Calendario) {
     this.actualizar = true;

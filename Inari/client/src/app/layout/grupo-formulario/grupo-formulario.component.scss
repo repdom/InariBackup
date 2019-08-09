@@ -15,9 +15,8 @@
     width: 100%;
 }
 table {
-    width: 100%;
+    width: 90%;
     border-radius: 15px;
-    padding-bottom: 10px;
 }
 .mat-card-title {
     color: #004380;
@@ -25,12 +24,11 @@ table {
     font-weight: bold;
 }
 .mat-card {
-    margin-top: 10px;
-    border: 3px solid #AF100C;
+    border: 3px solid #004380;
     border-radius: 15px;
 }
 .div-card {
-    border: 3px solid #AF100C;
+    border: 3px solid #004380;
     border-radius: 15px;
 }
 .mat-paginator {
@@ -38,9 +36,6 @@ table {
 }
 .columna-border {
     border-top-left-radius: 15px;
-}
-.columna-border-derecha {
-    border-top-right-radius: 15px;
 }
 .boton-rojo {
     background: #ee4238;
@@ -56,21 +51,3 @@ table {
 .eliminar-rojo {
     color: #ee4238;
 }
-.mat-grid-list {
-    overflow-y: auto;
-}
-
-.mat-card-title-letra-pequenia {
-    font-size: 14px;
-}
-
-.example-card {
-    border: 3px solid #0000;
-    border-radius: 15px;
-    margin: 10px;
-  }
-  
-  .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
-  }  

@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Items</mat-card-title>
+    <mat-card-title>Items Especiales</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <div class="mb-20" fxLayout.lt-md="column" fxFlex fxLayoutGap="50px">
@@ -19,23 +19,11 @@
         </div>
         <div fxLayout="row">
             <mat-form-field>
-                <textarea matInput placeholder="Definición" [(ngModel)]="nuevoItem.definicion" name="definicionDeArea"></textarea>
+                <textarea matInput placeholder="Definición" [(ngModel)]="nuevoItem.descripcion" name="definicionDeArea"></textarea>
             </mat-form-field>            
         </div>
         <div fxLayout="row">
-          <mat-form-field>
-              <textarea matInput placeholder="Alias" [(ngModel)]="nuevoItem.alias" name="alias"></textarea>
-          </mat-form-field>            
-        </div>
-        <div fxLayout="row">
-          <mat-form-field>
-            <mat-label>Grupo Item</mat-label>
-            <mat-select [(ngModel)]="nuevoItem.codigoGrupo" name="codigoGrupo" required>
-              <mat-option *ngFor="let grupo of grupos" [value]="grupo.codigo">
-                {{grupo.nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>          
+            <mat-checkbox [(ngModel)]="nuevoItem.importante" name="importante">Es Importante</mat-checkbox>
         </div>
       </form>
     </div>
@@ -62,9 +50,9 @@
       </ng-container>
   
       <!-- Position Column -->
-      <ng-container matColumnDef="definicion">
+      <ng-container matColumnDef="descripcion">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Definición</th>
-        <td mat-cell *matCellDef="let element"> {{element.definicion}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
       </ng-container>
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
@@ -83,5 +71,4 @@
   
     <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]">
     </mat-paginator>
-  </div>
-  
+</div>

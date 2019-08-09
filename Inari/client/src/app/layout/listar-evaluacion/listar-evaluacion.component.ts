@@ -14,7 +14,7 @@ import { AreaService } from '../../services/area/area.service';
 import swal from 'sweetalert2';
 import { SwUpdate } from '@angular/service-worker';
 import { first } from 'rxjs/operators';
-import { ItemEspecialesEvaluacion } from '../formularios-bloqueados/formularios-bloqueados.component';
+import { ItemEspecialesEvaluacion, HistorialDeFormulario } from '../formularios-bloqueados/formularios-bloqueados.component';
 // http-server -c-1 -P http://localhost:9000 .
 
 export class ItemEvaluacion {
@@ -52,6 +52,7 @@ export class Evaluacion {
   fechaCompletaCreacion = '';
   fechaCompletaGuardado = '';
   itemEspeciales?: ItemEspecialesEvaluacion[] = [];
+  historial?: HistorialDeFormulario [] = [];
 }
 
 export class Imagen {

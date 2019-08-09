@@ -16,7 +16,8 @@ import { MatInputModule,
   MatListModule,
   MatExpansionModule,
   MatSortModule,
-  MatSelectModule } from '@angular/material';
+  MatSelectModule,
+  MatFormFieldModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +28,8 @@ import { ItemEvaluacionService } from 'src/app/services/evaluacion/item-evaluaci
 import { AreaService } from 'src/app/services/area/area.service';
 import { EvaluacionService } from 'src/app/services/evaluacion/evaluacion.service';
 import { BloqueadosService } from 'src/app/services/bloqueados/bloqueados.service';
+import { CookieService } from 'ngx-cookie-service';
+import { HistorialService } from 'src/app/services/historial/historial.service';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,7 @@ import { BloqueadosService } from 'src/app/services/bloqueados/bloqueados.servic
     MatSelectModule,
     NgxViewerModule,
     NgxPrintModule,
+    MatFormFieldModule,
     FlexLayoutModule.withConfig({addFlexToParent: false})
   ],
   providers: [
@@ -62,7 +66,9 @@ import { BloqueadosService } from 'src/app/services/bloqueados/bloqueados.servic
     ItemEvaluacionService,
     EvaluacionService,
     ColaboradorService,
-    BloqueadosService
+    BloqueadosService,
+    CookieService,
+    HistorialService
   ]
 })
 export class FormulariosBloqueadosModule { }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ItemComponent } from './item.component';
 import { MatInputModule,
          MatCheckboxModule,
          MatButtonModule,
@@ -22,9 +21,12 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { ItemService } from '../../services/item/item.service';
 import { GruposService } from 'src/app/services/grupos/grupos.service';
+import { GrupoFormularioComponent } from './grupo-formulario.component';
 
 @NgModule({
-  declarations: [ItemComponent],
+  declarations: [
+    GrupoFormularioComponent
+  ],
   imports: [
     CommonModule,
     MatInputModule,
@@ -47,9 +49,9 @@ import { GruposService } from 'src/app/services/grupos/grupos.service';
     MatSortModule,
     MatSelectModule,
     FlexLayoutModule.withConfig({addFlexToParent: false})
-  ], providers: [
-    ItemService,
+  ],
+  providers: [
     GruposService
   ]
 })
-export class ItemModule { }
+export class GrupoFormularioModule { }

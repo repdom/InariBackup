@@ -9,6 +9,8 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { CalendarioComponent } from './calendario/calendario.component';
 import { ListarEvaluacionComponent } from './listar-evaluacion/listar-evaluacion.component';
 import { FormulariosBloqueadosComponent } from './formularios-bloqueados/formularios-bloqueados.component';
+import { ItemEspecialesComponent } from './item-especiales/item-especiales.component';
+import { GrupoFormularioComponent } from './grupo-formulario/grupo-formulario.component';
 
 const routes: Routes = [
     {
@@ -50,6 +52,14 @@ const routes: Routes = [
             {
                 path: 'formularios-bloqueados',
                 component: FormulariosBloqueadosComponent
+            },
+            {
+                path: 'item-especiales',
+                component: ItemEspecialesComponent
+            },
+            {
+                path: 'grupo-formulario',
+                component: GrupoFormularioComponent
             }
             /*{
                 path: 'charts',

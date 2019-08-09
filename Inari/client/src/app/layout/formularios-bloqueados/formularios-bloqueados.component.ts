@@ -18,6 +18,7 @@ import { Evaluacion, ItemEvaluacion, Imagen } from '../listar-evaluacion/listar-
 import { BloqueadosService } from 'src/app/services/bloqueados/bloqueados.service';
 import { ItemEspecialesService } from 'src/app/services/itemEspeciales/item-especiales.service';
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { HistorialService } from 'src/app/services/historial/historial.service';
 
 export class ItemEspecialesEvaluacion {
   codigo = 0;
@@ -31,10 +32,11 @@ export class ItemEspecialesEvaluacion {
 }
 
 export class HistorialDeFormulario {
-  fechaDePublicacion: string = '';
   nombreDelPublicador: string = '';
-  codigoDelPublicador: string = '';
+  codigoDelPublicador: number = 0;
   comentario: string = '';
+  codigo: number = 0;
+  formularioCodigo: number = 0;
 }
 
 @Component({
@@ -97,6 +99,7 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
   public imageSrc: string = '';
   imgResultBeforeCompress: string;
   imgResultAfterCompress: string;
+  nuevoComentario: string = '';
 
   @ViewChild('tableEvaluacionPaginator') paginatorEvaluacion: MatPaginator;
   @ViewChild('tableSortEvaluacionSort') sortEvaluacion: MatSort;
@@ -118,7 +121,8 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
               public appRef: ApplicationRef,
               private bloqueadosService: BloqueadosService,
               private itemEspecialesService: ItemEspecialesService,
-              private imageCompress: NgxImageCompressService) { }
+              private imageCompress: NgxImageCompressService,
+              private historialService: HistorialService) { }
 
   ngOnInit() {
     setTimeout(t => {
@@ -409,6 +413,38 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
           console.log(this.imgResultAfterCompress);
         }
       );*/
+    });
+  }
+
+  comentar(evaluacion: Evaluacion) {
+    let nombre = '';
+    this.spinner.show();
+    this.colaboradoresService.getFromCode(Number(this.cookieService.get('userid'))).subscribe(user => {
+      nombre = user['primerNombre'] + ' ' + user['segundoNombre'] + ' ' + user['primerApellido'] + ' ' + user['segundoApellido'];
+
+    }, (error) => {
+      this.spinner.hide();
+    }, () => {
+      const historial = {
+        nombreDelPublicador: nombre,
+        codigoDelPublicador: Number(this.cookieService.get('userid')),
+        comentario:  this.nuevoComentario,
+        formularioCodigo:  evaluacion.codigo
+      };
+      const i = evaluacion.historial.push({
+        nombreDelPublicador: historial.nombreDelPublicador,
+        codigoDelPublicador: historial.codigoDelPublicador,
+        comentario: historial.comentario,
+        codigo: 0,
+        formularioCodigo: historial.formularioCodigo
+      });
+      this.historialService.create(historial).subscribe(h => {
+        evaluacion.historial[i - 1].codigo = h['codigo'];
+      }, (error) => {
+        this.spinner.hide();
+      }, () => {
+        this.spinner.hide();
+      });
     });
   }
 
@@ -719,24 +755,32 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
               throwError('Ha fallado la carga de datos, revisar conexión de internet');
             }, () => {
             // tslint:disable-next-line:prefer-const
-              let imagenes: Imagen[] = [];
-              this.iterable.forEach(element => {
-                if (evaluacion.foto[element] !== null && evaluacion.foto[element] !== '') {
-                  imagenes.push(new Imagen(evaluacion.area.foto[element], evaluacion.foto[element]));
-                  console.log(evaluacion.foto[element]);
-                }
-                if (element === 9) {
-                  this.dataSourceImagenes = new MatTableDataSource(imagenes);
-                }
+            this.bloqueadosService.cargarHistorial(evaluacion.codigo).subscribe(
+              historial => {
+                evaluacion.historial = historial;
+              }, (error) => {
+                this.spinner.hide();
+                throwError('Ha fallado la carga de datos, revisar conexión de internet');
+              }, () => {
+                let imagenes: Imagen[] = [];
+                this.iterable.forEach(element => {
+                  if (evaluacion.foto[element] !== null && evaluacion.foto[element] !== '') {
+                    imagenes.push(new Imagen(evaluacion.area.foto[element], evaluacion.foto[element]));
+                    console.log(evaluacion.foto[element]);
+                  }
+                  if (element === 9) {
+                    this.dataSourceImagenes = new MatTableDataSource(imagenes);
+                  }
+                });
+                evaluacion.itemsEvaluados = listaItemEvaluacion;
+                this.dataSourceEvaluacion = new MatTableDataSource(evaluacion.itemsEvaluados);
+                this.dataSourceEvaluacion.paginator = this.paginatorVistaEvaluacion;
+                this.dataSourceEvaluacion.sort = this.sortVistaEvaluacion;
+                this.evaluacion = evaluacion;
+                console.log(evaluacion);
+                this.seActivo = true;
+                this.spinner.hide();
               });
-              evaluacion.itemsEvaluados = listaItemEvaluacion;
-              this.dataSourceEvaluacion = new MatTableDataSource(evaluacion.itemsEvaluados);
-              this.dataSourceEvaluacion.paginator = this.paginatorVistaEvaluacion;
-              this.dataSourceEvaluacion.sort = this.sortVistaEvaluacion;
-              this.evaluacion = evaluacion;
-              console.log(evaluacion);
-              this.seActivo = true;
-              this.spinner.hide();
             });
           });
         });

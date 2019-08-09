@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ItemComponent } from './item.component';
 import { MatInputModule,
          MatCheckboxModule,
          MatButtonModule,
@@ -20,11 +19,21 @@ import { MatInputModule,
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { ItemService } from '../../services/item/item.service';
-import { GruposService } from 'src/app/services/grupos/grupos.service';
+import { ItemEvaluacionService } from '../../services/evaluacion/item-evaluacion.service';
+import { EvaluacionService } from '../../services/evaluacion/evaluacion.service';
+import { NgxViewerModule } from 'ngx-viewer';
+import { ColaboradorService } from 'src/app/services/usuario/colaborador.service';
+import { AreaService } from '../../services/area/area.service';
+import {NgxPrintModule} from 'ngx-print';
+import { BloqueadosService } from '../../services/bloqueados/bloqueados.service';
+import { ItemEspecialesService } from 'src/app/services/itemEspeciales/item-especiales.service';
+import { ItemEspecialesComponent } from './item-especiales.component';
+
 
 @NgModule({
-  declarations: [ItemComponent],
+  declarations: [
+    ItemEspecialesComponent
+  ],
   imports: [
     CommonModule,
     MatInputModule,
@@ -46,10 +55,12 @@ import { GruposService } from 'src/app/services/grupos/grupos.service';
     MatExpansionModule,
     MatSortModule,
     MatSelectModule,
+    NgxViewerModule,
+    NgxPrintModule,
     FlexLayoutModule.withConfig({addFlexToParent: false})
-  ], providers: [
-    ItemService,
-    GruposService
+  ],
+  providers: [
+    ItemEspecialesService
   ]
 })
-export class ItemModule { }
+export class ItemEspecialesModule { }
