@@ -18,7 +18,7 @@ module.exports = function (FormularioEvaluacion) {
     
                     });*/
                     if (result.bloqueado === true) {
-                        app.models.Area.find({where: {codigo: result.areaCodigo}}, function(err, result){
+                        FormularioEvaluacion.app.models.Area.find({where: {codigo: result.areaCodigo}}, function(err, result){
                             // result.forEach(e => {console.log(e.nombre)});
                             // console.log(result);
                             // cb(err);
