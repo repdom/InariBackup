@@ -153,7 +153,8 @@
   </mat-card-content>
   <mat-card-actions>
       <button mat-button class="boton-amarillo" *ngIf="seActivo" (click)="guardarFormularioBloqueado(evaluacion)">Guardar</button>
-      <button class="boton-rojo" mat-button *ngIf="seActivo" (click)="cancelar()">Cancelar</button> 
+      <button class="boton-rojo" mat-button *ngIf="seActivo" (click)="cancelar()">Cancelar</button>
+      <button style="background: #2CA552; color: #fff; " mat-button *ngIf="seActivo" [disabled]="listaParaLiberar" (click)="liberarFormularioBloqueado(evaluacion)">Liberar Área</button> 
   </mat-card-actions>
 </mat-card>
 <mat-form-field>

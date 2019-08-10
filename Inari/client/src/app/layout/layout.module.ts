@@ -34,6 +34,8 @@ import { ItemEspecialesComponent } from './item-especiales/item-especiales.compo
 import { ItemEspecialesModule } from './item-especiales/item-especiales.module';
 import { GrupoFormularioComponent } from './grupo-formulario/grupo-formulario.component';
 import { GrupoFormularioModule } from './grupo-formulario/grupo-formulario.module';
+import { FormulariosLiberadosModule } from './formularios-liberados/formularios-liberados.module';
+import { ColaMensajeriaModule } from './cola-mensajeria/cola-mensajeria.module';
 
 @NgModule({
     imports: [
@@ -56,7 +58,9 @@ import { GrupoFormularioModule } from './grupo-formulario/grupo-formulario.modul
         ListarEvaluacionModule,
         FormulariosBloqueadosModule,
         ItemEspecialesModule,
-        GrupoFormularioModule
+        GrupoFormularioModule,
+        FormulariosLiberadosModule,
+        ColaMensajeriaModule
     ],
     providers: [
         NgxImageCompressService

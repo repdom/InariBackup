@@ -12,6 +12,10 @@
         <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/grupo-formulario']">
             <mat-icon class="sidenav-icon">chrome_reader_mode</mat-icon> {{ 'Grupos' | translate }}
         </a>
+        <!--cola-mensajeria-->
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/cola-mensajeria']">
+            <mat-icon class="sidenav-icon">email</mat-icon> {{ 'Cola Mensajería' | translate }}
+        </a>
         <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/formulario']">
             <mat-icon class="sidenav-icon">library_books</mat-icon> {{ 'Formularios' | translate }}
         </a>
@@ -30,7 +34,10 @@
         <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/formularios-bloqueados']">
             <mat-icon class="sidenav-icon">warning</mat-icon> {{ 'Formularios Bloqueados' | translate }}
         </a>
-        <!--formularios-bloqueados-->
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/formularios-liberados']">
+            <mat-icon class="sidenav-icon">beenhere</mat-icon> {{ 'Formularios Liberados' | translate }}
+        </a>
+        <!--formularios-bloqueados formularios-liberados-->
         <!--<a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/charts']">
             <mat-icon class="sidenav-icon">bar_chart</mat-icon> {{ 'Charts' | translate }}
         </a>

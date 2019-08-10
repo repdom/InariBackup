@@ -17,6 +17,32 @@ module.exports = function (FormularioEvaluacion) {
                     itemEvaluacion.create(items, function(err, result) {
     
                     });*/
+                    if (result.bloqueado === true) {
+                        app.models.Area.find({where: {codigo: result.areaCodigo}}, function(err, result){
+                            // result.forEach(e => {console.log(e.nombre)});
+                            // console.log(result);
+                            // cb(err);
+                            result.forEach(e => {
+                                // console.log(e.nombre)
+                                FormularioEvaluacion.app.models.ColaMensajeria.find({}, function(err, result) {
+                                    // cosole.log(result);
+                                    result.forEach(function(element) {
+                                        FormularioEvaluacion.app.models.Email.send({
+                                            to: element.email,
+                                            from: 'juan.thomas.angel@gmail.com',
+                                            subject: `Area ${e.nombre} Bloqueada`,
+                                            text: `Area ${e.nombre} Bloqueada por culpa de incumplimiento grave`,
+                                            html:  `Favor comunicarse con el administrador del área<em>${e.nombre}</em>`
+                                          }, function(err, mail) {
+                                            console.log('email sent!');
+                                            cb(err);
+                                          });
+                                    });
+                                });        
+                            });
+                         });                    
+                    }
+
                     var formularioCompleto = {};
                     formularioCompleto.formulario = result;
                     let formularioCodigo = result.codigo;

@@ -20,31 +20,12 @@ import { ItemEspecialesService } from 'src/app/services/itemEspeciales/item-espe
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { HistorialService } from 'src/app/services/historial/historial.service';
 
-export class ItemEspecialesEvaluacion {
-  codigo = 0;
-  nombre = '';
-  importante = false;
-  cumplido = false ;
-  fechaSolicitada = '';
-  fechaAprobada = '';
-  formularioEvaluacionCodigo = 0;
-  codigoItemEspeciales = 1;
-}
-
-export class HistorialDeFormulario {
-  nombreDelPublicador: string = '';
-  codigoDelPublicador: number = 0;
-  comentario: string = '';
-  codigo: number = 0;
-  formularioCodigo: number = 0;
-}
-
 @Component({
-  selector: 'app-formularios-bloqueados',
-  templateUrl: './formularios-bloqueados.component.html',
-  styleUrls: ['./formularios-bloqueados.component.scss']
+  selector: 'app-formularios-liberados',
+  templateUrl: './formularios-liberados.component.html',
+  styleUrls: ['./formularios-liberados.component.scss']
 })
-export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
+export class FormulariosLiberadosComponent implements OnInit, AfterViewInit {
   evaluacionColumns = ['formularioNombre',
                         'fechaCompletaCreacion',
                         'fechaCompletaGuardado',
@@ -186,7 +167,7 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
     }*/
     this.listaEvaluacion = [];
     // tslint:disable-next-line:max-line-length
-    this.bloqueadosService.getFilteredPagination(true, this.tamPagina * pageEvent.pageIndex, this.tamPagina).subscribe(responseEvaluacion => {
+    this.bloqueadosService.getFilteredPaginationLiberados(true, this.tamPagina * pageEvent.pageIndex, this.tamPagina).subscribe(responseEvaluacion => {
       console.log(responseEvaluacion);
       this.spinner.show();
       responseEvaluacion.forEach(elementEvaluacion => {
@@ -470,12 +451,11 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
         }, (error) => {
           return throwError('Ha fallado el liberar la evaluación, revisar conexión de internet');
         }, () => {
-          // this.spinner.hide();
+          this.spinner.hide();
           this.abrir = false;
           this.seActivo = false;
           this.listaParaLiberar = false;
-          // this.evaluacion = new Evaluacion();
-          this.guardarFormularioBloqueado(evaluacion);
+          this.evaluacion = new Evaluacion();
           this.listaEvaluacion.splice(this.listaEvaluacion.findIndex(c => c.codigo === evaluacion.codigo), 1);
           this.dataSource.data = [];
           this.dataSource.data = this.listaEvaluacion;
@@ -555,8 +535,6 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
       }, () => {
         this.spinner.hide();
         this.listaParaLiberar = false;
-        this.abrir = false;
-        this.seActivo = false;
       });
     });
   }
@@ -574,7 +552,7 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
 
   listarEvaluaciones() {
     this.spinner.show();
-    this.bloqueadosService.getFilteredPagination(true, this.indicePagina, this.tamPagina).subscribe(responseEvaluacion => {
+    this.bloqueadosService.getFilteredPaginationLiberados(true, this.indicePagina, this.tamPagina).subscribe(responseEvaluacion => {
       console.log(responseEvaluacion);
       this.spinner.show();
       responseEvaluacion.forEach(elementEvaluacion => {

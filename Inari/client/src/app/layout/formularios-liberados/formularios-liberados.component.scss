@@ -25,11 +25,12 @@ table {
     font-weight: bold;
 }
 .mat-card {
-    border: 3px solid #004380;
+    margin-top: 10px;
+    border: 3px solid #2CA552;
     border-radius: 15px;
 }
 .div-card {
-    border: 3px solid #004380;
+    border: 3px solid #2CA552;
     border-radius: 15px;
 }
 .mat-paginator {
@@ -59,23 +60,17 @@ table {
     overflow-y: auto;
 }
 
-.semafaro-rojo {
-    width:30px;
-    height:30px;
-    border-radius: 50px;
-    background: #ee4238; 
+.mat-card-title-letra-pequenia {
+    font-size: 14px;
 }
 
-.semafaro-verde {
-    background: #2CA552;
-    border-radius: 50px;
-    width:30px;
-    height:30px;
-}
-
-.semafaro-amarillo {
-    border-radius: 50px;
-    background: #fcdd24;
-    width:30px;
-    height:30px;
-}
+.example-card {
+    border: 3px solid #0000;
+    border-radius: 15px;
+    margin: 10px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }  

@@ -11,6 +11,8 @@ import { ListarEvaluacionComponent } from './listar-evaluacion/listar-evaluacion
 import { FormulariosBloqueadosComponent } from './formularios-bloqueados/formularios-bloqueados.component';
 import { ItemEspecialesComponent } from './item-especiales/item-especiales.component';
 import { GrupoFormularioComponent } from './grupo-formulario/grupo-formulario.component';
+import { FormulariosLiberadosComponent } from './formularios-liberados/formularios-liberados.component';
+import { ColaMensajeriaComponent } from './cola-mensajeria/cola-mensajeria.component';
 
 const routes: Routes = [
     {
@@ -60,6 +62,14 @@ const routes: Routes = [
             {
                 path: 'grupo-formulario',
                 component: GrupoFormularioComponent
+            },
+            {
+                path: 'formularios-liberados',
+                component: FormulariosLiberadosComponent
+            },
+            {
+                path: 'cola-mensajeria',
+                component: ColaMensajeriaComponent
             }
             /*{
                 path: 'charts',

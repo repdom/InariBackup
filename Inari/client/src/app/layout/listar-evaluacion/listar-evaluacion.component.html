@@ -134,8 +134,18 @@
         <td mat-cell *matCellDef="let element">{{ element.formularioNombre }}</td>
       </ng-container>
       <ng-container matColumnDef="fechaCompletaCreacion">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Creación </th>
-        <td mat-cell *matCellDef="let element"> {{ element.fechaCompletaCreacion }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+        <td mat-cell *matCellDef="let element">  
+          <div [class.semafaro-amarillo]="element.hallazgos == true && element.bloqueado == false">
+
+          </div>
+          <div [class.semafaro-rojo]="element.bloqueado == true">
+
+          </div>
+          <div [class.semafaro-verde]="element.hallazgos == false || element.hallazgos == null">
+
+          </div>  
+        </td>
       </ng-container>
       <ng-container matColumnDef="fechaCompletaGuardado">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Envío </th>

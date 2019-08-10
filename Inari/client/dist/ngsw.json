@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1565387024300,
+  "timestamp": 1565438662853,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -8,16 +8,16 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/2.f2d15a87da745ca13b13.js",
-        "/6.00dd9d108109bc481835.js",
+        "/2.fc7e213a202ca0aeb8fb.js",
+        "/6.488112c4daf6a8fe923d.js",
         "/7.9b058fe2bccfcbe4ed09.js",
         "/8.9482213346c1b3aa054a.js",
         "/common.983726262e5cf01c2372.js",
         "/favicon.ico",
         "/index.html",
-        "/main.4d724a3c20765a3a60b7.js",
+        "/main.9583154fcdbd8f0ca476.js",
         "/polyfills.9d9805779ee64a075676.js",
-        "/runtime.a9232c4964b26797cacf.js",
+        "/runtime.bedb398c8bc58eba8244.js",
         "/scripts.9647d8a60788a64b71d6.js",
         "/styles.01381cf289f01493a06d.css"
       ],
@@ -56,11 +56,14 @@
       "name": "inari",
       "patterns": [
         "\\/api\\/Areas\\/.*",
-        "\\/api\\/\\/Calendarios\\/.*",
+        "\\/api\\/Calendarios\\/.*",
         "\\/api\\/FormulariosAreas\\/.*",
         "\\/api\\/FormularioModeloItems\\/.*",
         "\\/api\\/FormularioModelos\\/.*",
-        "\\/api\\/Items\\/.*"
+        "\\/api\\/Items\\/.*",
+        "\\/api\\/ItemEspecialesEvaluacions\\/.*",
+        "\\/api\\/ItemEspeciales\\/.*",
+        "\\/api\\/Grupos\\/.*"
       ],
       "strategy": "performance",
       "maxSize": 1000,
@@ -69,8 +72,8 @@
     }
   ],
   "hashTable": {
-    "/2.f2d15a87da745ca13b13.js": "0525d6fe2447d0656fb2f62952bc1f5189ed215e",
-    "/6.00dd9d108109bc481835.js": "de10259a28645f04747c2ab782642001e5131efa",
+    "/2.fc7e213a202ca0aeb8fb.js": "a92e9aaf783757ec3474e01996f7a1c0af9e809e",
+    "/6.488112c4daf6a8fe923d.js": "73f43dea412976f3dd043e43a18358c490318bbd",
     "/7.9b058fe2bccfcbe4ed09.js": "efcc7ea293b2c3570e3d3a17395721fe3103a219",
     "/8.9482213346c1b3aa054a.js": "64a60d89eae9c18b918e95db25e67ee37335c29f",
     "/assets/fonts/FontinSans/Fontin_Sans_B.otf": "35845d36e336191f9db678a9c55ea3bcff92dfe4",
@@ -94,10 +97,10 @@
     "/assets/images/card-3.jpg": "a2eb1ac502716c05d32d01ef01ab60a2a9ca62ef",
     "/common.983726262e5cf01c2372.js": "6300b12ef4c6e269a858fd1eea3f9e0369fb76b0",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "4a3a7a2dd992faa5217c0b2edf1ebf199293d0c2",
-    "/main.4d724a3c20765a3a60b7.js": "ad6a51253112bf46b9c04024257c9a712fe6ee80",
+    "/index.html": "ba688a2fec1403d54ceec0063e27ff343572f891",
+    "/main.9583154fcdbd8f0ca476.js": "ad6a51253112bf46b9c04024257c9a712fe6ee80",
     "/polyfills.9d9805779ee64a075676.js": "0539414b7b5be4fc511f66b4065ea0c70a455c86",
-    "/runtime.a9232c4964b26797cacf.js": "f1d9a8708736b9ca48fefc2ec3d17ca9139fdd6d",
+    "/runtime.bedb398c8bc58eba8244.js": "b1b8901ee4d316fd2e0981e70c660426fc0cfdaa",
     "/scripts.9647d8a60788a64b71d6.js": "f78dd81ce664813c931d74c675a784abf64c448a",
     "/styles.01381cf289f01493a06d.css": "879be2734ce899f09cc4f56402a2a387b51817cf"
   },

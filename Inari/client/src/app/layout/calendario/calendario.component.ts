@@ -229,7 +229,7 @@ export class CalendarioComponent implements OnInit {
   }
   agregarCalendario() {
     this.spinner.show();
-    const calendario = {
+    let calendario = {
       codigo: 0,
       inicioCalendario: this.nuevoCalendario.inicioCalendario,
       finCalendario: this.nuevoCalendario.finCalendario,
@@ -251,6 +251,7 @@ export class CalendarioComponent implements OnInit {
     this.nuevoCalendario = new Calendario();
     this.calendarioService.create(calendario).subscribe(calendarioResponse => {
       this.calendarios[indice - 1].codigo = calendarioResponse['codigo'];
+      calendario.codigo = calendarioResponse['codigo'];
     }, (error) => {
       this.nuevoCalendario = calendarioAux;
       this.calendarios.pop();
@@ -271,7 +272,8 @@ export class CalendarioComponent implements OnInit {
         fechaIncial: calendario.inicioCalendario,
         fechaFinal: calendario.finCalendario,
         completado: false,
-        bloqueado: false
+        bloqueado: false,
+        calendario: calendario.codigo
       };
       this.formularioAreaServicio.getAllWhereCodigoFormularioModelo(f.areaCodigo, 'area').subscribe(r => {
         // console.log(r);
@@ -381,14 +383,21 @@ export class CalendarioComponent implements OnInit {
         }, (error) => {
           return throwError('Ha fallado el eliminar el programa, revisar conexión de internet');
         }, () => {
-          this.calendarios.splice(this.calendarios.findIndex(c => c.codigo === calendarioCargar.codigo), 1);
-          this.dataSource.data = [];
-          this.dataSource.data = this.calendarios;
-          swal.fire(
-            '!Eliminado con exito¡',
-            'La programación ha sido eliminada con exito.',
-            'success'
-          );
+          // this.calendarioService.
+          this.calendarioService.borrarFormulario(calendarioActualizada.codigo).subscribe(r => {
+            console.log(r);
+          }, (error) => {
+            return throwError('Ha fallado el eliminar el programa, revisar conexión de internet');
+          }, () => {
+            this.calendarios.splice(this.calendarios.findIndex(c => c.codigo === calendarioCargar.codigo), 1);
+            this.dataSource.data = [];
+            this.dataSource.data = this.calendarios;
+            swal.fire(
+              '!Eliminado con exito¡',
+              'La programación ha sido eliminada con exito.',
+              'success'
+            );
+          });
         });
       }
     });

@@ -84,7 +84,7 @@ function defaultGrupos(app) {
                  console.log(`===== OK ${grupo.nombre} =====`);
                }
            );
-     });   
+     });
 };
 
 function defaultItemsEspeciales(app) {

@@ -28,11 +28,14 @@
       "name": "inari",
       "urls": [
         "/api/Areas/**",
-        "/api//Calendarios/**",
+        "/api/Calendarios/**",
         "/api/FormulariosAreas/**",
         "/api/FormularioModeloItems/**",
         "/api/FormularioModelos/**",
-        "/api/Items/**"
+        "/api/Items/**",
+        "/api/ItemEspecialesEvaluacions/**",
+        "/api/ItemEspeciales/**",
+        "/api/Grupos/**"
       ],
       "cacheConfig": {
         "strategy": "performance",
