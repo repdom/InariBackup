@@ -308,7 +308,7 @@
     },
     "calendario": {
       "type": "number",
-      "required": true
+      "required": false
     }
   },
   "validations": [],
