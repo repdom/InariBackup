@@ -41,7 +41,7 @@ module.exports = function (FormularioEvaluacion) {
                                                     html:  `Favor comunicarse con el administrador del área<em>${e.nombre}</em>`
                                                   }, function(err, mail) {
                                                     console.log('email sent!');
-                                                    cb(err);
+                                                    // cb(err);
                                                   });
                                             });    
                                         }
