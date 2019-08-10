@@ -49,6 +49,18 @@ export class EvaluacionService extends DataService {
     );
   }
 
+  getFiltradoPaginacionConHallazgos(pagina: number, desde: number, tamPagina: number) {
+    const headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json'});
+    headers.append('Authorization', this.cookieService);
+    const options = new RequestOptions({ headers: headers });
+    // tslint:disable-next-line:max-line-length
+    return this.http.get(this.url + `?filter={"limit": "${tamPagina}", "skip": "${desde}", "where": {"and":[{"or": [{"completado": true}, {"completado":null}]}, {"or": [{"liberado": true}, {"bloqueado": null}]}]}, "fields": {"codigo": true, "fechaCreacion": true, "fechaGuardado":true, "usuarioRelacionado": true, "formularioModeloCodigo": true, "areaCodigo": true, "bloqueado": true, "liberado": true, "hallazgos": true}, "order": "fechaGuardado DESC"}`, options)
+    .pipe(
+      map(response => response.json()),
+      catchError(this.handlerError)
+    );
+  }
+
   getItemEspecialeEvaluacion(codigoFormularioEvaluacion: number) {
     const headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json'});
     headers.append('Authorization', this.cookieService);
@@ -73,6 +85,18 @@ export class EvaluacionService extends DataService {
     );
   }
 
+  contar() {
+    const headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json'});
+    headers.append('Authorization', this.cookieService);
+    const options = new RequestOptions({ headers: headers });
+    // tslint:disable-next-line:max-line-length
+    return this.http.get(this.url + `/count?where={"and":[{"or": [{"completado": true}, {"completado":null}]}, {"or": [{"liberado": true}, {"bloqueado": null}]}]}`, options)
+    .pipe(
+      map(response => response.json()),
+      catchError(this.handlerError)
+    );
+  }
+
   /*getCantidad() {
     const headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json'});
     headers.append('Authorization', this.cookieService);
@@ -84,4 +108,6 @@ export class EvaluacionService extends DataService {
       catchError(this.handlerError)
     );
   }*/
+
+  // {"and":[{"or": [{"completado": true}, {"completado":null}]}, {"or": [{"liberado": true}, {"bloqueado": null}]}]}
 }

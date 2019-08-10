@@ -28,7 +28,13 @@
         "model": "Historial",
         "foreignKey": "formularioCodigo",
         "primaryKey": "codigo"
-      }
+      },
+      "calendarioProgramacion": {
+        "type": "belongsTo",
+        "model": "Calendario",
+        "foreignKey": "calendario",
+        "primaryKey": "codigo"
+      }  
     }
   },
   "properties": {
@@ -299,6 +305,10 @@
       "type": "boolean",
       "default": "false",
       "required": false
+    },
+    "calendario": {
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],

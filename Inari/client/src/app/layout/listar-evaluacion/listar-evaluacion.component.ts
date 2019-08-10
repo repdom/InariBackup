@@ -46,6 +46,10 @@ export class Evaluacion {
   administradorDeArea = '';
   areaNombre = '';
   nombreEvaluador = '';
+  completado?: boolean = false;
+  bloqueado?: boolean = false;
+  liberado?: boolean = true;
+  hallazgos?: boolean = false;
   evaluador: Colaborador;
   foto = ['', '', '', '', '', '', '', '', '', ''];
   itemsEvaluados: ItemEvaluacion[] = [];
@@ -170,7 +174,8 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
       this.acumuladorPagina -= this.tamAnterior;
     }*/
     this.listaEvaluacion = [];
-    this.evaluacionService.getFilteredPagination(0, this.tamPagina * pageEvent.pageIndex, this.tamPagina).subscribe(responseEvaluacion => {
+    // tslint:disable-next-line:max-line-length
+    this.evaluacionService.getFiltradoPaginacionConHallazgos(0, this.tamPagina * pageEvent.pageIndex, this.tamPagina).subscribe(responseEvaluacion => {
       console.log(responseEvaluacion);
       this.spinner.show();
       responseEvaluacion.forEach(elementEvaluacion => {
@@ -182,6 +187,10 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
           usuarioRelacionado: elementEvaluacion['usuarioRelacionado'],
           formularioModeloCodigo: elementEvaluacion['formularioModeloCodigo'],
           areaCodigo: elementEvaluacion['areaCodigo'],
+          completado: elementEvaluacion['completado'],
+          bloqueado: elementEvaluacion['bloqueado'],
+          liberado: elementEvaluacion['liberado'],
+          hallazgos: elementEvaluacion['hallazgos'],
           foto: [],
           itemsEvaluados: [],
           area: new Area(),
@@ -330,7 +339,7 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
 
   cargarCantidad() {
     const c = 0;
-    this.evaluacionService.count().subscribe(r => {
+    this.evaluacionService.contar().subscribe(r => {
       this.cantidadEvaluaciones = r['count'];
     }, (error) => {
       throwError('Ha fallado la carga de datos, revisar conexión de internet');
@@ -341,7 +350,7 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
 
   listarEvaluaciones() {
     this.spinner.show();
-    this.evaluacionService.getFilteredPagination(0, this.indicePagina, this.tamPagina).subscribe(responseEvaluacion => {
+    this.evaluacionService.getFiltradoPaginacionConHallazgos(0, this.indicePagina, this.tamPagina).subscribe(responseEvaluacion => {
       console.log(responseEvaluacion);
       this.spinner.show();
       responseEvaluacion.forEach(elementEvaluacion => {
@@ -353,6 +362,10 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
           usuarioRelacionado: elementEvaluacion['usuarioRelacionado'],
           formularioModeloCodigo: elementEvaluacion['formularioModeloCodigo'],
           areaCodigo: elementEvaluacion['areaCodigo'],
+          completado: elementEvaluacion['completado'],
+          bloqueado: elementEvaluacion['bloqueado'],
+          liberado: elementEvaluacion['liberado'],
+          hallazgos: elementEvaluacion['hallazgos'],
           foto: [],
           itemsEvaluados: [],
           area: new Area(),

@@ -11,7 +11,13 @@
         "model": "Area",
         "type": "belongsTo",
         "foreignKey": "areaCodigo"
-      }
+      },
+      "formularioEvaluacion": {
+        "type": "hasOne",
+        "model": "FormularioEvaluacion",
+        "foreignKey": "calendario",
+        "primaryKey": "codigo"
+      }  
     }
   },
   "properties": {
