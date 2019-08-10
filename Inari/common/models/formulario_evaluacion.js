@@ -23,14 +23,14 @@ module.exports = function (FormularioEvaluacion) {
                             // console.log(result);
                             // cb(err);
                             if (err) {
-                                cb(err);
+                                // cb(err);
                             } else {
                                 result.forEach(function(e) {
                                     // console.log(e.nombre)
                                     FormularioEvaluacion.app.models.ColaMensajeria.find({}, function(err, result) {
                                         // cosole.log(result);
                                         if (err) {
-                                            cb(err);
+                                            // cb(err);
                                         } else {
                                             result.forEach(function(element) {
                                                 FormularioEvaluacion.app.models.Email.send({
