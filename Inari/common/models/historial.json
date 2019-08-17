@@ -24,7 +24,8 @@
           "type": "number"
       },
       "fechaEnvio": {
-        "type": "date"
+        "type": "date",
+        "default": "$now"
       }
     },
     "validations": [],
