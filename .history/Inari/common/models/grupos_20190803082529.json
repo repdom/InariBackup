@@ -1,0 +1,26 @@
+{
+    "name": "Grupos",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+        "codigo": {
+            "type": "number",
+            "id": true,
+            "generated": true        
+        },
+    "nombre": {
+        "type": "string",
+        "required": true
+      },
+      "descripcion": {
+        "type": "string"
+      }
+    },
+    "validations": [],
+    "relations": {
+    },
+    "acls": [],
+    "methods": {}
+}  

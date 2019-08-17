@@ -1,0 +1,23 @@
+{
+    "name": "ColaMensajeria",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+        "codigo": {
+            "type": "number",
+            "id": true,
+            "generated": true        
+        },
+    "nombreDelPublicador": {
+        "type": "string",
+        "required": true
+      },
+      "email"
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {}
+}  

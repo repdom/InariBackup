@@ -35,10 +35,10 @@ module.exports = function (FormularioEvaluacion) {
                                             result.forEach(function(element) {
                                                 FormularioEvaluacion.app.models.Email.send({
                                                     to: element.email,
-                                                    from: 'juan.thomas.angel@gmail.com',
+                                                    from: 'area.en.rojo@gmail.com',
                                                     subject: `Area ${e.nombre} Bloqueada`,
                                                     text: `Area ${e.nombre} Bloqueada por culpa de incumplimiento grave`,
-                                                    html:  `Favor comunicarse con el administrador del área<em>${e.nombre}</em>`
+                                                    html:  `Favor comunicarse con el administrador del área <em>${e.nombre}</em>`
                                                   }, function(err, mail) {
                                                     console.log('email sent!');
                                                     console.log(mail);

@@ -1,0 +1,89 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "Area": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "Calendario": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "FormularioEvaluacion": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "FormularioModelo": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "FormularioModeloItem": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "Item": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "ItemEvaluacion": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "colaborador": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "ACL": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "Role": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "RoleMapping": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "AccessToken": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "FormularioArea": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "ItemEspeciales": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "Grupos": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "ItemEspecialesEvaluacion": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "Historial": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "ColaMensajeria": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  ""
+}

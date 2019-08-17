@@ -26,7 +26,7 @@ module.exports = function(app) {
     defaultRoles(app);
     crearUsuarioAdministrador(app);
     defaultGrupos(app);
-    defaultItemsEspeciales(app)
+    defaultItemsEspeciales(app);
     // crearConfiguracion(app);
   });
 };

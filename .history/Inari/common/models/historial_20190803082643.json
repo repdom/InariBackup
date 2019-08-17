@@ -1,0 +1,31 @@
+{
+    "name": "Historial",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+        "codigo": {
+            "type": "number",
+            "id": true,
+            "generated": true        
+        },
+    "nombreDelPublicador": {
+        "type": "string",
+        "required": true
+      },
+      "comentario": {
+        "type": "string"
+      }
+    },
+    "codigoDelPublicador": {
+        "type": "number"
+    },
+    "formularioCodigo": {
+        
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {}
+}  
