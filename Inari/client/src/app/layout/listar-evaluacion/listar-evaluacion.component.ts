@@ -144,6 +144,7 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
   indicePagina = 0;
   acumuladorPagina = 0;
   tamAnterior = 0;
+  public rol: string;
 
   @ViewChild('tableEvaluacionPaginator') paginatorEvaluacion: MatPaginator;
   @ViewChild('tableSortEvaluacionSort') sortEvaluacion: MatSort;
@@ -165,6 +166,7 @@ export class ListarEvaluacionComponent implements OnInit, AfterViewInit {
               public appRef: ApplicationRef) { }
 
   ngOnInit() {
+    this.rol = this.cookieService.get('role');
     setTimeout(t => {
       this.cargarCantidad();
     }, 1000);

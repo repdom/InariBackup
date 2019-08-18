@@ -38,8 +38,8 @@ export class TopnavComponent implements OnInit {
         this.router.navigate(['/login']);
         this.cookieService.delete('userid');
         this.cookieService.delete('access_token');
+        this.cookieService.delete('role');
     }
-
     changeLang(language: string) {
         this.translate.use(language);
     }

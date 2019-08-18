@@ -19,6 +19,7 @@ import { BloqueadosService } from 'src/app/services/bloqueados/bloqueados.servic
 import { ItemEspecialesService } from 'src/app/services/itemEspeciales/item-especiales.service';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { HistorialService } from 'src/app/services/historial/historial.service';
+import { HistorialDeFormulario } from '../formularios-bloqueados/formularios-bloqueados.component';
 
 @Component({
   selector: 'app-formularios-liberados',
@@ -490,10 +491,12 @@ export class FormulariosLiberadosComponent implements OnInit, AfterViewInit {
         codigoDelPublicador: historial.codigoDelPublicador,
         comentario: historial.comentario,
         codigo: 0,
-        formularioCodigo: historial.formularioCodigo
+        formularioCodigo: historial.formularioCodigo,
+        fechaEnvio: ''
       });
       this.historialService.create(historial).subscribe(h => {
         evaluacion.historial[i - 1].codigo = h['codigo'];
+        evaluacion.historial[i - 1].fechaEnvio = new DatePipe('es-ES').transform(h['fechaEnvio'], 'MMMM d, y, h:mm:ss');
       }, (error) => {
         this.spinner.hide();
       }, () => {
@@ -811,9 +814,20 @@ export class FormulariosLiberadosComponent implements OnInit, AfterViewInit {
               throwError('Ha fallado la carga de datos, revisar conexión de internet');
             }, () => {
             // tslint:disable-next-line:prefer-const
+            evaluacion.historial = [];
             this.bloqueadosService.cargarHistorial(evaluacion.codigo).subscribe(
               historial => {
-                evaluacion.historial = historial;
+                historial.forEach(e => {
+                  const h: HistorialDeFormulario = {
+                    nombreDelPublicador: e['nombreDelPublicador'],
+                    codigoDelPublicador: e[''],
+                    comentario: e['comentario'],
+                    codigo: e['codigo'],
+                    formularioCodigo: e['formularioCodigo'],
+                    fechaEnvio: new DatePipe('es-ES').transform(e['fechaEnvio'], 'MMMM d, y, h:mm:ss')
+                  };
+                  evaluacion.historial.push(h);
+                });
               }, (error) => {
                 this.spinner.hide();
                 throwError('Ha fallado la carga de datos, revisar conexión de internet');

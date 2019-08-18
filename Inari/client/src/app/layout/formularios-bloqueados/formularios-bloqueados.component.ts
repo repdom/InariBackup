@@ -29,6 +29,7 @@ export class ItemEspecialesEvaluacion {
   fechaAprobada = '';
   formularioEvaluacionCodigo = 0;
   codigoItemEspeciales = 1;
+  vinoDeServidor?: boolean = false;
 }
 
 export class HistorialDeFormulario {
@@ -37,6 +38,7 @@ export class HistorialDeFormulario {
   comentario: string = '';
   codigo: number = 0;
   formularioCodigo: number = 0;
+  fechaEnvio = '';
 }
 
 @Component({
@@ -122,6 +124,8 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
   nuevoComentario: string = '';
   cantItemsEspeciales: number = 0;
   listaParaLiberar = true;
+  public rol: string;
+  public tienePermiso = true;
 
   @ViewChild('tableEvaluacionPaginator') paginatorEvaluacion: MatPaginator;
   @ViewChild('tableSortEvaluacionSort') sortEvaluacion: MatSort;
@@ -147,6 +151,12 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
               private historialService: HistorialService) { }
 
   ngOnInit() {
+    this.rol = this.cookieService.get('role');
+
+    if (this.rol === 'Administrador' || this.rol === 'Audior Lider') {
+      this.tienePermiso = false;
+    }
+
     setTimeout(t => {
       this.cantItemEspeciales();
     }, 1000);
@@ -193,17 +203,6 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
     this.indicePagina = pageEvent.pageIndex + 1;
     this.tamAnterior = this.tamPagina;
     this.tamPagina = pageEvent.pageSize;
-    // this.cantidadEvaluaciones = pageEvent.length;
-    /*if (pageEvent.previousPageIndex > pageEvent.pageIndex && pageEvent.length !== this.listaEvaluacion.length) {
-      this.acumuladorPagina += this.tamPagina;
-      console.log(this.acumuladorPagina);
-    } else if (pageEvent.previousPageIndex === pageEvent.pageIndex && pageEvent.pageSize > this.tamAnterior) {
-      // this.acumuladorPagina -= this.tamPagina;
-      this.acumuladorPagina += this.tamAnterior;
-      console.log(this.acumuladorPagina);
-    } else if (pageEvent.previousPageIndex > pageEvent.pageIndex && pageEvent.pageSize < this.tamAnterior) {
-      this.acumuladorPagina -= this.tamAnterior;
-    }*/
     this.listaEvaluacion = [];
     // tslint:disable-next-line:max-line-length
     this.bloqueadosService.getFilteredPagination(true, this.tamPagina * pageEvent.pageIndex, this.tamPagina).subscribe(responseEvaluacion => {
@@ -237,16 +236,6 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
         this.areaService.getFromCodeLimited(elementEvaluacion['areaCodigo']).subscribe(responseArea => {
           // tslint:disable-next-line:prefer-const
           area.nombre = responseArea['nombre'];
-          /*area.foto[0] = responseArea['foto1'];
-          area.foto[1] = responseArea['foto2'];
-          area.foto[2] = responseArea['foto3'];
-          area.foto[3] = responseArea['foto4'];
-          area.foto[4] = responseArea['foto5'];
-          area.foto[5] = responseArea['foto6'];
-          area.foto[6] = responseArea['foto7'];
-          area.foto[7] = responseArea['foto8'];
-          area.foto[8] = responseArea['foto9'];
-          area.foto[9] = responseArea['foto10'];*/
           this.colaboradoresService.getFromCode(responseArea['usuarioAdministradorArea']).subscribe(responseColaborador => {
             const colaboradr: Colaborador = {
               primerNombre: responseColaborador['primerNombre'],
@@ -289,47 +278,6 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
         });
         // tslint:disable-next-line:prefer-const
         let listaItemEvaluacion: ItemEvaluacion[] = [];
-        /*this.itemEvaluacionService.getAllWhere(elementEvaluacion['codigo'], 'formularioEvaluacionCodigo').subscribe(responseItem => {
-          responseItem.forEach(elementItem => {
-            // tslint:disable-next-line:prefer-const
-            let itemEvaluacion: ItemEvaluacion = {
-              codigo: elementItem['codigo'],
-              fechaCreacion: elementItem['fechaCreacion'],
-              fechaGuardado: elementItem['fechaGuardado'],
-              evaluacion: elementItem['evaluacion'],
-              comentario: elementItem['comentario'],
-              formularioEvaluacionCodigo: elementItem['formularioEvaluacionCodigo'],
-              imagen: elementItem['imagen'],
-              usuarioRelacionado: elementItem['usuarioRelacionado'],
-              itemCodigo: elementItem['itemCodigo'],
-              itemNombre: '',
-              definicion: '',
-              fechaGuardadoCompleta: ''
-            };
-            let nombreItem: string;
-            let definicion: string;
-            this.itemEvaluacionService.getRelation(elementItem['codigo'], 'itemEvaluacionItemrel')
-              .subscribe(itemNoEvaluacionResponse => {
-                // console.log(itemNoEvaluacionResponse);
-                nombreItem = itemNoEvaluacionResponse['nombre'];
-                definicion = itemNoEvaluacionResponse['definicion'];
-              }, (error) => {
-                return throwError('Ha fallado la carga de datos, revisar conexión de internet');
-              }, () => {
-                itemEvaluacion.itemNombre = nombreItem;
-                itemEvaluacion.definicion = definicion;
-                // tslint:disable-next-line:max-line-length
-                itemEvaluacion.fechaGuardadoCompleta =
-                  new DatePipe('es-ES').transform(elementEvaluacion['fechaGuardado'], 'MMMM d, y, h:mm:ss');
-              });
-            listaItemEvaluacion.push(itemEvaluacion);
-          });
-        }, (error) => {
-          this.spinner.hide();
-          return throwError('Ha fallado la carga de datos, revisar conexión de internet');
-        }, () => {
-          evaluacion.itemsEvaluados = listaItemEvaluacion;
-        });*/
         let colaborador: Colaborador = new Colaborador();
         this.colaboradoresService.getFromCode(elementEvaluacion['usuarioRelacionado']).subscribe(colaboradorResponse => {
           colaborador = {
@@ -457,13 +405,6 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
           }
         );
       }
-      /*this.imageCompress.compressFile(image, orientation, 50, 50).then(
-        result => {
-          this.imgResultAfterCompress = result;
-          console.warn('Size in bytes is now:', this.imageCompress.byteCount(result));
-          console.log(this.imgResultAfterCompress);
-        }
-      );*/
     });
   }
 
@@ -530,10 +471,12 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
         codigoDelPublicador: historial.codigoDelPublicador,
         comentario: historial.comentario,
         codigo: 0,
-        formularioCodigo: historial.formularioCodigo
+        formularioCodigo: historial.formularioCodigo,
+        fechaEnvio: ''
       });
       this.historialService.create(historial).subscribe(h => {
         evaluacion.historial[i - 1].codigo = h['codigo'];
+        evaluacion.historial[i - 1].fechaEnvio = new DatePipe('es-ES').transform(h['fechaEnvio'], 'MMMM d, y, h:mm:ss');
       }, (error) => {
         this.spinner.hide();
       }, () => {
@@ -625,16 +568,6 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
         this.areaService.getFromCodeLimited(elementEvaluacion['areaCodigo']).subscribe(responseArea => {
           // tslint:disable-next-line:prefer-const
           area.nombre = responseArea['nombre'];
-          /*area.foto[0] = responseArea['foto1'];
-          area.foto[1] = responseArea['foto2'];
-          area.foto[2] = responseArea['foto3'];
-          area.foto[3] = responseArea['foto4'];
-          area.foto[4] = responseArea['foto5'];
-          area.foto[5] = responseArea['foto6'];
-          area.foto[6] = responseArea['foto7'];
-          area.foto[7] = responseArea['foto8'];
-          area.foto[8] = responseArea['foto9'];
-          area.foto[9] = responseArea['foto10'];*/
           this.colaboradoresService.getFromCode(responseArea['usuarioAdministradorArea']).subscribe(responseColaborador => {
             const colaboradr: Colaborador = {
               primerNombre: responseColaborador['primerNombre'],
@@ -677,47 +610,6 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
         });
         // tslint:disable-next-line:prefer-const
         let listaItemEvaluacion: ItemEvaluacion[] = [];
-        /*this.itemEvaluacionService.getAllWhere(elementEvaluacion['codigo'], 'formularioEvaluacionCodigo').subscribe(responseItem => {
-          responseItem.forEach(elementItem => {
-            // tslint:disable-next-line:prefer-const
-            let itemEvaluacion: ItemEvaluacion = {
-              codigo: elementItem['codigo'],
-              fechaCreacion: elementItem['fechaCreacion'],
-              fechaGuardado: elementItem['fechaGuardado'],
-              evaluacion: elementItem['evaluacion'],
-              comentario: elementItem['comentario'],
-              formularioEvaluacionCodigo: elementItem['formularioEvaluacionCodigo'],
-              imagen: elementItem['imagen'],
-              usuarioRelacionado: elementItem['usuarioRelacionado'],
-              itemCodigo: elementItem['itemCodigo'],
-              itemNombre: '',
-              definicion: '',
-              fechaGuardadoCompleta: ''
-            };
-            let nombreItem: string;
-            let definicion: string;
-            this.itemEvaluacionService.getRelation(elementItem['codigo'], 'itemEvaluacionItemrel')
-              .subscribe(itemNoEvaluacionResponse => {
-                // console.log(itemNoEvaluacionResponse);
-                nombreItem = itemNoEvaluacionResponse['nombre'];
-                definicion = itemNoEvaluacionResponse['definicion'];
-              }, (error) => {
-                return throwError('Ha fallado la carga de datos, revisar conexión de internet');
-              }, () => {
-                itemEvaluacion.itemNombre = nombreItem;
-                itemEvaluacion.definicion = definicion;
-                // tslint:disable-next-line:max-line-length
-                itemEvaluacion.fechaGuardadoCompleta =
-                  new DatePipe('es-ES').transform(elementEvaluacion['fechaGuardado'], 'MMMM d, y, h:mm:ss');
-              });
-            listaItemEvaluacion.push(itemEvaluacion);
-          });
-        }, (error) => {
-          this.spinner.hide();
-          return throwError('Ha fallado la carga de datos, revisar conexión de internet');
-        }, () => {
-          evaluacion.itemsEvaluados = listaItemEvaluacion;
-        });*/
         let colaborador: Colaborador = new Colaborador();
         this.colaboradoresService.getFromCode(elementEvaluacion['usuarioRelacionado']).subscribe(colaboradorResponse => {
           colaborador = {
@@ -842,7 +734,22 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
           }, () => {
             this.contador = 0;
             this.evaluacionService.getItemEspecialeEvaluacion(evaluacion.codigo).subscribe(itemEspeciales => {
-              evaluacion.itemEspeciales = itemEspeciales;
+              // evaluacion.itemEspeciales = itemEspeciales;
+              evaluacion.itemEspeciales = [];
+              itemEspeciales.forEach(elementEspeciales => {
+                const eE: ItemEspecialesEvaluacion = {
+                    codigo: elementEspeciales['codigo'],
+                    nombre: elementEspeciales['nombre'],
+                    importante: elementEspeciales['importante'],
+                    cumplido: elementEspeciales['cumplido'],
+                    fechaSolicitada: elementEspeciales['fechaSolicitada'],
+                    fechaAprobada: elementEspeciales['fechaAprobada'],
+                    formularioEvaluacionCodigo: elementEspeciales['formularioEvaluacionCodigo'],
+                    codigoItemEspeciales: elementEspeciales['codigoItemEspeciales'],
+                    vinoDeServidor:  elementEspeciales['cumplido'] === true ? true : false,
+                };
+                evaluacion.itemEspeciales.push(eE);
+              });
               // itemEspeciales.forEach(r => {
                 // if (r['importante'] === true) {
                   // this.contador += 0;
@@ -853,9 +760,22 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
               throwError('Ha fallado la carga de datos, revisar conexión de internet');
             }, () => {
             // tslint:disable-next-line:prefer-const
+            evaluacion.historial = [];
             this.bloqueadosService.cargarHistorial(evaluacion.codigo).subscribe(
               historial => {
-                evaluacion.historial = historial;
+                // evaluacion.historial = historial;
+                historial.forEach(historialResponseElement => {
+                  const h: HistorialDeFormulario = {
+                    nombreDelPublicador: historialResponseElement['nombreDelPublicador'],
+                    codigoDelPublicador: historialResponseElement[''],
+                    comentario: historialResponseElement['comentario'],
+                    codigo: historialResponseElement['codigo'],
+                    formularioCodigo: historialResponseElement['formularioCodigo'],
+                    fechaEnvio: (historialResponseElement['fechaEnvio'] !== undefined) ?
+                          new DatePipe('es-ES').transform(historialResponseElement['fechaEnvio'], 'MMMM d, y, h:mm:ss') : ''
+                  };
+                  evaluacion.historial.push(h);
+                });
               }, (error) => {
                 this.spinner.hide();
                 throwError('Ha fallado la carga de datos, revisar conexión de internet');

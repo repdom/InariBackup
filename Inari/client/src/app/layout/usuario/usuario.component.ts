@@ -120,7 +120,7 @@ export class UsuarioComponent implements OnInit {
     && this.nuevoUsuario.primerApellido !== '' && this.nuevoUsuario.username !== '') {
       const nuevoUsuario = {
         primerNombre: this.nuevoUsuario.primerNombre,
-        segundoNombre: this.nuevoUsuario.segundoApellido,
+        segundoNombre: this.nuevoUsuario.segundoNombre,
         primerApellido: this.nuevoUsuario.primerApellido,
         segundoApellido: this.nuevoUsuario.segundoApellido,
         username: this.nuevoUsuario.username,

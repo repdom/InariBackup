@@ -309,6 +309,11 @@
     "calendario": {
       "type": "number",
       "required": false
+    },
+    "emailDesbloqueoEnviado":{
+      "type": "boolean",
+      "default": "false",
+      "required": false
     }
   },
   "validations": [],

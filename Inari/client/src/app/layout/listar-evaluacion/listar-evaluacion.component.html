@@ -174,7 +174,7 @@
             <button mat-button (click)="cargarFormulario(element)">
               <i class="material-icons">open_in_browser</i>
             </button>
-            <button mat-button>
+            <button mat-button *ngIf="rol == 'Administrador'">
               <i class="material-icons eliminar-rojo" (click)="eliminarFormularioEvaluacion(element)">cancel</i>
             </button>    
         </td>

@@ -36,4 +36,14 @@ export class RolMappingService extends  DataService {
       );
   }
 
+  getAllRelationRol(id: number) {
+    const headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
+    headers.append('Authorization', this.cookieService);
+    const options = new RequestOptions({ headers: headers });
+    return this.http.get(this.url + '/' + id + '/role', options)
+      .pipe(
+        map(response => response.json()),
+        catchError(this.handlerError)
+      );
+  }
 }
