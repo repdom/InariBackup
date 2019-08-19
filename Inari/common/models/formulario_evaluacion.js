@@ -75,7 +75,7 @@ module.exports = function (FormularioEvaluacion) {
         FormularioEvaluacion.app.models.ColaMensajeria.find({}, function(err, result) {
             // cosole.log(result);
             if (err) {
-                // cb(err);
+                console.log(err);
             } else {
                 result.forEach(function(element) {
                     FormularioEvaluacion.app.models.Email.send({
@@ -88,9 +88,10 @@ module.exports = function (FormularioEvaluacion) {
                         console.log('email sent!');
                         console.log(mail);
                         console.log(err);
-                        cb(err, mail);
+                        // cb(err, mail);
                       });
-                });    
+                });
+                cb(err, result);
             }
         });        
     }
