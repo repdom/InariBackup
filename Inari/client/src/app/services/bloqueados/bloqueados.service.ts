@@ -88,4 +88,17 @@ export class BloqueadosService extends DataService {
       catchError(this.handlerError)
     );
   }
+
+  enviarEmail(area) {
+    const headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json'});
+    headers.append('Authorization', this.cookieService);
+    const options = new RequestOptions({ headers: headers });
+
+    // tslint:disable-next-line:max-line-length 60
+    return this.http.post(this.url + `/enviarEmailDeDesbloqueoDeArea`, JSON.stringify(area), options)
+    .pipe(
+      map(response => response.json()),
+      catchError(this.handlerError)
+    );
+  }
 }

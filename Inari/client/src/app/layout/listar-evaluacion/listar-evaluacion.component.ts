@@ -57,6 +57,7 @@ export class Evaluacion {
   fechaCompletaGuardado = '';
   itemEspeciales?: ItemEspecialesEvaluacion[] = [];
   historial?: HistorialDeFormulario [] = [];
+  emailDesbloqueoEnviado?: boolean;
 }
 
 export class Imagen {

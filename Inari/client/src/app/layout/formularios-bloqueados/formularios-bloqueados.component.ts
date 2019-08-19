@@ -124,6 +124,7 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
   nuevoComentario: string = '';
   cantItemsEspeciales: number = 0;
   listaParaLiberar = true;
+  puedeEnviarEmail = false;
   public rol: string;
   public tienePermiso = true;
 
@@ -165,6 +166,11 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
       this.cantidadDeItemsEspecialesActivos();
       console.log(this.listaParaLiberar);
     }, 1000);
+
+    setInterval(i => {
+      this.enviarEmailDeCumplidosDosItemImportantes();
+      console.log(this.puedeEnviarEmail);
+    }, 1000);
     // this.cargarCantidad();
     // this._DomSanitizer.bypassSecurityTrustResourceUrl()
     // this._DomSanitizer.bypassSecurityTrustHtml('http://abt.com.do/wp-content/themes/abt/images/logo.jpg')
@@ -198,6 +204,26 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
     });
   }
 
+  enviarEmailDeCumplidosDosItemImportantes() {
+    let cantidad = 0;
+    let i = 0;
+    const cantidadImportantes = this.evaluacion.itemEspeciales.filter(r => r.importante === true).length;
+    this.evaluacion.itemEspeciales.forEach(itemEspeciales => {
+      // cantidad +=
+      if (itemEspeciales.cumplido === true && itemEspeciales.importante === true) {
+        cantidad += 1;
+      }
+      if (i === this.evaluacion.itemEspeciales.length - 1) {
+        if (cantidad >= cantidadImportantes) {
+          this.puedeEnviarEmail = true;
+        } else {
+          this.puedeEnviarEmail = false;
+        }
+      }
+      i += 1;
+    });
+  }
+
   cambiarPagina(pageEvent: PageEvent) {
     console.log(pageEvent);
     this.indicePagina = pageEvent.pageIndex + 1;
@@ -227,7 +253,8 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
           nombreEvaluador: '',
           administradorDeArea: '',
           fechaCompletaCreacion: '',
-          fechaCompletaGuardado: ''
+          fechaCompletaGuardado: '',
+          emailDesbloqueoEnviado: elementEvaluacion['emailDesbloqueoEnviado']
         };
         // tslint:disable-next-line:prefer-const
         let area: Area = new Area();
@@ -486,10 +513,35 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
     });
   }
 
-  guardarFormularioBloqueado(evaluacion) {
+  guardarFormularioBloqueado(evaluacion: Evaluacion) {
     console.log(evaluacion);
     this.spinner.show();
     let cont = 0;
+    if ((evaluacion.emailDesbloqueoEnviado === null || evaluacion.emailDesbloqueoEnviado === false) && this.puedeEnviarEmail === true) {
+      const evaluacionEmailDesbloqueado = {
+        nombreArea: evaluacion.area.nombre
+      };
+      evaluacion.emailDesbloqueoEnviado = true;
+      this.bloqueadosService.enviarEmail(evaluacionEmailDesbloqueado).subscribe(eviarEmailResponse => {
+      }, (error) => {
+        this.spinner.hide();
+        throwError('Ha fallado la carga de datos, revisar conexión de internet');
+        evaluacion.emailDesbloqueoEnviado = false;
+      }, () => {
+        const evaluacionFormulario = {
+          codigo: evaluacion.codigo,
+          emailDesbloqueoEnviado: true
+        };
+        this.bloqueadosService.update(evaluacionFormulario).subscribe(evaluacionResponseService => {
+
+        }, (error) => {
+          evaluacion.emailDesbloqueoEnviado = false;
+          this.spinner.hide();
+          throwError('Ha fallado la carga de datos, revisar conexión de internet');
+        }, () => {
+        });
+      });
+    }
     evaluacion.itemsEvaluados.forEach(iE => {
       const i = {
         codigo: iE.codigo,
@@ -559,7 +611,8 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
           nombreEvaluador: '',
           administradorDeArea: '',
           fechaCompletaCreacion: '',
-          fechaCompletaGuardado: ''
+          fechaCompletaGuardado: '',
+          emailDesbloqueoEnviado: elementEvaluacion['emailDesbloqueoEnviado']
         };
         // tslint:disable-next-line:prefer-const
         let area: Area = new Area();

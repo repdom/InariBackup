@@ -246,7 +246,7 @@ export class CalendarioComponent implements OnInit {
       cancelado: 0,
       usuarioRelacionado: this.nuevoCalendario.usuarioRelacionado,
       usuario: this.listaColaboradores.find(c => c.id === calendarioAux.usuarioRelacionado),
-      area: this.areas.find(a => a.codigo === calendarioAux.areaCodigo)
+      area: this.areas.find(a => a.codigo === calendarioAux.areaCodigo),
     });
     this.nuevoCalendario = new Calendario();
     this.calendarioService.create(calendario).subscribe(calendarioResponse => {
@@ -273,7 +273,8 @@ export class CalendarioComponent implements OnInit {
         fechaFinal: calendario.finCalendario,
         completado: false,
         bloqueado: false,
-        calendario: calendario.codigo
+        calendario: calendario.codigo,
+        emailDesbloqueoEnviado: false
       };
       this.formularioAreaServicio.getAllWhereCodigoFormularioModelo(f.areaCodigo, 'area').subscribe(r => {
         // console.log(r);

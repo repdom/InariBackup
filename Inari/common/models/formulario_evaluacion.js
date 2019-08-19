@@ -71,13 +71,43 @@ module.exports = function (FormularioEvaluacion) {
             });    
         });
     }
-
+    FormularioEvaluacion.enviarEmailDeDesbloqueoDeArea = function(formularioBloqueado,cb) {
+        FormularioEvaluacion.app.models.ColaMensajeria.find({}, function(err, result) {
+            // cosole.log(result);
+            if (err) {
+                // cb(err);
+            } else {
+                result.forEach(function(element) {
+                    FormularioEvaluacion.app.models.Email.send({
+                        to: element.email,
+                        from: 'area.en.rojo@gmail.com',
+                        subject: `Área ${formularioBloqueado.nombreArea} ha vuelto a estar operando`,
+                        text: `Área ${formularioBloqueado.nombreArea} ha vuelto a estar operando luego de haberse bloqueado por culpa de incumplimiento grave`,
+                        html:  `Favor comunicarse con el administrador del área <em>${formularioBloqueado.nombreArea}</em>`
+                      }, function(err, mail) {
+                        console.log('email sent!');
+                        console.log(mail);
+                        console.log(err);
+                        // cb(err);
+                      });
+                });    
+            }
+        });        
+    }
     FormularioEvaluacion.remoteMethod(
         'insertarConItemes', {
             http: { path: '/insertarConItemes', verb: 'post' },
             accepts:{ arg: 'formularioEvaluacion', type: 'object', required: true, http: { source: 'body' }},
             returns: { arg: 'data', type: 'object', root: true },
             description: 'Insertar itemes con el formulario evaluacion'
+        }
+    );
+    FormularioEvaluacion.remoteMethod(
+        'enviarEmailDeDesbloqueoDeArea', {
+            http: { path: '/enviarEmailDeDesbloqueoDeArea', verb: 'post' },
+            accepts:{ arg: 'formularioBloqueado', type: 'object', required: true, http: { source: 'body' }},
+            returns: { arg: 'data', type: 'object', root: true },
+            description: 'Enviar email luego de desbloqueo de área'
         }
     );
 }
