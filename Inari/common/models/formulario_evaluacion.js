@@ -88,7 +88,7 @@ module.exports = function (FormularioEvaluacion) {
                         console.log('email sent!');
                         console.log(mail);
                         console.log(err);
-                        // cb(err);
+                        cb(err, mail);
                       });
                 });    
             }

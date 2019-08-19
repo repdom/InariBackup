@@ -164,7 +164,7 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
     this.listarEvaluaciones();
     setInterval(f => {
       this.cantidadDeItemsEspecialesActivos();
-      console.log(this.listaParaLiberar);
+      // console.log(this.listaParaLiberar);
     }, 1000);
 
     setInterval(i => {
@@ -208,6 +208,7 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
     let cantidad = 0;
     let i = 0;
     const cantidadImportantes = this.evaluacion.itemEspeciales.filter(r => r.importante === true).length;
+    console.log(cantidadImportantes);
     this.evaluacion.itemEspeciales.forEach(itemEspeciales => {
       // cantidad +=
       if (itemEspeciales.cumplido === true && itemEspeciales.importante === true) {
@@ -517,7 +518,8 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
     console.log(evaluacion);
     this.spinner.show();
     let cont = 0;
-    if ((evaluacion.emailDesbloqueoEnviado === null || evaluacion.emailDesbloqueoEnviado === false) && this.puedeEnviarEmail === true) {
+    // tslint:disable-next-line:max-line-length
+    if ((evaluacion.emailDesbloqueoEnviado === undefined || evaluacion.emailDesbloqueoEnviado === false) && this.puedeEnviarEmail === true) {
       const evaluacionEmailDesbloqueado = {
         nombreArea: evaluacion.area.nombre
       };
@@ -533,47 +535,100 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
           emailDesbloqueoEnviado: true
         };
         this.bloqueadosService.update(evaluacionFormulario).subscribe(evaluacionResponseService => {
-
+          console.log(evaluacionResponseService);
         }, (error) => {
           evaluacion.emailDesbloqueoEnviado = false;
           this.spinner.hide();
           throwError('Ha fallado la carga de datos, revisar conexión de internet');
         }, () => {
+          evaluacion.itemsEvaluados.forEach(iE => {
+            const i = {
+              codigo: iE.codigo,
+              imagen: iE.imagen,
+              imagen2: iE.imagen2
+            };
+            this.itemEvaluacionService.update(i).subscribe(r => {
+              console.log(r);
+            });
+          });
+          let itemEspecialesConteo = 0;
+          evaluacion.itemEspeciales.forEach(cargando => {
+            const gurdar = {
+                cumplido: cargando['cumplido'],
+                fechaAprobada: cargando['fechaAprobada'],
+                fechaSolicitada: cargando['fechaSolicitada'],
+                formularioEvaluacionCodigo: cargando['formularioEvaluacionCodigo'],
+                importante: cargando['importante'],
+                nombre: cargando['nombre']
+            };
+            this.bloqueadosService.actualizarItemsEspecialesEnlazados(evaluacion.codigo, cargando.codigo, gurdar)
+              .subscribe(actualizando => {
+            }, (error) => {
+              console.log(error);
+              this.spinner.hide();
+            }, () => {
+              // this.spinner.hide();
+              this.listaParaLiberar = false;
+              this.abrir = false;
+              this.seActivo = false;
+              this.cancelar();
+            });
+            if (itemEspecialesConteo === evaluacion.itemEspeciales.length - 1) {
+              this.spinner.hide();
+              this.listaParaLiberar = false;
+              this.abrir = false;
+              this.seActivo = false;
+              this.cancelar();
+            }
+            itemEspecialesConteo += 1;
+          });
         });
       });
-    }
-    evaluacion.itemsEvaluados.forEach(iE => {
-      const i = {
-        codigo: iE.codigo,
-        imagen: iE.imagen,
-        imagen2: iE.imagen2
-      };
-      this.itemEvaluacionService.update(i).subscribe(r => {
-        console.log(r);
+    } else {
+      evaluacion.itemsEvaluados.forEach(iE => {
+        const i = {
+          codigo: iE.codigo,
+          imagen: iE.imagen,
+          imagen2: iE.imagen2
+        };
+        this.itemEvaluacionService.update(i).subscribe(r => {
+          console.log(r);
+        });
       });
-    });
 
-    evaluacion.itemEspeciales.forEach(cargando => {
-      const gurdar = {
-          cumplido: cargando['cumplido'],
-          fechaAprobada: cargando['fechaAprobada'],
-          fechaSolicitada: cargando['fechaSolicitada'],
-          formularioEvaluacionCodigo: cargando['formularioEvaluacionCodigo'],
-          importante: cargando['importante'],
-          nombre: cargando['nombre']
-      };
-      this.bloqueadosService.actualizarItemsEspecialesEnlazados(evaluacion.codigo, cargando.codigo, gurdar)
-        .subscribe(actualizando => {
-      }, (error) => {
-        console.log(error);
-        this.spinner.hide();
-      }, () => {
-        this.spinner.hide();
-        this.listaParaLiberar = false;
-        this.abrir = false;
-        this.seActivo = false;
+      let itemEspecialesConteo = 0;
+
+      evaluacion.itemEspeciales.forEach(cargando => {
+        const gurdar = {
+            cumplido: cargando['cumplido'],
+            fechaAprobada: cargando['fechaAprobada'],
+            fechaSolicitada: cargando['fechaSolicitada'],
+            formularioEvaluacionCodigo: cargando['formularioEvaluacionCodigo'],
+            importante: cargando['importante'],
+            nombre: cargando['nombre']
+        };
+        this.bloqueadosService.actualizarItemsEspecialesEnlazados(evaluacion.codigo, cargando.codigo, gurdar)
+          .subscribe(actualizando => {
+        }, (error) => {
+          console.log(error);
+          this.spinner.hide();
+        }, () => {
+          // this.spinner.hide();
+          this.listaParaLiberar = false;
+          this.abrir = false;
+          this.seActivo = false;
+          this.cancelar();
+        });
+        if (itemEspecialesConteo === evaluacion.itemEspeciales.length - 1) {
+          this.spinner.hide();
+          this.listaParaLiberar = false;
+          this.abrir = false;
+          this.seActivo = false;
+          this.cancelar();
+        }
+        itemEspecialesConteo += 1;
       });
-    });
+    }
   }
 
   cargarCantidad() {
