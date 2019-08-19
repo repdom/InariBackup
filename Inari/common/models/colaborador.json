@@ -46,6 +46,18 @@
       "principalType": "ROLE",
       "principalId": "Administrador",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "Administrador de Area",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "Audior Lider",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

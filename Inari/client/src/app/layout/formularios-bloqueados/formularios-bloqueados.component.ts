@@ -519,7 +519,7 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     let cont = 0;
     // tslint:disable-next-line:max-line-length
-    if ((evaluacion.emailDesbloqueoEnviado === undefined || evaluacion.emailDesbloqueoEnviado === false) && this.puedeEnviarEmail === true) {
+    if ((evaluacion.emailDesbloqueoEnviado === undefined || evaluacion.emailDesbloqueoEnviado === false) && this.puedeEnviarEmail === true && evaluacion.emailDesbloqueoEnviado !== true) {
       const evaluacionEmailDesbloqueado = {
         nombreArea: evaluacion.area.nombre
       };
@@ -568,10 +568,10 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
               this.spinner.hide();
             }, () => {
               // this.spinner.hide();
-              this.listaParaLiberar = false;
-              this.abrir = false;
-              this.seActivo = false;
-              this.cancelar();
+              // this.listaParaLiberar = false;
+              // this.abrir = false;
+              // this.seActivo = false;
+              // this.cancelar();
             });
             if (itemEspecialesConteo === evaluacion.itemEspeciales.length - 1) {
               this.spinner.hide();
@@ -584,7 +584,7 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
           });
         });
       });
-    } else {
+    } else if (evaluacion.emailDesbloqueoEnviado === true || this.puedeEnviarEmail === true) {
       evaluacion.itemsEvaluados.forEach(iE => {
         const i = {
           codigo: iE.codigo,
@@ -614,10 +614,10 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
           this.spinner.hide();
         }, () => {
           // this.spinner.hide();
-          this.listaParaLiberar = false;
-          this.abrir = false;
-          this.seActivo = false;
-          this.cancelar();
+          // this.listaParaLiberar = false;
+          // this.abrir = false;
+          // this.seActivo = false;
+          // this.cancelar();
         });
         if (itemEspecialesConteo === evaluacion.itemEspeciales.length - 1) {
           this.spinner.hide();
@@ -627,6 +627,7 @@ export class FormulariosBloqueadosComponent implements OnInit, AfterViewInit {
           this.cancelar();
         }
         itemEspecialesConteo += 1;
+        console.log(itemEspecialesConteo);
       });
     }
   }

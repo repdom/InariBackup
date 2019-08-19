@@ -20,7 +20,7 @@ export class BloqueadosService extends DataService {
     const options = new RequestOptions({ headers: headers });
 
     // tslint:disable-next-line:max-line-length 60
-    return this.http.get(this.url + `?filter=%7B%22limit%22%3A%20${tamPagina}%2C%20%22fields%22%3A%20%7B%22codigo%22%3A%20true%2C%22fechaCreacion%22%3A%20true%2C%20%22fechaGuardado%22%3Atrue%2C%20%22usuarioRelacionado%22%3Atrue%2C%20%22formularioModeloCodigo%22%3A%20true%2C%20%22areaCodigo%22%3A%20true%2C%20%22completado%22%3A%20true%2C%20%22bloqueado%22%3A%20true%7D%2C%20%22where%22%3A%7B%22bloqueado%22%3A%20%22${cuestionar}%22,"liberado":false%7D%7D`, options)
+    return this.http.get(this.url + `?filter=%7B%22limit%22%3A%20${tamPagina}%2C%20%22fields%22%3A%20%7B%22codigo%22%3A%20true%2C%22fechaCreacion%22%3A%20true%2C%20%22fechaGuardado%22%3Atrue%2C%20%22usuarioRelacionado%22%3Atrue%2C%20%22formularioModeloCodigo%22%3A%20true%2C%20%22areaCodigo%22%3A%20true%2C%20%22completado%22%3A%20true%2C%20%22emailDesbloqueoEnviado%22%3A%20true%2C%20%22bloqueado%22%3A%20true%7D%2C%20%22where%22%3A%7B%22bloqueado%22%3A%20%22${cuestionar}%22,"liberado":false%7D%7D`, options)
     .pipe(
       map(response => response.json()),
       catchError(this.handlerError)
