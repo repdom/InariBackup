@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1566182093610,
+  "timestamp": 1567627553459,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -9,15 +9,15 @@
       "updateMode": "prefetch",
       "urls": [
         "/2.fc7e213a202ca0aeb8fb.js",
-        "/6.28cb945971d3bb141bf8.js",
-        "/7.3a9b7dec29a2f69ec38b.js",
-        "/8.9482213346c1b3aa054a.js",
+        "/6.c0477552114fae901e63.js",
+        "/7.ebdd8f71b84f726cfc07.js",
+        "/8.7284881acf95da05e64c.js",
         "/common.5a11cbde580766e5ece4.js",
         "/favicon.ico",
         "/index.html",
-        "/main.9583154fcdbd8f0ca476.js",
+        "/main.cf7d119a6094017d4a1f.js",
         "/polyfills.9d9805779ee64a075676.js",
-        "/runtime.30165e53eaf52b6400f6.js",
+        "/runtime.669aa133026a9d64925a.js",
         "/scripts.9647d8a60788a64b71d6.js",
         "/styles.01381cf289f01493a06d.css"
       ],
@@ -56,7 +56,6 @@
       "name": "inari",
       "patterns": [
         "\\/api\\/Areas\\/.*",
-        "\\/api\\/Calendarios\\/.*",
         "\\/api\\/FormulariosAreas\\/.*",
         "\\/api\\/FormularioModeloItems\\/.*",
         "\\/api\\/FormularioModelos\\/.*",
@@ -69,13 +68,23 @@
       "maxSize": 1000,
       "maxAge": 86400000,
       "version": 1
+    },
+    {
+      "name": "inariCalendarios",
+      "patterns": [
+        "\\/api\\/Calendarios\\/.*"
+      ],
+      "strategy": "freshness",
+      "maxSize": 1000,
+      "maxAge": 86400000,
+      "version": 1
     }
   ],
   "hashTable": {
     "/2.fc7e213a202ca0aeb8fb.js": "a92e9aaf783757ec3474e01996f7a1c0af9e809e",
-    "/6.28cb945971d3bb141bf8.js": "9eae2f1d87f12ae526dec32ae3a3399e561c40f4",
-    "/7.3a9b7dec29a2f69ec38b.js": "d8d1e745ba1631b61b659f5473a1e4d63b0d6b46",
-    "/8.9482213346c1b3aa054a.js": "64a60d89eae9c18b918e95db25e67ee37335c29f",
+    "/6.c0477552114fae901e63.js": "163f2c82abc9913c397dba48d56273e20dcd8fa3",
+    "/7.ebdd8f71b84f726cfc07.js": "a13af28f5208ec1c2e60e0674d8c2ba349d7c81d",
+    "/8.7284881acf95da05e64c.js": "5d4fbbeead82d129b9e69f6c6119cc4dc3aeffdf",
     "/assets/fonts/FontinSans/Fontin_Sans_B.otf": "35845d36e336191f9db678a9c55ea3bcff92dfe4",
     "/assets/fonts/FontinSans/Fontin_Sans_BI.otf": "1c0eaf3a484f2ae3f1754def68b5750a1d99d3f1",
     "/assets/fonts/FontinSans/Fontin_Sans_I.otf": "db2dd0d7216ee27b6b05d924735c9a8a7f4faa70",
@@ -97,10 +106,10 @@
     "/assets/images/card-3.jpg": "a2eb1ac502716c05d32d01ef01ab60a2a9ca62ef",
     "/common.5a11cbde580766e5ece4.js": "92be5faca295ebe1c20be7c67cac16887df9eddc",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "d5cf6186ce59be9e8e7873aff3f3e482a914742a",
-    "/main.9583154fcdbd8f0ca476.js": "ad6a51253112bf46b9c04024257c9a712fe6ee80",
+    "/index.html": "2f3c14274136b6813b20b05577f75d5e428c19c3",
+    "/main.cf7d119a6094017d4a1f.js": "c76047c8c45b2ac496e2acf74f930ff64556461d",
     "/polyfills.9d9805779ee64a075676.js": "0539414b7b5be4fc511f66b4065ea0c70a455c86",
-    "/runtime.30165e53eaf52b6400f6.js": "bc1a1f062bb2b5bde38e0ae51bcc776eddcb3f7b",
+    "/runtime.669aa133026a9d64925a.js": "13a8e23c1fe130d5715034b9aff9971fa96a472b",
     "/scripts.9647d8a60788a64b71d6.js": "f78dd81ce664813c931d74c675a784abf64c448a",
     "/styles.01381cf289f01493a06d.css": "879be2734ce899f09cc4f56402a2a387b51817cf"
   },
