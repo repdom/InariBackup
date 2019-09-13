@@ -47,19 +47,19 @@
   },
   "ACL": {
     "dataSource": "mysql",
-    "public": true
+    "public": false
   },
   "Role": {
     "dataSource": "mysql",
-    "public": true
+    "public": false
   },
   "RoleMapping": {
     "dataSource": "mysql",
-    "public": true
+    "public": false
   },
   "AccessToken": {
     "dataSource": "mysql",
-    "public": true
+    "public": false
   },
   "FormularioArea": {
     "dataSource": "mysql",

@@ -1,4 +1,18 @@
 module.exports = function (Calendario) {
+    Calendario.disableRemoteMethodByName('create');     // Removes (POST) /products
+    Calendario.disableRemoteMethodByName('upsert');     // Removes (PUT) /products
+    Calendario.disableRemoteMethodByName('deleteById'); // Removes (DELETE) /products/:id
+    Calendario.disableRemoteMethodByName('updateAll');  // Removes (POST) /products/update
+    Calendario.disableRemoteMethodByName('prototype.updateAttributes');
+    // Removes (PUT) /products/:id
+    Calendario.disableRemoteMethodByName('createChangeStream');
+    Calendario.disableRemoteMethodByName('prototype.__create__formularioEvaluacion');
+    Calendario.disableRemoteMethodByName('prototype.__delete__formularioEvaluacion');
+    Calendario.disableRemoteMethodByName('prototype.__destroyById__formularioEvaluacion');
+    Calendario.disableRemoteMethodByName('prototype.__updateById__formularioEvaluacion');
+    Calendario.disableRemoteMethodByName('prototype.__update__formularioEvaluacion', false);
+    Calendario.disableRemoteMethodByName('prototype.__destroy__formularioEvaluacion', false);
+
     Calendario.cantidadProgramacionesActivas = function(cb) {
         Calendario.dataSource.connector.query(`SELECT 
                                                             COUNT(f.codigo) as Cantidad FROM calendario AS f 

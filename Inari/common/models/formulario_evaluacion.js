@@ -2,6 +2,26 @@
 // var itemEvaluacionVar = app.models.ItemEvaluacion;
 // let itemEvaluacionVar = app.dataSources.ItemEvaluacion;
 module.exports = function (FormularioEvaluacion) {
+    FormularioEvaluacion.disableRemoteMethodByName('create');     // Removes (POST) /products
+    FormularioEvaluacion.disableRemoteMethodByName('upsert');     // Removes (PUT) /products
+    FormularioEvaluacion.disableRemoteMethodByName('deleteById'); // Removes (DELETE) /products/:id
+    FormularioEvaluacion.disableRemoteMethodByName('updateAll');  // Removes (POST) /products/update
+    FormularioEvaluacion.disableRemoteMethodByName('prototype.updateAttributes');
+    FormularioEvaluacion.disableRemoteMethodByName('enviarEmailDeDesbloqueoDeArea');  // Removes (POST) /products/update
+    FormularioEvaluacion.disableRemoteMethodByName('insertarConItemes');  // Removes (POST) /products/update
+    FormularioEvaluacion.disableRemoteMethodByName('change-stream');  // Removes (POST) /products/update
+    
+    // Removes (PUT) /products/:id
+    FormularioEvaluacion.disableRemoteMethodByName('prototype.__create__historial');
+    FormularioEvaluacion.disableRemoteMethodByName('prototype.__delete__historial');
+    FormularioEvaluacion.disableRemoteMethodByName('prototype.__destroyById__historial');
+    FormularioEvaluacion.disableRemoteMethodByName('prototype.__updateById__historial');
+
+    FormularioEvaluacion.disableRemoteMethodByName('prototype.__create__itemEspeciales');
+    FormularioEvaluacion.disableRemoteMethodByName('prototype.__delete__itemEspeciales');
+    FormularioEvaluacion.disableRemoteMethodByName('prototype.__destroyById__itemEspeciales');
+    FormularioEvaluacion.disableRemoteMethodByName('prototype.__updateById__itemEspeciales');
+
     // var itemEvaluacionVar = FormularioEvaluacion.app.models.ItemEvaluacion;
     FormularioEvaluacion.insertarConItemes = function(formularioEvaluacion,cb) {
         formularioEvaluacion.formularios.forEach(function(element) {
